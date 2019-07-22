@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/07/19 15:19:05 by edillenb         ###   ########.fr        #
+#    Updated: 2019/07/22 10:55:15 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ clean:
 
 fclean: clean
 	make fclean -C libft
-	@echo "$(BLUE)⚡️ SUPPR DES EXECUTABLES . . . . . . . . . . . . . .$(RED)"
+	@echo "$(BLUE)⚡️ SUPPR DE L'EXECUTABLE . . . . . . . . . . . . . .$(RED)"
 	rm -f $(NAME)
 	@echo "$(GREEN)TOUT EST -----------------------------------> OK$(BLACK)"
 

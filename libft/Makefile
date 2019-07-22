@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 11:28:49 by edillenb          #+#    #+#              #
-#    Updated: 2019/07/18 13:29:25 by edillenb         ###   ########.fr        #
+#    Updated: 2019/07/22 16:43:56 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SOURCES = $(addsuffix .c, ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove \
 		  ft_hexatoa ft_lltoa ft_llutoa ft_octatoa ft_po ft_sqrt ft_str_add \
 		  ft_swap ft_strjoinfr ft_str_up ft_printf convert flag float_a \
 		  float_b cast_arg malloc_str fill_str tools fill_float floatools \
-		  color ft_strrchr)
+		  color ft_strrchr ft_atoui)
 
 OBJ = $(SOURCES:.c=.o)
 

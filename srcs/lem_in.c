@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/22 19:31:40 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/23 19:28:58 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,31 @@ int		free_room_lst(t_room **head, int opt)
 /*
 ** This function parses the input found in line
 ** It then activates flags within the node depending on found type ->
-** QUESTION: how do I know this is a start or end? Maybe send an int table 
-** that would be modified while parsing when I find a start or end instruction ?
 */
 
-int		set_room_data(t_room *room, char *line, int opt)
+int		set_room_data(char *line, t_room *room, int *command)
 {
-	t_room->name = line;
-	if (opt == 1)
+	if (*command == 1)
+	{
 		t_room->start = true;
+		*command = 0;
+	}
 	else
 		t_room->start = false;
-	if (opt == 2)
+	if (*command == 2)
+	{
 		t_room->end = true;
+		*command = 0;
+	}
 	else
 		t_room->end = false;
 	t_room->ant_here = false;
 	t_room->ant = 0;
-	x = 
+	if (get_room(line, room) == -1)
+		return (-1);
 }
 
-int			add_room(t_room **head, char *line)
+int			add_room(char *line, t_room **head, int *command)
 {
 	t_room *new_room;
 	t_room *last;
@@ -64,7 +68,7 @@ int			add_room(t_room **head, char *line)
 	last = *head;
 	if (!(new_room = (t_room*)malloc(sizeof(t_room))))
 		return (free_room_lst(head));
-	if (!(set_room_data(t_room, char *line)))
+	if (!(set_room_data(t_room, line, command)))
 		return (free_room_lst(head));
 	if (*head == NULL)
 	{
@@ -82,6 +86,8 @@ int			main(void)
 	int		*ant_tab = NULL;
 	size_t	nb_ants;
 
-	if (argc > 1 || parsing(&room_lst, &ant_tab, &nb_ants) == -1)
+	if (argc > 1 || parsing(&room_lst, &nb_ants) == -1)
+		return (free_room_lst(&room_lst, 1));
+	if (check_input(room_lst, nb_ants) == -1)
 		return (free_room_lst(&room_lst, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/23 19:28:55 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/24 17:35:57 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ int			parsing(t_room **room_lst, size_t *nb_ants)
 			if (!(to_print = ft_strjoinfr(to_print, line, 1)))
 				return (exit_parsing(&line, -1));
 		}
-		else if (index == 0 && is_ant_nb(line) && index++ == 0)
+		else if (index == 0 && is_ant_nb(line))
 		{
 			*nb_ants = ft_atoui(line);
 			if (!(to_print = ft_strjoinfr(to_print, line, 1)))
 				return (exit_parsing(&line, -1));
+			index++;
 		}
 		else if (index == 1)
 		{
@@ -64,6 +65,7 @@ int			parsing(t_room **room_lst, size_t *nb_ants)
 			}
 			else if (is_tunnel(line) != -1)
 			{
+				build_hash_tab(t_room *room_lst, t_room **hash_tab);
 				get_tunnel(line, room_lst, &index);
 				if (!(to_print = ft_strjoinfr(to_print, line, 1)))
 					return (exit_parsing(&line, -1));

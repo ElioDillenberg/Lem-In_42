@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:02:44 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/23 18:53:06 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/24 11:47:55 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ static int	check_coordinate(char *line)
 /*
 ** Below function and the three above statics have the purpose to check wether
 ** given line is receivable data to build a new room
-** 
 */ 
 
 int		is_room(char *line)
@@ -113,8 +112,6 @@ int		is_room(char *line)
 
 	i = 0;
 	x = 0;
-	while (*line == ' ')
-		line++;
 	if (*line == 'L')
 		return (-1);
 	while (*line != ' ')

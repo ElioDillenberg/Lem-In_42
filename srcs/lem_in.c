@@ -6,12 +6,13 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/23 19:28:58 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:00:18 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incls/lem_in.h"
 #include "../libft/libft.h"
+#include <unistd.h>
 #include <stdlib.h>
 
 int		free_room_lst(t_room **head, int opt)
@@ -42,22 +43,24 @@ int		set_room_data(char *line, t_room *room, int *command)
 {
 	if (*command == 1)
 	{
-		t_room->start = true;
+		room->start = true;
 		*command = 0;
 	}
 	else
-		t_room->start = false;
+		room->start = false;
 	if (*command == 2)
 	{
-		t_room->end = true;
+		room->end = true;
 		*command = 0;
 	}
 	else
-		t_room->end = false;
-	t_room->ant_here = false;
-	t_room->ant = 0;
+		room->end = false;
+	room->ant_here = false;
+	room->ant = 0;
+	room->next = NULL;
 	if (get_room(line, room) == -1)
 		return (-1);
+	return (0);
 }
 
 int			add_room(char *line, t_room **head, int *command)
@@ -67,9 +70,9 @@ int			add_room(char *line, t_room **head, int *command)
 
 	last = *head;
 	if (!(new_room = (t_room*)malloc(sizeof(t_room))))
-		return (free_room_lst(head));
-	if (!(set_room_data(t_room, line, command)))
-		return (free_room_lst(head));
+		return (free_room_lst(head, -1));
+	if (set_room_data(line, new_room, command) == -1)
+		return (free_room_lst(head, -1));
 	if (*head == NULL)
 	{
 		*head = new_room;
@@ -78,16 +81,19 @@ int			add_room(char *line, t_room **head, int *command)
 	while (last->next != NULL)
 		last = last->next;
 	last->next = new_room;
+	return (0);
 }
 
-int			main(void)
+int			main(int argc, char **argv)
 {
 	t_room	*room_lst = NULL;
-	int		*ant_tab = NULL;
 	size_t	nb_ants;
 
-	if (argc > 1 || parsing(&room_lst, &nb_ants) == -1)
-		return (free_room_lst(&room_lst, 1));
-	if (check_input(room_lst, nb_ants) == -1)
-		return (free_room_lst(&room_lst, 1));
+	(void)argv;
+	if (argc > 1)
+		return (-1);
+	if (parsing(&room_lst, &nb_ants) == -1)
+		return (free_room_lst(&room_lst, -1));
+//	if (check_input(room_lst, nb_ants) == -1)
+//		return (free_room_lst(&room_lst, 1));
 }

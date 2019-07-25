@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 11:28:49 by edillenb          #+#    #+#              #
-#    Updated: 2019/07/22 16:43:56 by edillenb         ###   ########.fr        #
+#    Updated: 2019/07/25 18:27:07 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ OBJ = $(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) Makefile libft.h ft_printf.h
-	@$(CC) $(CFLAGS) -c $(SOURCES)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 

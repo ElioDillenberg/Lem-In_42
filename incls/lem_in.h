@@ -6,18 +6,38 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/19 16:04:03 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/25 19:47:22 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-struct		s_room
+#include <string.h>
+#include <stdbool.h>
+
+typedef struct		s_room
 {
-	char	*name;
-	bool	start;
-	bool	end;
-	bool	ant_here;
-	size_t	ant;
-	int		x;
-	int		y;
-	t_room	*next;
-}			t_room;
+	char			*name;
+	bool			start;
+	bool			end;
+	bool			ant_here;
+	size_t			ant;
+	int				x;
+	int				y;
+	struct s_room	*next;
+}					t_room;
+
+int		parsing(t_room **room_lst, size_t *nb_ants);
+
+int		free_room_lst(t_room **head, int opt);
+int		set_room_data(char *line, t_room *room, int *command);
+int		add_room(char *line, t_room **head, int *command);
+
+void	get_command(char *line, int *command);
+int		get_room(char *line, t_room *room);
+int		get_hash(char *name, int len_hash_tab);
+int		build_hash_tab(t_room *room_lst, t_room **hash_tab);
+int		get_tunnels(char *line, t_room *room_lst, t_room **hash_tab);
+
+int		is_ant_nb(char *line);
+int		is_room(char *line, t_room **room_lst);
+
+int		is_tunnel(char *line, t_room **room_lst);

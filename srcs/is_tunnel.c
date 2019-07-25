@@ -6,20 +6,25 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:59:34 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/24 12:15:05 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/25 19:47:21 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../incls/lem_in.h"
+#include "../libft/libft.h"
 
 int		is_tunnel(char *line, t_room **room_lst)
 {
 	size_t	i;
-	size_t	comp;
+	size_t	cmp;
 	t_room *cr;
 
+	ft_printf("Testing wether it's a tunnel!\n");
 	i = 0;
-	comp = 0;
+	cmp = 0;
 	cr = *room_lst;
-	while (line[i] != '-' && line[i])
+//	ft_printf("this is cr->name %s\n", cr->name);
+	while (line[i] != '-' && line[i] != '\0')
 		i++;
 	if (i == 0)
 		return (-1);

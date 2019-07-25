@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/07/22 10:55:15 by edillenb         ###   ########.fr        #
+#    Updated: 2019/07/25 18:14:07 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,15 @@ CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 LIBFT = libft/libft.a
 
-SRCS = $(addprefix srcs/, $(addsuffix .c, ))
-OBJS = $(addprefix objs/, $(addsuffix .o, ))
-INCLS = $(addprefix incls/, $(addsuffix .h, ))
+OBJDIR = objs
+SRCDIR = srcs
+
+SC = $(addsuffix .c, lem_in get_parsing_tools parsing \
+	   is_parsing_tools is_tunnel)
+
+SRCS = $(addprefix $(SRCDIR)/, $(SC))
+OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))
+INCLS = $(addprefix ./incls/, $(addsuffix .h, lem_in))
 
 GREEN = \033[01;32m
 BLUE = \033[01;34m
@@ -45,6 +51,9 @@ $(NAME): $(LIBFT) $(OBJS) $(INCLS) Makefile
 	$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)TOUT EST -----------------------------------> OK$(NOCOLOR)"
 
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	    $(CC) $(CFLAGS) -c -o $@ $<
+
 $(LIBFT): FORCE
 	@echo "$(BLUE)⚡️ CHECKING LIBFT.A. . . . . . . . . . . . . . . . $(YELLOW)"
 	@make -C libft/
@@ -54,7 +63,7 @@ FORCE:
 clean:
 	make clean -C libft
 	@echo "$(BLUE)⚡️ SUPPR DES .O . . . . . . . . . . . . . . . . . . .$(RED)"
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 	@echo "$(GREEN)TOUT EST ----------------------------------> OK$(NOCOLOR)"
 
 fclean: clean

@@ -6,9 +6,13 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:02:44 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/24 11:47:55 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/25 19:41:58 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../incls/lem_in.h"
+#include "../libft/libft.h"
+#include <stdlib.h>
 
 /*
 ** Below function checks wether given line can be used at data for the nb of
@@ -42,16 +46,16 @@ static int	max_min_integer(char *line)
 {
 	if (line[0] == '-')
 	{
-		if (ft_strcmp(line, "-2147483648") == -1)
+		if (ft_strncmp(line, "-2147483648", 11) == -1)
 			return (-1);
 	}
 	if (line[0] == '+')
 	{
-		if (ft_strcmp(line, "+2147483647") == -1)
+		if (ft_strncmp(line, "+2147483647", 11) == -1)
 			return (-1);
 	}
 	else
-		if (ft_strcmp(line, "-2147483647") == -1)
+		if (ft_strncmp(line, "2147483647", 10) == -1)
 			return (-1);
 	return (0);
 }
@@ -67,10 +71,9 @@ static int	is_coordinate(char *line)
 		line++;
 	if (line[i] == '-' || line[i] == '+')
 		i++;
-	while (line[i])
+	while (line[i] && ft_isdigit(line[i]) != 0)
 	{
-		if (ft_isdigit(line[i]) == 0 || ++x > 10)
-			return (-1);
+		x++;
 		if (x == 10)
 			if (max_min_integer(line) == -1)
 				return (-1);
@@ -79,24 +82,45 @@ static int	is_coordinate(char *line)
 	return (0);
 }
 
-static int	check_coordinate(char *line)
+int			check_coordinates_lst(int x, int y, t_room **room_lst)
 {
+	t_room *cr;
+
+	cr = *room_lst;
+	while (cr != NULL)
+	{
+		if (cr->x == x)
+			if (cr->y == y)
+				return (-1);
+		cr = cr->next;
+	}
+	return (0);
+}
+
+static int	check_coordinates(char *line, t_room **room_lst)
+{
+	int	x;
+	int y;
+
+	while (*line == ' ')
+		line++;
+	ft_printf("This is line in check_coordinates: |%s|\n", line);
+	if (is_coordinate(line) == -1)
+		return (-1);
+	x = ft_atoi(line);
+	if (*line == '+' || *line == '-')
+		line++;
+	while (ft_isdigit(*line) != 0)
+		line++;
 	while (*line == ' ')
 		line++;
 	if (is_coordinate(line) == -1)
 		return (-1);
 	if (*line == '+' || *line == '-')
 		line++;
-	while (ft_isdigit(line) != 0)
-		line++;
-	while (*line == ' ')
-		line++;
-	if (is_coordinate(line) == -1)
+	y = ft_atoi(line);
+	if (check_coordinates_lst(x, y, room_lst) == -1)
 		return (-1);
-	if (*line == '+' || *line == '-')
-		line++;
-	while (ft_isdigit(line) != 0)
-		line++;
 	return (0);
 }
 
@@ -105,23 +129,39 @@ static int	check_coordinate(char *line)
 ** given line is receivable data to build a new room
 */ 
 
-int		is_room(char *line)
+int		is_room(char *line, t_room **room_lst)
 {
 	size_t	i;
-	size_t	x;
+	char	*test;
+	t_room	*cr;
 
+	cr = *room_lst;
 	i = 0;
-	x = 0;
+	ft_printf("Checking if it's a room\n");
 	if (*line == 'L')
 		return (-1);
+	while (line[i] != ' ')
+		i++;
+	if (!(test = ft_strnew(i)))
+		return (-1);
+	test = ft_strncpy(test, line, i);
+	while (cr != NULL)
+	{
+		if (ft_strcmp(test, cr->name) == 0)
+		{
+			free(test);
+			return (-1);
+		}
+		cr = cr->next;
+	}
+	free(test);
 	while (*line != ' ')
 	{
 		if (*line == '-')
 			return (-1);
 		line++;
-		x = 1;
 	}
-	if (check_coordinates(line) == -1)
+	if (check_coordinates(line, room_lst) == -1)
 		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/27 17:19:35 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 20:11:10 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ static int	exit_parsing(char **line, int ret)
 	return (ret);
 }
 
-int			parsing(t_room **room_lst, size_t *nb_ants)
+int			parsing(t_room **rm_lst, size_t *antz, t_room **rm_tab, int *roomz)
 {
-	char	*to_print;
+	char	*to_print = NULL;
 	char	*line;
 	int		index;
 	int		command;
 	int		ret;
 
-	to_print = NULL;
 	command = 0;
 	index = 0;
 	ft_printf("Start of parsing\n");
@@ -46,58 +45,61 @@ int			parsing(t_room **room_lst, size_t *nb_ants)
 		if (line[0] == '#' && line[1] != '#')
 		{
 			ft_printf("Just found this comment: %s\n", line);
-			if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-				return (-1);
+			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+				return (exit_parsing(&line, -1));
 		}
 		else if (line[0] == '#' && line[1] == '#')
 		{
 			get_command(line, &command);
 			ft_printf("Just found this command: %s\n", line);
-			if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-				return (-1);
+			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+				return (exit_parsing(&line, -1));
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
 		{
-			*nb_ants = ft_atoui(line);
-			ft_printf("nb of ants = %u\n", *nb_ants);
-			if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-				return (-1);
+			*antz = ft_atoui(line);
+			ft_printf("nb of ants = %u\n", *antz);
+			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+				return (exit_parsing(&line, -1));
 			index++;
 		}
 		else if (index == 1)
 		{
 			ft_printf("Is it a room or a tunnel?\n");
-			if (is_room(line, room_lst) != -1)
+			if (is_room(line, rm_lst) != -1)
 			{
 				ft_printf("Just found a valid room: %s\n", line);
-				if (add_room(line, room_lst, &command) == -1)
+				if (add_room(line, rm_lst, &command) == -1)
 					return (exit_parsing(&line, -1));
-				if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-					return (-1);
+				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+					return (exit_parsing(&line, -1));
 			}
-			else if (is_tunnel(line, room_lst) != -1)
+			else if (is_tunnel(line, rm_lst) != -1)
 			{
-		//		build_hash_tab(t_room *room_lst, t_room **hash_tab);
-		//		get_tunnel(line, room_lst, &index)
+				if (!(*roomz = build_room_tab(rm_lst, rm_tab)))
+					return (exit_parsing(&line, - 1));
+		//		get_tunnel(line, rm_lst, &index)
 				ft_printf("Just the first valid tunnel: %s\n", line);
 				index++;
-				if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-					return (-1);
+				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+					return (exit_parsing(&line, -1));
 			}
 			else
 				return (exit_parsing(&line, 0));
 		}
-		else if (index == 2 && is_tunnel(line, room_lst) != -1)
+		else if (index == 2 && is_tunnel(line, rm_lst) != -1)
 		{
 			ft_printf("Just found a valid tunnel : %s\n", line);
-			if (!(to_print = ft_strjoinfrendl(&to_print, &line, 2)))
-				return (-1);
-			//get_tunnel(line, room_lst, &index);
+			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
+				return (exit_parsing(&line, -1));
+			//get_tunnel(line, rm_lst, &index);
 		}
 		else
 			return (exit_parsing(&line, 0));
 		ft_printf("Bottom of parsing while loop\n\n");
+		ft_memdel((void**)&line);
 	}
 	ft_putstr(to_print);
+	ft_memdel((void**)&to_print);
 	return (exit_parsing(&line, 0));
 }

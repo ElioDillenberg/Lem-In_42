@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/25 18:00:18 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 20:19:51 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int		set_room_data(char *line, t_room *room, int *command)
 
 int			add_room(char *line, t_room **head, int *command)
 {
-	t_room *new_room;
-	t_room *last;
+	t_room 	*new_room;
+	t_room 	*last;
 
 	last = *head;
 	if (!(new_room = (t_room*)malloc(sizeof(t_room))))
@@ -86,14 +86,18 @@ int			add_room(char *line, t_room **head, int *command)
 
 int			main(int argc, char **argv)
 {
-	t_room	*room_lst = NULL;
-	size_t	nb_ants;
+	t_room	*rm_lst = NULL;
+	t_room	*rm_tab = NULL;
+	size_t	antz;
+	int		roomz;
 
 	(void)argv;
 	if (argc > 1)
 		return (-1);
-	if (parsing(&room_lst, &nb_ants) == -1)
-		return (free_room_lst(&room_lst, -1));
+	if (parsing(&rm_lst, &antz, &rm_tab, &roomz) == -1)
+		return (free_room_lst(&rm_lst, -1));
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
+	free(rm_tab);
+	return (free_room_lst(&rm_lst, 0));
 }

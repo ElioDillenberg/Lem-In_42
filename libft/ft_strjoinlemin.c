@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoinfrendl.c                                 :+:      :+:    :+:   */
+/*   ft_strjoinlemin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 16:58:48 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/27 17:42:55 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 18:50:07 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	handle_first(char **new, char **s2)
 	return (0);
 }
 
-char		*ft_strjoinfrendl(char **s1, char **s2, char option)
+char		*ft_strjoinlemin(char **s1, char **s2, char option)
 {
 	char	*new;
 	size_t	len;
@@ -40,7 +40,7 @@ char		*ft_strjoinfrendl(char **s1, char **s2, char option)
 	if (*s1 == NULL && *s2)
 	{
 		if (handle_first(&new, s2) == -1)
-			return ((char*)ft_free_stropt(s1, s2, option));
+			return (NULL);
 	}
 	else if (*s1 && *s2)
 	{
@@ -55,7 +55,7 @@ char		*ft_strjoinfrendl(char **s1, char **s2, char option)
 			new[i++] = (*s2)[len++];
 		new[i++] = '\n';
 		new[i] = '\0';
+		ft_free_stropt(s1, s2, option);
 	}
-	ft_free_stropt(s1, s2, option);
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/25 18:04:45 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 20:07:34 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,46 +47,49 @@ int		get_room(char *line, t_room *room)
 	return (0);
 }
 
-int		get_hash(char *name, int len_hash_tab)
-{
-	int		hash;
-
-	hash = 0;
-	while (*name)
-	{
-		hash += *name;
-		name++;
-	}
-	hash /= len_hash_tab;
-	return (hash);
-}
-
-int		build_hash_tab(t_room *room_lst, t_room **hash_tab)
+int		build_room_tab(t_room **rm_lst, t_room **rm_tab)
 {
 	t_room	*cr;
-	size_t	len;
-	int		hash;
+	t_room	*prev = NULL;
+	t_room	*last = NULL;
+	int		len;
+	int		i;
 
-	cr = room_lst;
+	cr = *rm_lst;
 	len = 0;
+	i = 0;
 	while (cr != NULL)
 	{
+		if (cr->start && cr != *rm_lst)
+		{
+			prev->next = cr->next;
+			cr->next = *rm_lst;
+			*rm_lst = cr;
+		}
+		else if (cr->end && cr->next != NULL)
+		{
+			prev->next = cr->next;
+			last = cr;
+		}
+		else if (cr->next == NULL && cr->end == false)
+		{
+			cr->next = last;
+			last->next = NULL;
+		}
+		prev = cr;
 		cr = cr->next;
 		len++;
 	}
-	if (!(*hash_tab = (t_room*)malloc(sizeof(t_room) * len)))
+	if (!(*rm_tab = (t_room*)malloc(sizeof(t_room) * len)))
 		return (-1);
-	cr = room_lst;
+	cr =  *rm_lst;
 	while (cr != NULL)
 	{
-		// need to create a function that will place the hash at the right place here
-		hash = get_hash(cr->name, len);
-		//if (*(hash_tab)[hash] == NULL)
-	//		(*hash_tab)[hash] = cr;
-		// does this work? doubts here, maybe changing cr will affect *hash_tab[hash]
+		(*rm_tab)[i] = *cr;
 		cr = cr->next;
+		i++;
 	}
-	return (0);
+	return (len);
 }
 
 /*

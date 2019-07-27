@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/25 19:47:22 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 20:10:45 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
-int		parsing(t_room **room_lst, size_t *nb_ants);
+int		parsing(t_room **room_lst, size_t *ants, t_room **room_tab, int *rooms);
 
 int		free_room_lst(t_room **head, int opt);
 int		set_room_data(char *line, t_room *room, int *command);
@@ -34,7 +34,7 @@ int		add_room(char *line, t_room **head, int *command);
 void	get_command(char *line, int *command);
 int		get_room(char *line, t_room *room);
 int		get_hash(char *name, int len_hash_tab);
-int		build_hash_tab(t_room *room_lst, t_room **hash_tab);
+int		build_room_tab(t_room **rm_lst, t_room **rm_tab);
 int		get_tunnels(char *line, t_room *room_lst, t_room **hash_tab);
 
 int		is_ant_nb(char *line);

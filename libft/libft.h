@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 18:39:30 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/22 16:42:58 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:55:47 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ ULL				ft_po(ULL nb, int po);
 int				ft_sqrt(int nb);
 int				ft_printf(const char *fmt, ...);
 size_t			ft_atoui(const char *str);
+char			*ft_strjoinfrendl(char **s1, char **s2, char option);
 
 #endif

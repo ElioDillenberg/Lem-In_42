@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/27 20:19:51 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/28 20:29:07 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ int			main(int argc, char **argv)
 {
 	t_room	*rm_lst = NULL;
 	t_room	*rm_tab = NULL;
-	size_t	antz;
-	int		roomz;
+	int		nt_rm[2];
+	int		**tu_tab;
 
 	(void)argv;
 	if (argc > 1)
 		return (-1);
-	if (parsing(&rm_lst, &antz, &rm_tab, &roomz) == -1)
+	if (parsing(&rm_lst, nt_rm, &rm_tab, &tu_tab) == -1)
 		return (free_room_lst(&rm_lst, -1));
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));

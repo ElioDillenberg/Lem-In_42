@@ -6,12 +6,13 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/27 20:11:10 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:06:28 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incls/lem_in.h"
 #include "../libft/libft.h"
+#include <stdlib.h>
 
 /*
 ** Here under the function that will handle the entire parsing of input
@@ -28,7 +29,12 @@ static int	exit_parsing(char **line, int ret)
 	return (ret);
 }
 
-int			parsing(t_room **rm_lst, size_t *antz, t_room **rm_tab, int *roomz)
+/*
+** 
+**
+*/
+
+int			parsing(t_room **rm_lst, int *nt_rm, t_room **rm_tab, int ***tu_tab)
 {
 	char	*to_print = NULL;
 	char	*line;
@@ -57,8 +63,8 @@ int			parsing(t_room **rm_lst, size_t *antz, t_room **rm_tab, int *roomz)
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
 		{
-			*antz = ft_atoui(line);
-			ft_printf("nb of ants = %u\n", *antz);
+			nt_rm[0] = ft_atoui(line);
+			ft_printf("nb of ants = %u\n", nt_rm[0]);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
 			index++;
@@ -76,9 +82,11 @@ int			parsing(t_room **rm_lst, size_t *antz, t_room **rm_tab, int *roomz)
 			}
 			else if (is_tunnel(line, rm_lst) != -1)
 			{
-				if (!(*roomz = build_room_tab(rm_lst, rm_tab)))
-					return (exit_parsing(&line, - 1));
-		//		get_tunnel(line, rm_lst, &index)
+				if (!(nt_rm[1] = build_room_tab(rm_lst, rm_tab)))
+					return (exit_parsing(&line, -1));
+				if (init_tu_tab(tu_tab, nt_rm) == -1)
+					return (exit_parsing(&line, -1));
+				get_tunnel(line, nt_rm, *tu_tab, rm_tab);
 				ft_printf("Just the first valid tunnel: %s\n", line);
 				index++;
 				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
@@ -90,9 +98,9 @@ int			parsing(t_room **rm_lst, size_t *antz, t_room **rm_tab, int *roomz)
 		else if (index == 2 && is_tunnel(line, rm_lst) != -1)
 		{
 			ft_printf("Just found a valid tunnel : %s\n", line);
+			get_tunnel(line, nt_rm, *tu_tab, rm_tab);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
-			//get_tunnel(line, rm_lst, &index);
 		}
 		else
 			return (exit_parsing(&line, 0));

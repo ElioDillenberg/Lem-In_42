@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/27 20:07:34 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/28 21:25:41 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		get_room(char *line, t_room *room)
 		i++;
 	if (!(room->name = ft_strsub((const char **)&line, 0, i, 0)))
 		return (-1);
-	ft_printf("This is room_name : %s\n", room->name);
 	while (*line != ' ')
 		line++;
 	while (*line == ' ')
@@ -91,22 +90,3 @@ int		build_room_tab(t_room **rm_lst, t_room **rm_tab)
 	}
 	return (len);
 }
-
-/*
-int		get_tunnels(char *line, t_room *room, t_room **hash_tab)
-{
-	t_room *cr;
-	size_t	len;
-
-	cr = room;
-	len = 0;
-	while (cr != NULL)
-	{
-		cr = cr->next;
-		len++;
-	}
-	if (!(*hash_tab = (t_room*)malloc(sizeof(t_room) * len)))
-		return (-1);
-	return (0);
-}
-*/

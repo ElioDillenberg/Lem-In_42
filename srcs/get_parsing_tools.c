@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/28 21:25:41 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/29 18:31:57 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,25 @@ int		get_room(char *line, t_room *room)
 	return (0);
 }
 
-int		build_room_tab(t_room **rm_lst, t_room **rm_tab)
+int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 {
 	t_room	*cr;
 	t_room	*prev = NULL;
+	t_room	*first = NULL;
 	t_room	*last = NULL;
 	int		len;
-	int		i;
 
 	cr = *rm_lst;
 	len = 0;
-	i = 0;
 	while (cr != NULL)
 	{
 		if (cr->start && cr != *rm_lst)
 		{
+			first = cr;
 			prev->next = cr->next;
-			cr->next = *rm_lst;
-			*rm_lst = cr;
+			cr = cr->next;
+			first->next = *rm_lst;
+			*rm_lst = first;
 		}
 		else if (cr->end && cr->next != NULL)
 		{
@@ -79,14 +80,16 @@ int		build_room_tab(t_room **rm_lst, t_room **rm_tab)
 		cr = cr->next;
 		len++;
 	}
-	if (!(*rm_tab = (t_room*)malloc(sizeof(t_room) * len)))
+	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
 		return (-1);
 	cr =  *rm_lst;
+	len = 0;
 	while (cr != NULL)
 	{
-		(*rm_tab)[i] = *cr;
+		(*rm_tab)[len] = cr;
+		prev = cr;
 		cr = cr->next;
-		i++;
+		len++;
 	}
 	return (len);
 }

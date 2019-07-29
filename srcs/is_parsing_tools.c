@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:02:44 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/25 19:41:58 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/29 18:43:12 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ static int	check_coordinates(char *line, t_room **room_lst)
 
 	while (*line == ' ')
 		line++;
-	ft_printf("This is line in check_coordinates: |%s|\n", line);
 	if (is_coordinate(line) == -1)
 		return (-1);
 	x = ft_atoi(line);
@@ -137,10 +136,9 @@ int		is_room(char *line, t_room **room_lst)
 
 	cr = *room_lst;
 	i = 0;
-	ft_printf("Checking if it's a room\n");
 	if (*line == 'L')
 		return (-1);
-	while (line[i] != ' ')
+	while (line[i] != ' ' && line[i])
 		i++;
 	if (!(test = ft_strnew(i)))
 		return (-1);
@@ -155,7 +153,7 @@ int		is_room(char *line, t_room **room_lst)
 		cr = cr->next;
 	}
 	free(test);
-	while (*line != ' ')
+	while (*line != ' ' && line)
 	{
 		if (*line == '-')
 			return (-1);

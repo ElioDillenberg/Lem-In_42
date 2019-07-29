@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/28 21:06:28 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/29 18:39:46 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	exit_parsing(char **line, int ret)
 **
 */
 
-int			parsing(t_room **rm_lst, int *nt_rm, t_room **rm_tab, int ***tu_tab)
+int			parsing(t_room **rm_lst, int *nt_rm, t_room ***rm_tab, int ***tu_tab)
 {
 	char	*to_print = NULL;
 	char	*line;
@@ -44,37 +44,30 @@ int			parsing(t_room **rm_lst, int *nt_rm, t_room **rm_tab, int ***tu_tab)
 
 	command = 0;
 	index = 0;
-	ft_printf("Start of parsing\n");
 	while ((ret = get_next_line(0, &line, 1)) && ret != -1 && ret != 0)
 	{
-		ft_printf("While parsing loop\n");
 		if (line[0] == '#' && line[1] != '#')
 		{
-			ft_printf("Just found this comment: %s\n", line);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
 		}
 		else if (line[0] == '#' && line[1] == '#')
 		{
 			get_command(line, &command);
-			ft_printf("Just found this command: %s\n", line);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
 		{
 			nt_rm[0] = ft_atoui(line);
-			ft_printf("nb of ants = %u\n", nt_rm[0]);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
 			index++;
 		}
 		else if (index == 1)
 		{
-			ft_printf("Is it a room or a tunnel?\n");
 			if (is_room(line, rm_lst) != -1)
 			{
-				ft_printf("Just found a valid room: %s\n", line);
 				if (add_room(line, rm_lst, &command) == -1)
 					return (exit_parsing(&line, -1));
 				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
@@ -86,8 +79,7 @@ int			parsing(t_room **rm_lst, int *nt_rm, t_room **rm_tab, int ***tu_tab)
 					return (exit_parsing(&line, -1));
 				if (init_tu_tab(tu_tab, nt_rm) == -1)
 					return (exit_parsing(&line, -1));
-				get_tunnel(line, nt_rm, *tu_tab, rm_tab);
-				ft_printf("Just the first valid tunnel: %s\n", line);
+				get_tunnel(line, nt_rm, *tu_tab, *rm_tab);
 				index++;
 				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 					return (exit_parsing(&line, -1));
@@ -97,14 +89,12 @@ int			parsing(t_room **rm_lst, int *nt_rm, t_room **rm_tab, int ***tu_tab)
 		}
 		else if (index == 2 && is_tunnel(line, rm_lst) != -1)
 		{
-			ft_printf("Just found a valid tunnel : %s\n", line);
-			get_tunnel(line, nt_rm, *tu_tab, rm_tab);
+			get_tunnel(line, nt_rm, *tu_tab, *rm_tab);
 			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
 				return (exit_parsing(&line, -1));
 		}
 		else
 			return (exit_parsing(&line, 0));
-		ft_printf("Bottom of parsing while loop\n\n");
 		ft_memdel((void**)&line);
 	}
 	ft_putstr(to_print);

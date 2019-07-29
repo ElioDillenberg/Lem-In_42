@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:59:34 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/28 21:25:48 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/29 18:40:26 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int		is_tunnel(char *line, t_room **room_lst)
 	size_t	cmp;
 	t_room *cr;
 
-	ft_printf("Testing wether it's a tunnel!\n");
 	i = 0;
 	cmp = 0;
 	cr = *room_lst;
@@ -82,7 +81,10 @@ int		is_tunnel(char *line, t_room **room_lst)
 		cr = cr->next;
 	}
 	if (cmp != 2)
+	{
+		ft_printf("cmp != 2\n");
 		return (-1);
+	}
 	return (0);
 }
 
@@ -95,33 +97,25 @@ void	get_tunnel(char *line, int *nt_rm, int **tu_tab, t_room **room_tab)
 	i = 0;
 	one = 0;
 	two = 0;
-	ft_printf("DEBUG1\n");
 	while (line[i] != '-' && line[i] != '\0')
 		i++;
 	line[i] = '\0';
-	ft_printf("line = %s\n", line);
-	ft_printf("room_tab[one] = %s\n", room_tab[0]->name);
-	ft_printf("DEBUG2\n");
 	while (one < nt_rm[1])
 	{
 		if (strcmp(line, (room_tab[one])->name) == 0)
 			break;
 		one++;
 	}
-	ft_printf("DEBUG3\n");
 	line[i] = '-';
-	ft_printf("DEBUG4\n");
 	while (*line != '-' && *line)
 		line++;
 	line++;
-	ft_printf("DEBUG5\n");
 	while (two < nt_rm[1])
 	{
 		if (strcmp(line, room_tab[two]->name) == 0)
 			break;
 		two++;
 	}
-	ft_printf("DEBUG6\n");
 	tu_tab[one][two] = 1;
 	tu_tab[two][one] = 1;
 }

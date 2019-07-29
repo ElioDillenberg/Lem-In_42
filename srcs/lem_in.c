@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/28 20:29:07 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/29 19:02:03 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			add_room(char *line, t_room **head, int *command)
 int			main(int argc, char **argv)
 {
 	t_room	*rm_lst = NULL;
-	t_room	*rm_tab = NULL;
+	t_room	**rm_tab = NULL;
 	int		nt_rm[2];
 	int		**tu_tab;
 
@@ -98,6 +98,5 @@ int			main(int argc, char **argv)
 		return (free_room_lst(&rm_lst, -1));
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
-	free(rm_tab);
 	return (free_room_lst(&rm_lst, 0));
 }

@@ -69,5 +69,5 @@ void				ft_roomdelone(t_room **alst);
 void				free_int_tab(t_env *env, int size);
 int					free_room_lst(t_room **head, int opt);
 
-int					find_path(t_env *env, int index);
+void					find_path(t_env *env, int index);
 #endif

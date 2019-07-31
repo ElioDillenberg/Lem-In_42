@@ -22,21 +22,21 @@
 ** start tho
 */
 
-static int	exit_parsing(char **line, int ret)
+static int exit_parsing(char **line, int ret, t_env *env)
 {
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0);
-	return (ret);
+	env->ret = ret;
+	return (env->ret);
 }
 
 /*
-** 
+**
 **
 */
 
-int			parsing(t_room **rm_lst, int *nt_rm, t_room ***rm_tab, int ***tu_tab)
+int parsing(t_env *env)
 {
-	char	*to_print = NULL;
 	char	*line;
 	int		index;
 	int		command;
@@ -48,56 +48,55 @@ int			parsing(t_room **rm_lst, int *nt_rm, t_room ***rm_tab, int ***tu_tab)
 	{
 		if (line[0] == '#' && line[1] != '#')
 		{
-			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-				return (exit_parsing(&line, -1));
+			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				return (exit_parsing(&line, -1, env));
 		}
 		else if (line[0] == '#' && line[1] == '#')
 		{
 			get_command(line, &command);
-			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-				return (exit_parsing(&line, -1));
+			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				return (exit_parsing(&line, -1, env));
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
 		{
-			nt_rm[0] = ft_atoui(line);
-			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-				return (exit_parsing(&line, -1));
+			env->nt_rm[0] = ft_atoui(line);
+			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				return (exit_parsing(&line, -1, env));
 			index++;
 		}
 		else if (index == 1)
 		{
-			if (is_room(line, rm_lst) != -1)
+			if (is_room(line, env->rm_lst) != -1)
 			{
-				if (add_room(line, rm_lst, &command) == -1)
-					return (exit_parsing(&line, -1));
-				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-					return (exit_parsing(&line, -1));
+				if (add_room(line, env->rm_lst, &command) == -1)
+					return (exit_parsing(&line, -1, env));
+				if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+					return (exit_parsing(&line, -1, env));
 			}
-			else if (is_tunnel(line, rm_lst) != -1)
+			else if (is_tunnel(line, env->rm_lst) != -1)
 			{
-				if (!(nt_rm[1] = build_room_tab(rm_lst, rm_tab)))
-					return (exit_parsing(&line, -1));
-				if (init_tu_tab(tu_tab, nt_rm) == -1)
-					return (exit_parsing(&line, -1));
-				get_tunnel(line, nt_rm, *tu_tab, *rm_tab);
+				if (!(env->nt_rm[1] = build_room_tab(env->rm_lst, &(env)->rm_tab)))
+					return (exit_parsing(&line, -1, env));
+				if (init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
+					return (exit_parsing(&line, -1, env));
+				get_tunnel(env, line);
 				index++;
-				if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-					return (exit_parsing(&line, -1));
+				if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+					return (exit_parsing(&line, -1, env));
 			}
 			else
-				return (exit_parsing(&line, 0));
+				return (exit_parsing(&line, 0, env));
 		}
-		else if (index == 2 && is_tunnel(line, rm_lst) != -1)
+		else if (index == 2 && is_tunnel(line, env->rm_lst) != -1)
 		{
-			get_tunnel(line, nt_rm, *tu_tab, *rm_tab);
-			if (!(to_print = ft_strjoinlemin(&to_print, &line, 1)))
-				return (exit_parsing(&line, -1));
+			get_tunnel(env, line);
+			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				return (exit_parsing(&line, -1, env));
 		}
 		else
-			return (exit_parsing(&line, 0));
+			return (exit_parsing(&line, 0, env));
 		ft_memdel((void**)&line);
 	}
-	ft_putstr(to_print);
-	ft_memdel((void**)&to_print);
-	return (exit_parsing(&line, 0));
+	ft_putstr(env->to_print);
+	return (exit_parsing(&line, 0, env));
 }

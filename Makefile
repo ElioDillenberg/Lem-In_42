@@ -20,7 +20,7 @@ OBJDIR = objs
 SRCDIR = srcs
 
 SC = $(addsuffix .c, lem_in get_parsing_tools parsing \
-	   is_parsing_tools is_tunnel)
+	   is_parsing_tools is_tunnel free path)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

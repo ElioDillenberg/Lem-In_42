@@ -6,12 +6,18 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/29 18:59:20 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:55:30 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdbool.h>
+#ifndef LEM_IN_H
+# define LEM_IN_H
+# include <string.h>
+# include <stdbool.h>
+
+/*
+******************************** Structures ************************************
+*/
 
 typedef struct		s_room
 {
@@ -25,20 +31,43 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
-int		parsing(t_room **rm_lst, int *nt_rm, t_room ***rm_tab, int ***tu_tab);
+typedef struct		s_env
+{
+	t_room			**rm_lst;
+	t_room			**rm_tab;
+	char			*to_print;
+	int				rm_len;
+	int				nt_rm[2];
+	int				**tu_tab;
+	int				ret;
+}					t_env;
 
-int		free_room_lst(t_room **head, int opt);
-int		set_room_data(char *line, t_room *room, int *command);
-int		add_room(char *line, t_room **head, int *command);
+/*
+******************************** Fonctions *************************************
+*/
+int					parsing(t_env *env);
 
-void	get_command(char *line, int *command);
-int		get_room(char *line, t_room *room);
-int		get_hash(char *name, int len_hash_tab);
-int		build_room_tab(t_room **rm_lst, t_room ***rm_tab);
+int					set_room_data(char *line, t_room *room, int *command);
+int					add_room(char *line, t_room **head, int *command);
 
-int		is_ant_nb(char *line);
-int		is_room(char *line, t_room **room_lst);
+void				get_command(char *line, int *command);
+int					get_room(char *line, t_room *room);
+int					get_hash(char *name, int len_hash_tab);
+int					util_build_room(t_room **rm_lst, t_room *cr, int len);
+int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
 
-int		is_tunnel(char *line, t_room **room_lst);
-void	get_tunnel(char *line, int *nt_rm, int **tu_tab, t_room **room_tab);
-int		init_tu_tab(int ***tub_tab, int *nt_rm);
+int					is_ant_nb(char *line);
+int					is_room(char *line, t_room **room_lst);
+
+int					is_tunnel(char *line, t_room **room_lst);
+void				get_tunnel(t_env *env, char *line);
+int					init_tu_tab(int ***tub_tab, int *nt_rm);
+
+int					free_all(t_env *env, int opt);
+void				ft_roomdel(t_room **alst);
+void				ft_roomdelone(t_room **alst);
+void				free_int_tab(t_env *env, int size);
+int					free_room_lst(t_room **head, int opt);
+
+int					find_path(t_env *env, int index);
+#endif

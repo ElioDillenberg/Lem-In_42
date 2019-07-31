@@ -88,7 +88,7 @@ int		is_tunnel(char *line, t_room **room_lst)
 	return (0);
 }
 
-void	get_tunnel(char *line, int *nt_rm, int **tu_tab, t_room **room_tab)
+void	get_tunnel(t_env * env, char *line)
 {
 	size_t	i;
 	int		one;
@@ -100,9 +100,9 @@ void	get_tunnel(char *line, int *nt_rm, int **tu_tab, t_room **room_tab)
 	while (line[i] != '-' && line[i] != '\0')
 		i++;
 	line[i] = '\0';
-	while (one < nt_rm[1])
+	while (one < env->nt_rm[1])
 	{
-		if (strcmp(line, (room_tab[one])->name) == 0)
+		if (strcmp(line, (env->rm_tab[one])->name) == 0)
 			break;
 		one++;
 	}
@@ -110,12 +110,12 @@ void	get_tunnel(char *line, int *nt_rm, int **tu_tab, t_room **room_tab)
 	while (*line != '-' && *line)
 		line++;
 	line++;
-	while (two < nt_rm[1])
+	while (two < env->nt_rm[1])
 	{
-		if (strcmp(line, room_tab[two]->name) == 0)
+		if (strcmp(line, env->rm_tab[two]->name) == 0)
 			break;
 		two++;
 	}
-	tu_tab[one][two] = 1;
-	tu_tab[two][one] = 1;
+	env->tu_tab[one][two] = 1;
+	env->tu_tab[two][one] = 1;
 }

@@ -15,25 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int		free_room_lst(t_room **head, int opt)
-{
-	t_room *cr;
-	t_room *next;
-
-	cr = *head;
-	next = NULL;
-	while (cr != NULL)
-	{
-		next = cr->next;
-		ft_memdel((void**)&(cr->name));
-		ft_memdel((void**)&cr);
-		cr = next;
-	}
-	if (opt == 1)
-		write(2, "ERROR\n", 6);
-	return (-1);
-}
-
 /*
 ** This function parses the input found in line
 ** It then activates flags within the node depending on found type ->
@@ -84,19 +65,31 @@ int			add_room(char *line, t_room **head, int *command)
 	return (0);
 }
 
+t_env *init_env(t_env *env)
+{
+	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
+			return (NULL);
+	if (!(env->rm_lst = (t_room **)ft_memalloc(sizeof(t_room *))))
+			return (NULL);
+	env->rm_tab = NULL;
+	return (env);
+}
+
 int			main(int argc, char **argv)
 {
-	t_room	*rm_lst = NULL;
-	t_room	**rm_tab = NULL;
-	int		nt_rm[2];
-	int		**tu_tab;
+	t_env *env;
 
 	(void)argv;
+	env = NULL;
 	if (argc > 1)
 		return (-1);
-	if (parsing(&rm_lst, nt_rm, &rm_tab, &tu_tab) == -1)
-		return (free_room_lst(&rm_lst, -1));
+	if (!(env = init_env(env)))
+		return (-1);
+	if ((env->ret = parsing(env)) == -1)
+		return (free_all(env, -1));
+	find_path(env, 0);
+//	ft_printf("[%s]\n", (*env->rm_lst)->next->name);
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
-	return (free_room_lst(&rm_lst, 0));
+	return (free_all(env, 0));
 }

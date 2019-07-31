@@ -50,7 +50,7 @@ int			add_room(char *line, t_room **head, int *command)
 	t_room 	*last;
 
 	last = *head;
-	if (!(new_room = (t_room*)malloc(sizeof(t_room))))
+	if (!(new_room = (t_room*)ft_memalloc(sizeof(t_room))))
 		return (free_room_lst(head, -1));
 	if (set_room_data(line, new_room, command) == -1)
 		return (free_room_lst(head, -1));
@@ -71,14 +71,20 @@ t_env *init_env(t_env *env)
 			return (NULL);
 	if (!(env->rm_lst = (t_room **)ft_memalloc(sizeof(t_room *))))
 			return (NULL);
+	if (!(env->path = ft_strnew(0)))
+			return (NULL);
 	env->rm_tab = NULL;
+	env->nb_path = 1;
+	env->no_path = 1;
 	return (env);
 }
 
 int			main(int argc, char **argv)
 {
 	t_env *env;
+	int to_find;
 
+	to_find = 1;
 	(void)argv;
 	env = NULL;
 	if (argc > 1)
@@ -87,8 +93,22 @@ int			main(int argc, char **argv)
 		return (-1);
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, -1));
-	find_path(env, 0);
-//	ft_printf("[%s]\n", (*env->rm_lst)->next->name);
+	//view_tunnel_by_name(env);
+	ft_printf("\n\n");
+	while (to_find)
+	{
+		to_find = env->nb_path;
+		find_path(env, 0, to_find + 1);
+		if (to_find == env->nb_path)
+			break ;
+	}
+	if (env->no_path == 1)
+		ft_putendl("NO PATH");
+	else
+	{
+		make_valid_path(env);
+		ft_printf("PATH : %s\n", env->path);
+	}
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
 	return (free_all(env, 0));

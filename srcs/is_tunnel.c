@@ -17,25 +17,13 @@
 int		init_tu_tab(int ***tu_tab, int *nt_rm)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	if (!(*tu_tab = (int**)malloc(sizeof(int*) * nt_rm[1])))
+	if (!(*tu_tab = (int**)ft_memalloc(sizeof(int*) * nt_rm[1])))
 		return (-1);
 	while (i < nt_rm[1])
-		if (!((*tu_tab)[i++] = (int*)malloc(sizeof(int) * nt_rm[1])))
+		if (!((*tu_tab)[i++] = (int*)ft_memalloc(sizeof(int) * nt_rm[1])))
 			return(-1);
-	i = 0;
-	while (i < nt_rm[1])
-	{
-		j = 0;
-		while (j < nt_rm[1])
-		{
-			(*tu_tab)[i][j] = 0;
-			j++;
-		}
-		i++;
-	}
 	return (0);
 }
 
@@ -88,7 +76,7 @@ int		is_tunnel(char *line, t_room **room_lst)
 	return (0);
 }
 
-void	get_tunnel(t_env * env, char *line)
+void	get_tunnel(t_env *env, char *line)
 {
 	size_t	i;
 	int		one;

@@ -26,8 +26,10 @@ typedef struct		s_room
 	bool			end;
 	bool			ant_here;
 	size_t			ant;
+	int       index;
 	int				x;
 	int				y;
+	int       path;
 	struct s_room	*next;
 }					t_room;
 
@@ -35,10 +37,13 @@ typedef struct		s_env
 {
 	t_room			**rm_lst;
 	t_room			**rm_tab;
-	char			*to_print;
-	int				rm_len;
-	int				nt_rm[2];
 	int				**tu_tab;
+	char			*to_print;
+	char      *path;
+	int       no_path;
+	int       nb_path;
+	int				nt_rm[2];
+	int				rm_len;
 	int				ret;
 }					t_env;
 
@@ -69,5 +74,12 @@ void				ft_roomdelone(t_room **alst);
 void				free_int_tab(t_env *env, int size);
 int					free_room_lst(t_room **head, int opt);
 
-void					find_path(t_env *env, int index);
+int find_path(t_env *env, int index, int path_nbr);
+int  get_connection(t_env *env, int i, int index, int path_nbr);
+void make_valid_path(t_env *env);
+
+void view_tunnel_by_name(t_env *env);
+char *ft_joinfree(char *s1, char *s2);
+char *ft_strrev(char *str);
+char	*ft_strndup(const char *s1, size_t n);
 #endif

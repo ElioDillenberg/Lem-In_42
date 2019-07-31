@@ -86,6 +86,7 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 	len = 0;
 	while (cr != NULL)
 	{
+		cr->index = len;
 		(*rm_tab)[len] = cr;
 		prev = cr;
 		cr = cr->next;

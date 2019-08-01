@@ -1,0 +1,35 @@
+9
+##start
+a 0 0
+#bite
+b 1 1
+c 2 2
+d 3 3
+e 4 4
+f 5 5
+g 6 6
+h 7 7
+i 8 8
+j 9 9
+k 10 10
+l 11 11
+m 12 12
+##end
+n 13 13
+a-b
+a-c
+b-d
+d-f
+c-f
+c-e
+f-h
+f-i
+e-g
+g-i
+h-l
+l-k
+i-k
+i-j
+j-m
+m-n
+k-n

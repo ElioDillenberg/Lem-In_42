@@ -71,7 +71,7 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 			prev->next = cr->next;
 			last = cr;
 		}
-		else if (cr->next == NULL && cr->end == false)
+		else if (cr->next == NULL && !cr->end)
 		{
 			cr->next = last;
 			last->next = NULL;

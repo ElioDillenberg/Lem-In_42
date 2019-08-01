@@ -40,50 +40,46 @@ Le chemin est composé des nom  des rooms successif jusqu a end (certainement a 
 
 int find_path(t_env *env, int index, int path_nbr)
 {
-  t_room *room;
   int     i;
   int fin;
 
   i = 0;
   fin = 0;
-  room = NULL;
-  if (index >= env->nt_rm[1] || env->nb_path == path_nbr)
+  int free =0;
+  if (index >= env->nt_rm[1] || path_nbr > env->max_path + 2 || path_nbr == env->nb_path)
     return (1);
-  room = env->rm_tab[index];
-  env->path = ft_joinfree(env->path, room->name);
+  env->path = ft_joinfree(env->path,env->rm_tab[index]->name);
   env->path = ft_joinfree(env->path, " ");
-  if (room->start == 1)
-    room->path = path_nbr;
-  if (room->end == 1)
-    return (1);
-  while (i < env->nt_rm[1])
+  if (env->rm_tab[index]->start == 1)
+    env->rm_tab[index]->path = path_nbr;
+  //on regarde si la room end est connecte a la room actuel
+
+  while (i < env->nt_rm[1] && free == 0)
   {
     if (env->tu_tab[i][index] == 1 && env->rm_tab[i]->path != path_nbr && env->rm_tab[i]->end == 1)
     {
       env->path = ft_joinfree(env->path, env->rm_tab[i]->name);
       env->path = ft_joinfree(env->path, "|");
       env->nb_path++;
-      env->no_path = 0;
       return (1);
     }
     i++;
   }
-  if (fin != 1 && (i = get_connection(env, 0, index, path_nbr)) != -1)
+  i = 0;
+  // On cherche une room non visitee
+  while (i < env->nt_rm[1])
+  {
+    if (env->tu_tab[i][index] == 1 && env->rm_tab[i]->path == 0)
+    {
+      env->rm_tab[i]->path = path_nbr;
+      free = 1;
+      find_path(env, i, path_nbr);
+      break ;
+    }
+    i++;
+  }
+  // Sinon on avance
+  if (fin != 1 && !free && (i = get_connection(env, 0, index, path_nbr)) != -1)
     find_path(env, i, path_nbr);
   return (0);
-}
-
-void make_valid_path(t_env *env)
-{
-  int i;
-  char *tmp;
-
-  i = 0;
-  ft_strrev(env->path);
-  while (env->path[i] != '|')
-    i++;
-  ft_strrev(env->path);
-  tmp = env->path;
-  env->path = ft_strndup(env->path, ft_strlen(env->path) - i);
-  ft_memdel((void **)&tmp);
 }

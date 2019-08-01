@@ -27,7 +27,7 @@ void view_tunnel_by_name(t_env *env)
     while (j < env->nt_rm[1])
     {
       if (env->tu_tab[i][j])
-      ft_printf(" %s ", env->rm_tab[j]->name);
+        ft_printf(" %s ", env->rm_tab[j]->name);
       j++;
     }
     ft_printf("\n");

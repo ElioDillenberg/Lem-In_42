@@ -38,6 +38,7 @@ int		set_room_data(char *line, t_room *room, int *command)
 		room->end = false;
 	room->ant_here = false;
 	room->ant = 0;
+	room->parent = -1;
 	room->next = NULL;
 	if (get_room(line, room) == -1)
 		return (-1);
@@ -67,15 +68,19 @@ int			add_room(char *line, t_room **head, int *command)
 
 t_env *init_env(t_env *env)
 {
+	int j;
+
+	j = 0;
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 			return (NULL);
 	if (!(env->rm_lst = (t_room **)ft_memalloc(sizeof(t_room *))))
 			return (NULL);
+	if (!(env->rm_lst_path = (t_room **)ft_memalloc(sizeof(t_room *))))
+			return (NULL);
 	if (!(env->path = ft_strnew(0)))
 			return (NULL);
 	env->rm_tab = NULL;
-	env->nb_path = 1;
-	env->no_path = 1;
+	env->nb_path = 0;
 	return (env);
 }
 
@@ -95,20 +100,15 @@ int			main(int argc, char **argv)
 		return (free_all(env, -1));
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
-	while (to_find)
+	set_max_path(env);
+	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
+	if (env->max_path)
 	{
-		to_find = env->nb_path;
-		find_path(env, 0, to_find + 1);
-		if (to_find == env->nb_path)
-			break ;
+		ft_bfs(env);
+		get_path(env);
 	}
-	if (env->no_path == 1)
-		ft_putendl("NO PATH");
-	else
-	{
-		make_valid_path(env);
-		ft_printf("PATH : %s\n", env->path);
-	}
+
+	//path_finder(env);
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
 	return (free_all(env, 0));

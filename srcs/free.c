@@ -38,8 +38,11 @@ int		free_all(t_env *env, int opt)
 {
   if (env->to_print)
     ft_memdel((void**)&(env)->to_print);
-	ft_memdel((void**)&(env)->path);	
+	ft_memdel((void**)&(env)->path);
   free_int_tab(env, env->nt_rm[1]);
+	if (env->nb_path)
+		ft_roomdel(env->rm_lst_path);
+	ft_memdel((void **)&(env)->rm_lst_path);
   ft_roomdel(env->rm_lst);
   ft_memdel((void **)&(env)->rm_lst);
   ft_memdel((void **)&(env)->rm_tab);

@@ -71,6 +71,7 @@ int		is_tunnel(char *line, t_room **room_lst)
 	if (cmp != 2)
 	{
 		ft_printf("cmp != 2\n");
+		ft_printf("%s\n", line);
 		return (-1);
 	}
 	return (0);

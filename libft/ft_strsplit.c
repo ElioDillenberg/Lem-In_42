@@ -28,8 +28,11 @@ static size_t	count_words(char const *s, char c)
 	{
 		if (s[i] == c)
 			i++;
-		else if (s[i++ - 1] == c)
+		else if (s[i - 1] == c)
+		{
+			i++;
 			k++;
+		}
 		else
 			i++;
 	}
@@ -51,7 +54,7 @@ static char		**malloc_strs(char const *s, char c, char **result)
 			i++;
 		else
 		{
-			while (!((s[i++]) == c) && s[i])
+			while (s[i] && !((s[i++]) == c))
 				k++;
 			if (!(result[j] = (char *)malloc(sizeof(char) * (k + 1))))
 			{

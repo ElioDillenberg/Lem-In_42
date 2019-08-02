@@ -102,29 +102,49 @@ int			main(int argc, char **argv)
 	ft_printf("\n\n");
 	set_max_path(env);
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
-	//Tant qu on a pqs trouve tous les chemin possible on cherche
+	/*
+	Tant qu on a pqs trouve tous les chemin possible on cherche
+	Chaque chemin possede une entree et une sortie disctinct :
+	Le chemin 1 va partie de start pour aller a la room A
+	Le chemin 2 va partir de staart et aller dans la room B
+	Idem pour la sortie
+	Actuellemt on recher tous les chemin theoriquemt possible, maais si tu llance big.txt on se rend compte que lq plupart de chemins seront intilisees.
+	Donc faudra opti la dessus car c est la partie la plus chronophage de l algo
+	 */
 	while (env->nb_path < env->max_path)
 	{
-		view_tunnel_by_name(env);
-		// Parcours des rooms
+		//view_tunnel_by_name(env);
+		// Parcours des rooms et creation de lien pere - fils
 		ft_bfs(env, 0);
-		// Extraction du chemin et destruction des tunnels utilisee
+		// Extraction du chemin pere fils et destruction des tunnels utilisee
 		get_path(env);
-		// Reset des roomrs
+		// Reset des rooms
 		reset_path_room(env);
 		// Si c est le dernier path on ne free pas, la fct free_exit va free
 		if (env->nb_path != env->max_path && (*env->rm_lst_path))
 			ft_roomdel(env->rm_lst_path);
-		//path_finder(env);
 	}
-	// Supprime si il y a des doublons dans les path (quang start et end sont connectee)
+	// Supprime si il y a des path non valide
 	// Puis affiche les path
 	if (env->nb_path > 0)
 		check_path(env);
-	// A free ou a supprimer c est juste pour afficher les diffrents path
 
-
-
+	// Parcours du tableau de path
+	int i = 0;
+	int j;
+	while (i < env->nb_path)
+	{
+		ft_printf("PATH [%d] : ", i);
+		j = 0;
+		while (env->path_tab[i][j] != -1)
+		{
+			ft_printf("%d ", env->path_tab[i][j]);
+			j++;
+		}
+		i++;
+		ft_printf("\n");
+	}
+// A free ou a supprimer c est juste pour afficher les diffrents path
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
 	return (free_all(env, 0));

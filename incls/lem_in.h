@@ -40,6 +40,7 @@ typedef struct		s_env
 	t_room			**rm_lst_path;
 	t_room			**rm_tab;
 	int				**tu_tab;
+	int 			**path_tab;
 	char			*to_print;
 	char      *path;
 	int       nb_path;
@@ -83,7 +84,7 @@ int					init_tu_tab(int ***tub_tab, int *nt_rm);
 int					free_all(t_env *env, int opt);
 void				ft_roomdel(t_room **alst);
 void				ft_roomdelone(t_room **alst);
-void				free_int_tab(t_env *env, int size);
+void				free_int_tab(t_env *env, int size, int choose);
 int					free_room_lst(t_room **head, int opt);
 /*
 ******************************** BFS.c *****************************************
@@ -98,6 +99,8 @@ void reset_path_room(t_env *env);
 */
 void set_max_path(t_env *env);
 void check_path(t_env *env);
+void create_path_tab(t_env *env, char *str, int index);
+void	free_tab(char **tab);
 /*
 ******************************** Path.c ****************************************
 */
@@ -121,4 +124,6 @@ char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
 void print_lst(t_env *env);
+
+char		**ft_split(char const *s, char c);
 #endif

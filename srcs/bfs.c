@@ -60,7 +60,7 @@ int			add_room_path(t_env *env, t_room *room)
 }
 
 /*
-Ajout de la premiere dans env->rm_lst_path
+Suppression de la premiere room dans env->rm_lst_path
 */
 
 int			delete_room_path(t_env *env)
@@ -96,26 +96,28 @@ void ft_bfs(t_env *env, int start)
     {
       if (env->tu_tab[i][index] == 1 && env->rm_tab[i]->path == 0 && i != 0)
       {
-        // Si une connection a ete trouve avec une autre room on renseigne son parent, on marque que lq cqse q ete explorer et on l add a la liste
+        // Si une connection a ete trouve avec une autre room on renseigne son parent, on marque que la case a ete explorer et on l add a la liste
         env->rm_tab[i]->path = 1;
         env->rm_tab[i]->parent = index;
         add_room_path(env, env->rm_tab[i]);
       }
       i++;
     }
+    // Si toutes les room sont parcourus sans trouve la room end on ne trouvera plus dautre chemin
     if (!(*env->rm_lst_path))
     {
-      env->max_path--;
+      env->max_path = env->nb_path;
       return ;
     }
+
+    // Si on a trouve la room end on incremente le nb de path trouve
     if ((*env->rm_lst_path)->end)
       env->nb_path++;
   }
-  return ;
 }
 
 /* Parcours la graphe en commencant par la fin, et en remontant par le parent de chaque rooms
-le path est un char *, où les rooms sont renseignées par leur noms ( a changer par leur index), et delimieter par un espace
+le path est un char *, où les rooms sont renseignées par leurs id, et delimieter par un espace
 
 Puis on supprime les tunnels de notre path pour essayer de trouver un nouveau chemin
 Chaque path commence par la room start, et fini par un "|"
@@ -126,15 +128,18 @@ void get_path(t_env *env)
 	int parent;
   int index;
   int save;
+  char *tmp;
 
   //On prends l index de la case end et on cherche son pere
   index = env->nt_rm[1] - 1;
   parent = env->rm_tab[index]->parent;
   // On join son nom dans le path suivis d un espace pour delimiter
+  tmp = ft_strrev(ft_itoa(index));
   env->path = ft_strrev(env->path);
   env->path = ft_joinfree(env->path, "|");
-  env->path = ft_joinfree(env->path, env->rm_tab[index]->name);
+  env->path = ft_joinfree(env->path, tmp);
   env->path = ft_joinfree(env->path, " ");
+  ft_memdel((void **)&tmp);
   // Tant qu on est pas sur la case start (qui na pas de pere ;( ) on continue)
 	while (env->rm_tab[index]->parent != -1)
 	{
@@ -143,12 +148,11 @@ void get_path(t_env *env)
     index = env->rm_tab[parent]->index;
     env->tu_tab[save][index] = 0;
     env->tu_tab[index][save] = 0;
-		env->path = ft_joinfree(env->path, env->rm_tab[index]->name);
+    tmp = ft_strrev(ft_itoa(index));
+		env->path = ft_joinfree(env->path, tmp);
+    ft_memdel((void **)&tmp);
     if (env->rm_tab[index]->parent != -1)
-    {
-      // On rajoute un espace dans env->path et on supprime les tunnels utilisee
       env->path = ft_joinfree(env->path, " ");
-    }
 	}
   env->path = ft_strrev(env->path);
 }

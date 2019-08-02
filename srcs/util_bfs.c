@@ -44,26 +44,58 @@ void set_max_path(t_env *env)
 	env->max_path = start > end ? end : start;
 }
 
+/*
+Check si tous les chemins sont valide. Apres le 1er parcours de BFS lorsque des chemins sont bouche il est possible
+qu aucun chemin ne mene a la sortie, dans ce cas on le supprime.
+*/
 void check_path(t_env *env)
 {
   int i;
+  int j;
   char **tab;
 
   i = -1;
+  j = 0;
   tab = NULL;
+  if (!(env->path_tab = (int **)malloc(sizeof(int *) * env->nb_path)))
+    return ;
   if (env->nb_path)
   {
     tab = ft_strsplit(env->path, '|');
     while (tab[++i])
     {
-      // Si le parcours n a pas trouve de chemin valide on le supprimne
-      if (tab[i][0] == ' ')
-        delete_path(env);
-      else
-        ft_printf("PATH [%d] : %s\n", i,  tab[i]);
+      //Si le chemin n est valide on ne le traite pas (il commence par un espace au lieu de commencer par lindex de start)
+      if (tab[i][0] != ' ')
+        create_path_tab(env, tab[i], (env->nb_path - 1) - j++); // (env->nb_path - 1) -j pour que le premier chemin trouvé (le plus court) soit a l index 0
     }
   }
   i = 0;
+  free_tab(tab);
+}
+
+/*
+Cree un tableau int** qui reference tous les path
+Chaque path est compose des index des rooms utilisee
+la fin d un path est egale a -1 ce qui permet de parcourir le tableau sans connaitre sa longueur
+Le tout est stocke dans env->path_tab
+*/
+void create_path_tab(t_env *env, char *str, int index)
+{
+  char **tab;
+  int i;
+  int nb_room;
+
+  i = -1;
+  nb_room = 1;
+  while (str[++i])
+    nb_room += str[i] == ' ' ? 1 : 0;
+  if (!(env->path_tab[index] = (int *)malloc(sizeof(int) * (nb_room + 1))))
+    return ;
+  i = -1;
+  tab = ft_strsplit(str, ' ');
+  while (tab[++i])
+    env->path_tab[index][i] = ft_atoui(tab[i]);
+  env->path_tab[index][i] = -1;
   free_tab(tab);
 }
 
@@ -73,12 +105,13 @@ void delete_path(t_env *env)
   char *tmp;
 
   i = 0;
-  while (env->path[i] != '|')
+  while (env->path[i] != '|' && env->path[i])
     i++;
   i++;
   tmp = env->path;
   env->path = ft_strrev(env->path);
   env->path = ft_strndup(tmp, i);
+  env->nb_path--;
   ft_memdel((void **)&tmp);
 }
 

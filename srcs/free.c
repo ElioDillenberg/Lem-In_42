@@ -36,14 +36,19 @@ int		free_room_lst(t_room **head, int opt)
 
 int		free_all(t_env *env, int opt)
 {
+	int i;
+
+	i = -1;
   if (env->to_print)
     ft_memdel((void**)&(env)->to_print);
-	ft_memdel((void**)&(env)->path);
-  free_int_tab(env, env->nt_rm[1]);
+	if (env->nb_path)
+		free_int_tab(env, env->nb_path, 1);
 	if (env->max_path)
 		ft_roomdel(env->rm_lst_path);
+	free_int_tab(env, env->nt_rm[1], 0);
+	ft_roomdel(env->rm_lst);
+	ft_memdel((void**)&(env)->path);
 	ft_memdel((void **)&(env)->rm_lst_path);
-  ft_roomdel(env->rm_lst);
   ft_memdel((void **)&(env)->rm_lst);
   ft_memdel((void **)&(env)->rm_tab);
   ft_memdel((void **)&env);
@@ -52,17 +57,23 @@ int		free_all(t_env *env, int opt)
 	return (-1);
 }
 
-void	free_int_tab(t_env *env, int size)
+void	free_int_tab(t_env *env, int size, int choose)
 {
 	int i;
 
 	i = 0;
 	while (i < size)
 	{
-		ft_memdel((void **)&(env)->tu_tab[i]);
+		if (choose == 0)
+			ft_memdel((void **)&(env)->tu_tab[i]);
+		else if (choose == 1)
+			ft_memdel((void **)&(env)->path_tab[i]);
 		i++;
 	}
-	ft_memdel((void **)&(env)->tu_tab);
+	if (choose == 0)
+		ft_memdel((void **)&(env)->tu_tab);
+	else if (choose == 1)
+		ft_memdel((void **)&(env)->path_tab);
 }
 
 void ft_roomdel(t_room **room)

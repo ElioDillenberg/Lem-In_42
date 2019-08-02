@@ -19,9 +19,9 @@ size_t	ft_atoui(const char *str)
 
 	atoui = 0;
 	i = 0;
-	while (str[i] == 32 || (9 <= str[i] && str[i] <= 13))
+	while ((str[i] == 32 || (9 <= str[i] && str[i] <= 13)) && str[i])
 		i++;
-	while (ft_isdigit(str[i]))
+	while (ft_isdigit(str[i]) && str[i])
 	{
 		atoui = atoui * 10 + (str[i] - 48);
 		i++;

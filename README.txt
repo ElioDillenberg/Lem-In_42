@@ -17,10 +17,15 @@ Dans env j'ai ajouté :
   max_path, qui est le nombre maximal theorique de path possible
   nb_path qui est le nombre de path trouvé
 
-J ai modifie tres legerement ton ft_strsplit pour supprimer les invalid read et les segF sur les grosse map en rajoutant des conditions d existance.
-et un << Conditional jump or move depends on uninitialised value(s) >> de GNL dans parsing()
+J ai modifie tres legerement ton ft_strsplit pour supprimer les << Invalid read of size 1 >> et les segF sur les grosse map en rajoutant des conditions d existance.
+Et jai modifie tres legerement aussi ton GNL pour ne pas avoir de << Conditional jump or move depends on uninitialised value(s) >>
 
 Et dans Room jai ajouté "parent" pour le bfs et "path" pour savoir si une room a ete exploré
 
 Déso de pas avoir pu avancer plus mais j ai du corriger mon push_swap (jai eu une erreur sur ft_strsplit donc fail ...) et jsuis partis sur le mauvais algo.
 Bref bon courage gros hesites pas si tu comprends pas qlqchose ou si t es bloqué envoie un sms.
+
+En resume il faut :
+  Debug les segF du parsing
+  Optimiser la recherche de path
+  Creer l algo qui gere les round et l avancement des fourmis

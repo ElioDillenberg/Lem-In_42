@@ -47,6 +47,7 @@ char	*trim_to_eol(char **str)
 	int		i;
 
 	len = 0;
+	new_str = NULL;
 	while ((*str)[len] != '\n' && (*str)[len])
 		len++;
 	if (len != 0 && (*str)[len] == '\0')
@@ -72,6 +73,8 @@ int		get_next_line(const int fd, char **line, int opt)
 	static char		*stor = NULL;
 	char			*temp;
 
+	temp = NULL;
+	ret = 0;
 	if (opt == 0)
 		return (del_str_int(&stor));
 	if (!line || fd < 0 || fd > OM || BUFF_SIZE < 1 || m_stor(&stor) == -1)

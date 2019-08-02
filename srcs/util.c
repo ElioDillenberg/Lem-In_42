@@ -84,7 +84,6 @@ char	*ft_strndup(const char *s1, size_t n)
 	return (dest);
 }
 
-
 void print_lst(t_env *env)
 {
   t_room *room;

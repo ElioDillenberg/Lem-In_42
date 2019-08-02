@@ -138,7 +138,7 @@ int			main(int argc, char **argv)
 		j = 0;
 		while (env->path_tab[i][j] != -1)
 		{
-			ft_printf("%d ", env->path_tab[i][j]);
+			ft_printf("[Index : %d | Salle : %s] - ", env->path_tab[i][j], env->rm_tab[env->path_tab[i][j]]->name);
 			j++;
 		}
 		i++;

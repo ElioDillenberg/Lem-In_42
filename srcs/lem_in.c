@@ -102,13 +102,29 @@ int			main(int argc, char **argv)
 	ft_printf("\n\n");
 	set_max_path(env);
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
-	if (env->max_path)
+	//Tant qu on a pqs trouve tous les chemin possible on cherche
+	while (env->nb_path < env->max_path)
 	{
-		ft_bfs(env);
+		view_tunnel_by_name(env);
+		// Parcours des rooms
+		ft_bfs(env, 0);
+		// Extraction du chemin et destruction des tunnels utilisee
 		get_path(env);
+		// Reset des roomrs
+		reset_path_room(env);
+		// Si c est le dernier path on ne free pas, la fct free_exit va free
+		if (env->nb_path != env->max_path && (*env->rm_lst_path))
+			ft_roomdel(env->rm_lst_path);
+		//path_finder(env);
 	}
+	// Supprime si il y a des doublons dans les path (quang start et end sont connectee)
+	// Puis affiche les path
+	if (env->nb_path > 0)
+		check_path(env);
+	// A free ou a supprimer c est juste pour afficher les diffrents path
 
-	//path_finder(env);
+
+
 //	if (check_input(room_lst, nb_ants) == -1)
 //		return (free_room_lst(&room_lst, 1));
 	return (free_all(env, 0));

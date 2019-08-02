@@ -40,7 +40,7 @@ int		free_all(t_env *env, int opt)
     ft_memdel((void**)&(env)->to_print);
 	ft_memdel((void**)&(env)->path);
   free_int_tab(env, env->nt_rm[1]);
-	if (env->nb_path)
+	if (env->max_path)
 		ft_roomdel(env->rm_lst_path);
 	ft_memdel((void **)&(env)->rm_lst_path);
   ft_roomdel(env->rm_lst);
@@ -67,7 +67,7 @@ void	free_int_tab(t_env *env, int size)
 
 void ft_roomdel(t_room **room)
 {
-	if (!room)
+	if (!(*room))
 		return ;
 	while ((*room)->next)
     ft_roomdel(&(*room)->next);

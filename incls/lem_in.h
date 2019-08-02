@@ -90,9 +90,14 @@ int					free_room_lst(t_room **head, int opt);
 */
 int			add_room_path(t_env *env, t_room *room);
 int			delete_room_path(t_env *env);
-void ft_bfs(t_env *env);
-void print_lst(t_env *env);
+void ft_bfs(t_env *env, int index);
 void get_path(t_env *env);
+void reset_path_room(t_env *env);
+/*
+******************************** util_BFS.c *************************************
+*/
+void set_max_path(t_env *env);
+void check_path(t_env *env);
 /*
 ******************************** Path.c ****************************************
 */
@@ -104,9 +109,10 @@ int					choose_room(t_env *env, int path_nbr, int index);
 /*
 ******************************** Util_path.c ***********************************
 */
-void				set_max_path(t_env *env);
 void				make_valid_path(t_env *env);
 void path_finder(t_env *env);
+void delete_path(t_env *env);
+void	free_tab(char **tab);
 /*
 ******************************** Util.c ****************************************
 */
@@ -114,4 +120,5 @@ void				view_tunnel_by_name(t_env *env);
 char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
+void print_lst(t_env *env);
 #endif

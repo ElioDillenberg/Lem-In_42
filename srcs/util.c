@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/*
+Affiche la liste de tunnels pour voir si ils sont bien bouché
+*/
 void view_tunnel_by_name(t_env *env)
 {
   int i = 0;
@@ -79,4 +82,19 @@ char	*ft_strndup(const char *s1, size_t n)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+
+void print_lst(t_env *env)
+{
+  t_room *room;
+
+  room = (*env->rm_lst_path);
+  ft_printf("Room : ");
+  while (room)
+  {
+    ft_printf("%s ", room->name);
+    room = room->next;
+  }
+  ft_printf("\n");
 }

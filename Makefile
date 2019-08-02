@@ -20,7 +20,7 @@ OBJDIR = objs
 SRCDIR = srcs
 
 SC = $(addsuffix .c, lem_in get_parsing_tools parsing \
-	   is_parsing_tools is_tunnel free path util_path util bfs)
+	   is_parsing_tools is_tunnel free path util_path util bfs util_bfs)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))
@@ -48,7 +48,7 @@ $(NAME): $(LIBFT) $(OBJS) $(INCLS) Makefile
 	@echo "🔫                                                               🔫 "
 	@echo "🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 🔫 $(BLACK)"
 	@echo "$(BLUE)⚡️ COMPILATION DE L'EXECUTABLE LEM_IN. . . . . . . $(YELLOW)"
-	$(CC) -g3 $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)TOUT EST -----------------------------------> OK$(NOCOLOR)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

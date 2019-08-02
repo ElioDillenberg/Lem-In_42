@@ -15,32 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void set_max_path(t_env *env)
-{
-  int start_connection;
-  int end_connection;
-	int j;
-
-  end_connection = 0;
-	start_connection = 0;
-  j = 0;
-	while (j < env->nt_rm[1])
-	{
-		if (env->tu_tab[0][j])
-			start_connection++;
-		j++;
-	}
-  j = 0;
-  while (j < env->nt_rm[1])
-  {
-    if (env->tu_tab[env->nt_rm[1] - 1][j])
-      end_connection++;
-    j++;
-  }
-	env->max_path = start_connection > end_connection ? end_connection : start_connection;
-}
-
-
 void make_valid_path(t_env *env)
 {
   int i;

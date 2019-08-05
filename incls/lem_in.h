@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/01 11:52:30 by thallot          ###   ########.fr       */
+/*   Updated: 2019/08/03 15:29:55 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ typedef struct		s_room
 	bool			end;
 	bool			ant_here;
 	size_t			ant;
-	int       index;
+	int				index;
 	int				x;
 	int				y;
-	int       path;
-	int       parent;
+	int				path;
+	int				parent;
 	struct s_room	*next;
 }					t_room;
 
@@ -42,9 +42,9 @@ typedef struct		s_env
 	int				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
-	char      *path;
-	int       nb_path;
-	int       max_path;
+	char			*path;
+	int				nb_path;
+	int				max_path;
 	int				nt_rm[2];
 	int				rm_len;
 	int				ret;
@@ -89,33 +89,33 @@ int					free_room_lst(t_room **head, int opt);
 /*
 ******************************** BFS.c *****************************************
 */
-int			add_room_path(t_env *env, t_room *room);
-int			delete_room_path(t_env *env);
-void ft_bfs(t_env *env, int index);
-void get_path(t_env *env);
-void reset_path_room(t_env *env);
+int					add_room_path(t_env *env, t_room *room);
+int					delete_room_path(t_env *env);
+void 				ft_bfs(t_env *env, int index);
+void 				get_path(t_env *env);
+void 				reset_path_room(t_env *env);
 /*
 ******************************** util_BFS.c *************************************
 */
-void set_max_path(t_env *env);
-void check_path(t_env *env);
-void create_path_tab(t_env *env, char *str, int index);
-void	free_tab(char **tab);
+void 				set_max_path(t_env *env);
+void 				check_path(t_env *env);
+void 				create_path_tab(t_env *env, char *str, int index);
+void				free_tab(char **tab);
 /*
 ******************************** Path.c ****************************************
 */
 int					find_path(t_env *env, int index, int path_nbr);
 int 				get_connection(t_env *env, int i, int index, int path_nbr);
 int					get_connection_free(t_env *env, int i, int index,
-					int path_nbr);
+		int path_nbr);
 int					choose_room(t_env *env, int path_nbr, int index);
 /*
 ******************************** Util_path.c ***********************************
 */
 void				make_valid_path(t_env *env);
-void path_finder(t_env *env);
-void delete_path(t_env *env);
-void	free_tab(char **tab);
+void				path_finder(t_env *env);
+void				delete_path(t_env *env);
+void				free_tab(char **tab);
 /*
 ******************************** Util.c ****************************************
 */
@@ -123,7 +123,8 @@ void				view_tunnel_by_name(t_env *env);
 char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
-void print_lst(t_env *env);
+void				print_lst(t_env *env);
 
-char		**ft_split(char const *s, char c);
+char				**ft_split(char const *s, char c);
+
 #endif

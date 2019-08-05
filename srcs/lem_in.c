@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/29 19:02:03 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/05 16:21:56 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int		set_room_data(char *line, t_room *room, int *command)
 		return (-1);
 	return (0);
 }
+
+/*
+** One way to optimize parsing here would be to add room at the beginning of
+** the list and not at the end.
+*/
 
 int			add_room(char *line, t_room **head, int *command)
 {

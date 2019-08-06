@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 19:10:27 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/06 19:18:07 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 	len = 0;
 	while (cr != NULL)
 	{
-		ft_printf("LOOPLOL\n");
-		ft_printf("adr_cr = %p\n", cr);
-		ft_printf("adr_first = %p\n", first);
-		ft_printf("adr_last = %p\n", last);
-		ft_printf("adr_prev = %p\n", prev);
 		if (cr->start && cr != *rm_lst)
 		{
 			first = cr;
@@ -95,24 +90,17 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 			len++;
 		}
 	}
-	ft_printf("\nlen = %d\n\n", len);
 	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
 		return (-1);
 	len = 0;
 	cr = *rm_lst;
 	while (cr != NULL)
 	{
-		ft_printf("adr_cr = %p\n", cr);
-		ft_printf("adr_cr->next = %p\n", cr->next);
-		ft_printf("cr->name = %s\n\n", cr->name);
-//		ft_printf("len = %d\n", len);
 		cr->index = len;
 		(*rm_tab)[len] = cr;
 		prev = cr;
-//		ft_printf("cr->name = %s\n", cr->name);
 		cr = cr->next;
 		len++;
 	}
-	ft_printf("\nlen = %d\n\n", len);
 	return (len);
 }

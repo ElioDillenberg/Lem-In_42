@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/05 19:32:27 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/06 19:10:27 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,23 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 			if (cr->end && cr->next != NULL)
 			{
 				last = cr;
-				prev->next = cr->next;
+				if (cr != *rm_lst)
+					prev->next = cr->next;
+				else
+					*rm_lst = cr->next;
 				len--;
 			}
 			else if (cr->next == NULL && !cr->end)
 			{
 				cr->next = last;
 				last->next = NULL;
-				last = NULL;
 			}
-			prev = cr;
+			else
+				prev = cr;
 			cr = cr->next;
 			len++;
 		}
 	}
-	first = NULL;
 	ft_printf("\nlen = %d\n\n", len);
 	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
 		return (-1);

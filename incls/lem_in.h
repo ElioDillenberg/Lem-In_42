@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/03 15:29:55 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/06 19:41:28 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int					add_room(char *line, t_room **head, int *command);
 /*
 *************************** Get_parsing_tool.c *********************************
 */
-void				get_command(char *line, int *command);
+int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
 int					get_hash(char *name, int len_hash_tab);
 int					util_build_room(t_room **rm_lst, t_room *cr, int len);

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 19:18:07 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/06 19:41:12 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	get_command(char *line, int *command)
+int		get_command(char *line, int *start_end)
 {
 	if (ft_strcmp(line, "##start") == 0)
-		*command = 1;
+	{
+		if (start_end[0] == 0)
+			start_end[0] = 1;
+		else
+			return (-1);
+	}
 	else if (ft_strcmp(line, "##end") == 0)
-		*command = 2;
+	{
+		if (start_end[1] == 0)
+			start_end[1] = 1;
+		else
+			return (-1);
+	}
+	return (0);
 }
 
 int		get_room(char *line, t_room *room)

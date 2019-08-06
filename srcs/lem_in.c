@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/05 16:21:56 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/06 20:21:52 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@
 ** It then activates flags within the node depending on found type ->
 */
 
-int		set_room_data(char *line, t_room *room, int *command)
+int		set_room_data(char *line, t_room *room, int *start_end)
 {
-	if (*command == 1)
+	if (start_end[0] == 1)
 	{
 		room->start = true;
-		*command = 0;
+		start_end[0] = 2;
 	}
 	else
 		room->start = false;
-	if (*command == 2)
+	if (start_end[1] == 1)
 	{
 		room->end = true;
-		*command = 0;
+		start_end[1] = 2;
 	}
 	else
 		room->end = false;
@@ -103,6 +103,7 @@ int			main(int argc, char **argv)
 		return (-1);
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, -1));
+	ft_putstr(env->to_print);
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
 	set_max_path(env);

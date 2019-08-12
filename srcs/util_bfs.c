@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:28 by thallot           #+#    #+#             */
-/*   Updated: 2019/08/01 16:26:30 by thallot          ###   ########.fr       */
+/*   Updated: 2019/08/12 17:12:02 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,39 @@ void set_max_path(t_env *env)
 Check si tous les chemins sont valide. Apres le 1er parcours de BFS lorsque des chemins sont bouche il est possible
 qu aucun chemin ne mene a la sortie, dans ce cas on le supprime.
 */
-void check_path(t_env *env)
+
+int		check_path(t_env *env)
 {
-  int i;
-  int j;
-  char **tab;
+  int	i;
+  int	j;
+  char	**tab;
 
   i = -1;
   j = 0;
   tab = NULL;
   if (!(env->path_tab = (int **)malloc(sizeof(int *) * env->nb_path)))
-    return ;
+    return (-1);
   if (env->nb_path)
   {
-    tab = ft_strsplit(env->path, '|');
+    if (!(tab = ft_strsplit(env->path, '|')))
+	{
+		ft_memdel((void**)env->path_tab);
+		return (-1);
+	}
     while (tab[++i])
     {
       //Si le chemin n est valide on ne le traite pas (il commence par un espace au lieu de commencer par lindex de start)
       if (tab[i][0] != ' ')
-        create_path_tab(env, tab[i], (env->nb_path - 1) - j++); // (env->nb_path - 1) -j pour que le premier chemin trouvé (le plus court) soit a l index 0
+        if (create_path_tab(env, tab[i], (env->nb_path - 1) - j++) == -1)
+		{
+			free_tab(tab);
+			return (-1);
+		}
+		// (env->nb_path - 1) -j pour que le premier chemin trouvé (le plus court) soit a l index 0
     }
   }
-  i = 0;
   free_tab(tab);
+  return (0);
 }
 
 /*
@@ -79,7 +89,8 @@ Chaque path est compose des index des rooms utilisee
 la fin d un path est egale a -1 ce qui permet de parcourir le tableau sans connaitre sa longueur
 Le tout est stocke dans env->path_tab
 */
-void create_path_tab(t_env *env, char *str, int index)
+
+int		create_path_tab(t_env *env, char *str, int index)
 {
   char **tab;
   int i;
@@ -90,13 +101,15 @@ void create_path_tab(t_env *env, char *str, int index)
   while (str[++i])
     nb_room += str[i] == ' ' ? 1 : 0;
   if (!(env->path_tab[index] = (int *)malloc(sizeof(int) * (nb_room + 1))))
-    return ;
+    return (-1);
   i = -1;
-  tab = ft_strsplit(str, ' ');
+  if (!(tab = ft_strsplit(str, ' ')))
+	  return (-1);
   while (tab[++i])
     env->path_tab[index][i] = ft_atoui(tab[i]);
   env->path_tab[index][i] = -1;
   free_tab(tab);
+  return (0);
 }
 
 void delete_path(t_env *env)

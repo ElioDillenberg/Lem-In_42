@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 19:41:28 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/12 17:12:54 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int					init_tu_tab(int ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************
 */
-int					free_all(t_env *env, int opt);
+int					free_all(t_env *env, int opt, int ret);
 void				ft_roomdel(t_room **alst);
 void				ft_roomdelone(t_room **alst);
 void				free_int_tab(t_env *env, int size, int choose);
@@ -91,15 +91,15 @@ int					free_room_lst(t_room **head, int opt);
 */
 int					add_room_path(t_env *env, t_room *room);
 int					delete_room_path(t_env *env);
-void 				ft_bfs(t_env *env, int index);
-void 				get_path(t_env *env);
+int 				ft_bfs(t_env *env, int index);
+int					get_path(t_env *env);
 void 				reset_path_room(t_env *env);
 /*
 ******************************** util_BFS.c *************************************
 */
 void 				set_max_path(t_env *env);
-void 				check_path(t_env *env);
-void 				create_path_tab(t_env *env, char *str, int index);
+int					check_path(t_env *env);
+int					create_path_tab(t_env *env, char *str, int index);
 void				free_tab(char **tab);
 /*
 ******************************** Path.c ****************************************

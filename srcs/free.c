@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 11:24:48 by thallot           #+#    #+#             */
-/*   Updated: 2019/07/30 11:24:49 by thallot          ###   ########.fr       */
+/*   Updated: 2019/08/12 17:10:54 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int		free_room_lst(t_room **head, int opt)
 	return (-1);
 }
 
-int		free_all(t_env *env, int opt)
+int		free_all(t_env *env, int opt, int ret)
 {
 	int i;
 
 	i = -1;
-  if (env->to_print)
-    ft_memdel((void**)&(env)->to_print);
+	if (env->to_print)
+		ft_memdel((void**)&(env)->to_print);
 	if (env->nb_path)
 		free_int_tab(env, env->nb_path, 1);
 	if (env->max_path)
@@ -49,12 +49,12 @@ int		free_all(t_env *env, int opt)
 	ft_roomdel(env->rm_lst);
 	ft_memdel((void**)&(env)->path);
 	ft_memdel((void **)&(env)->rm_lst_path);
-  ft_memdel((void **)&(env)->rm_lst);
-  ft_memdel((void **)&(env)->rm_tab);
-  ft_memdel((void **)&env);
+	ft_memdel((void **)&(env)->rm_lst);
+	ft_memdel((void **)&(env)->rm_tab);
+	ft_memdel((void **)&env);
 	if (opt == 1)
 		write(2, "ERROR\n", 6);
-	return (-1);
+	return (ret);
 }
 
 void	free_int_tab(t_env *env, int size, int choose)
@@ -81,7 +81,7 @@ void ft_roomdel(t_room **room)
 	if (!(*room))
 		return ;
 	while ((*room)->next)
-    ft_roomdel(&(*room)->next);
+		ft_roomdel(&(*room)->next);
 	ft_roomdelone(room);
 }
 
@@ -89,7 +89,7 @@ void	ft_roomdelone(t_room **room)
 {
 	if (!room)
 		return ;
-  ft_memdel((void **)&(*room)->name);
-  ft_memdel((void **)room);
+	ft_memdel((void **)&(*room)->name);
+	ft_memdel((void **)room);
 	(*room) = NULL;
 }

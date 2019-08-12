@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 13:04:03 by thallot           #+#    #+#             */
-/*   Updated: 2019/07/31 13:04:05 by thallot          ###   ########.fr       */
+/*   Updated: 2019/08/12 16:53:47 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /*
 Affiche la liste de tunnels pour voir si ils sont bien bouché
 */
+
 void view_tunnel_by_name(t_env *env)
 {
   int i = 0;
@@ -38,24 +39,27 @@ void view_tunnel_by_name(t_env *env)
   }
 }
 
-char *ft_joinfree(char *s1, char *s2)
+char	*ft_joinfree(char *s1, char *s2)
 {
   char *tmp;
 
   tmp = s1;
-  s1 = ft_strjoin(s1, s2);
+  if (!(s1 = ft_strjoin(s1, s2)))
+	  return (NULL);
   ft_memdel((void **)&tmp);
   return (s1);
 }
 
-char *ft_strrev(char *str)
+char	*ft_strrev(char *str)
 {
-    if (!str || ! *str)
-        return str;
+    int		i;
+	int		j;	
+	char	ch;
 
-    int i = strlen(str) - 1, j = 0;
-
-    char ch;
+    if (!str || !*str)
+        return (str);
+	i = strlen(str) - 1;
+	j = 0;
     while (i > j)
     {
         ch = str[i];
@@ -64,7 +68,7 @@ char *ft_strrev(char *str)
         i--;
         j++;
     }
-    return str;
+    return (str);
 }
 
 char	*ft_strndup(const char *s1, size_t n)

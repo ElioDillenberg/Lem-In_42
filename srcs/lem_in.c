@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 20:21:52 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/12 17:14:14 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <stdlib.h>
 
 /*
-** This function parses the input found in line
-** It then activates flags within the node depending on found type ->
-*/
+ ** This function parses the input found in line
+ ** It then activates flags within the node depending on found type ->
+ */
 
 int		set_room_data(char *line, t_room *room, int *start_end)
 {
@@ -46,9 +46,9 @@ int		set_room_data(char *line, t_room *room, int *start_end)
 }
 
 /*
-** One way to optimize parsing here would be to add room at the beginning of
-** the list and not at the end.
-*/
+ ** One way to optimize parsing here would be to add room at the beginning of
+ ** the list and not at the end.
+ */
 
 int			add_room(char *line, t_room **head, int *command)
 {
@@ -77,13 +77,25 @@ t_env *init_env(t_env *env)
 
 	j = 0;
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
-			return (NULL);
+		return (NULL);
 	if (!(env->rm_lst = (t_room **)ft_memalloc(sizeof(t_room *))))
-			return (NULL);
+	{
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
 	if (!(env->rm_lst_path = (t_room **)ft_memalloc(sizeof(t_room *))))
-			return (NULL);
+	{
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
 	if (!(env->path = ft_strnew(0)))
-			return (NULL);
+	{
+		ft_memdel((void**)env->rm_lst_path);
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
 	env->rm_tab = NULL;
 	env->nb_path = 0;
 	return (env);
@@ -102,28 +114,30 @@ int			main(int argc, char **argv)
 	if (!(env = init_env(env)))
 		return (-1);
 	if ((env->ret = parsing(env)) == -1)
-		return (free_all(env, -1));
+		return (free_all(env, 1, -1));
 	ft_putstr(env->to_print);
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
 	set_max_path(env);
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	/*
-	Tant qu on a pqs trouve tous les chemin possible on cherche
-	Chaque chemin possede une entree et une sortie disctinct :
-	Le chemin 1 va partie de start pour aller a la room A
-	Le chemin 2 va partir de staart et aller dans la room B
-	Idem pour la sortie
-	Actuellemt on recher tous les chemin theoriquemt possible, maais si tu llance big.txt on se rend compte que lq plupart de chemins seront intilisees.
-	Donc faudra opti la dessus car c est la partie la plus chronophage de l algo
-	 */
+	   Tant qu on a pqs trouve tous les chemin possible on cherche
+	   Chaque chemin possede une entree et une sortie disctinct :
+	   Le chemin 1 va partie de start pour aller a la room A
+	   Le chemin 2 va partir de staart et aller dans la room B
+	   Idem pour la sortie
+	   Actuellemt on recher tous les chemin theoriquemt possible, maais si tu llance big.txt on se rend compte que lq plupart de chemins seront intilisees.
+	   Donc faudra opti la dessus car c est la partie la plus chronophage de l algo
+	   */
 	while (env->nb_path < env->max_path)
 	{
-		//view_tunnel_by_name(env);
+//		view_tunnel_by_name(env);
 		// Parcours des rooms et creation de lien pere - fils
-		ft_bfs(env, 0);
+		if (ft_bfs(env, 0) == -1)
+			return (free_all(env, 0, -1));
 		// Extraction du chemin pere fils et destruction des tunnels utilisee
-		get_path(env);
+		if (get_path(env) == -1)
+			return (free_all(env, 0, -1));
 		// Reset des rooms
 		reset_path_room(env);
 		// Si c est le dernier path on ne free pas, la fct free_exit va free
@@ -133,8 +147,8 @@ int			main(int argc, char **argv)
 	// Supprime si il y a des path non valide
 	// Puis affiche les path
 	if (env->nb_path > 0)
-		check_path(env);
-
+		if (check_path(env) == -1)
+			return (free_all(env, 0, -1));
 	// Parcours du tableau de path
 	int i = 0;
 	int j;
@@ -150,8 +164,8 @@ int			main(int argc, char **argv)
 		i++;
 		ft_printf("\n");
 	}
-// A free ou a supprimer c est juste pour afficher les diffrents path
-//	if (check_input(room_lst, nb_ants) == -1)
-//		return (free_room_lst(&room_lst, 1));
-	return (free_all(env, 0));
+	// A free ou a supprimer c est juste pour afficher les diffrents path
+	//	if (check_input(room_lst, nb_ants) == -1)
+	//		return (free_room_lst(&room_lst, 1));
+	return (free_all(env, 0, 0));
 }

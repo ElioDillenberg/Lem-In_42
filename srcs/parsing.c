@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 20:21:49 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/12 11:38:56 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int parsing(t_env *env)
 	int		command;
 	int		ret;
 
+	line = NULL;
 	start_end[0] = 0;
 	start_end[1] = 0;
 	command = 0;

@@ -6,20 +6,20 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 19:22:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/04/12 16:46:45 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/12 12:09:00 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <string.h>
 #include <stdlib.h>
 
 void	*ft_memalloc(size_t size)
 {
-	char	*fresh;
+	void	*fresh;
 
-	if (!(fresh = (void *)malloc(sizeof(char) * size)))
+	if (!(fresh = (void *)malloc(size)))
 		return (NULL);
-	while (size-- > 0)
-		fresh[size] = 0;
+	ft_bzero(fresh, size);
 	return (fresh);
 }

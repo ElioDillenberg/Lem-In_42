@@ -105,6 +105,7 @@ int		ft_bfs(t_env *env, int start)
 				// Si une connection a ete trouve avec une autre room on renseigne son parent, on marque que la case a ete explorer et on l add a la liste
 				env->rm_tab[i]->path = 1;
 				env->rm_tab[i]->parent = index;
+				//ATTENTION PEUT ETRE PROTECTION NECESSAIRE ICI EN DESSOUS?
 				if (add_room_path(env, env->rm_tab[i]) == -1)
 					return (-1);
 			}
@@ -170,13 +171,21 @@ int		get_path(t_env *env)
 		save = index;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
-		ft_printf("index = %d\n", index);
-		ft_printf("save = %d\n", save);
+		// ft_printf("index = %d\n", index);
+		// ft_printf("save = %d\n", save);
 		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
 		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a 0, en fonction de si le chemin dans le sens inverse est a 1 ou a 0
-		env->tu_tab[index][save] = env->tu_tab[save][index] == 0 ? -1 : 0;
-		ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
-		ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
+		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
+		if (env->tu_tab[save][index] == -1)
+		{
+			env->tu_tab[index][save] = -2;
+			env->tu_tab[save][index] = -2;
+			env->tu_cut = 1;
+		}
+		else
+			env->tu_tab[index][save] = -1;
+		// ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
+		// ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
 		if (!(tmp = ft_strrev(ft_itoa(index))))
 			return (-1);
 		if (!(env->path = ft_joinfree(env->path, tmp)))

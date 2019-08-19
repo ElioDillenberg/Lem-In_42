@@ -48,6 +48,7 @@ typedef struct		s_env
 	int				nt_rm[2];
 	int				rm_len;
 	int				ret;
+	int				tu_cut;
 }					t_env;
 
 /*
@@ -124,6 +125,12 @@ char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
 void				print_lst(t_env *env);
+
+/*
+******************************** cut.c ****************************************
+*/
+
+void				cut_and_reset(t_env *env);
 
 char				**ft_split(char const *s, char c);
 

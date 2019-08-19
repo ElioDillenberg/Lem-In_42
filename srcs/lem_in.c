@@ -98,6 +98,7 @@ t_env *init_env(t_env *env)
 	}
 	env->rm_tab = NULL;
 	env->nb_path = 0;
+	env->tu_cut = 0;
 	return (env);
 }
 
@@ -138,13 +139,14 @@ int			main(int argc, char **argv)
 		// Extraction du chemin pere fils et destruction des tunnels utilisee
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
-		if (check_to_cut(env) == 0)
+		if (env->tu_cut == 1)
 			cut_and_reset(env);
 		// Reset des rooms
 		reset_path_room(env);
 		// Si c est le dernier path on ne free pas, la fct free_exit va free
 		if (env->nb_path != env->max_path && (*env->rm_lst_path))
 			ft_roomdel(env->rm_lst_path);
+		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
 	}
 	// Supprime si il y a des path non valide
 	// Puis affiche les path

@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 12:35:39 by thallot           #+#    #+#             */
-/*   Updated: 2019/08/12 17:35:58 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/13 17:38:16 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
    Reset les parent et les path (variable qui definis si une case a ete explorée )
    pour relancer bfs et trouver un nouveau Parcours
    */
+
 void reset_path_room(t_env *env)
 {
 	int i;
@@ -99,7 +100,7 @@ int		ft_bfs(t_env *env, int start)
 		delete_room_path(env);
 		while (i < env->nt_rm[1])
 		{
-			if (env->tu_tab[i][index] == 1 && env->rm_tab[i]->path == 0 && i != 0)
+			if (env->tu_tab[index][i] == 1 && env->rm_tab[i]->path == 0 && i != 0)
 			{
 				// Si une connection a ete trouve avec une autre room on renseigne son parent, on marque que la case a ete explorer et on l add a la liste
 				env->rm_tab[i]->path = 1;
@@ -115,7 +116,6 @@ int		ft_bfs(t_env *env, int start)
 			env->max_path = env->nb_path;
 			return (0);
 		}
-
 		// Si on a trouve la room end on incremente le nb de path trouve
 		if ((*env->rm_lst_path)->end)
 			env->nb_path++;
@@ -170,8 +170,12 @@ int		get_path(t_env *env)
 		save = index;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
-		env->tu_tab[save][index] = 0;
-		env->tu_tab[index][save] = 0;
+		ft_printf("index = %d\n", index);
+		ft_printf("save = %d\n", save);
+		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
+		//ici on souhaite donc plutot mettre a zero le tunnel allant de INDEX a SAVE
+//		env->tu_tab[save][index] = 0;
+		env->tu_tab[index][save] = -1;
 		if (!(tmp = ft_strrev(ft_itoa(index))))
 			return (-1);
 		if (!(env->path = ft_joinfree(env->path, tmp)))

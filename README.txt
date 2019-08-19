@@ -30,3 +30,11 @@ En resume il faut :
   Debug la segF du parsing, et optimiser le parsing (en temps d execution)
   Optimiser la recherche de path (en temps d execution)
   Creer l algo qui gere les rounds et l avancement des fourmis
+
+On a un probleme avec le BFS:
+Il nous cherche tous les chemins directs. Or on souhaite:
+- 1 chemin le plus court
+- 2 chemins les plus courts
+- 3 chemins les plus courts
+- etc...
+pour ca on change le BF pour qu'il ne mette a zero que les tunnels dans le sens pris. On relance ensuite un BFS une seconds fois.

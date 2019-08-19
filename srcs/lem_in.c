@@ -138,6 +138,8 @@ int			main(int argc, char **argv)
 		// Extraction du chemin pere fils et destruction des tunnels utilisee
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
+		if (check_to_cut(env) == 0)
+			cut_and_reset(env);
 		// Reset des rooms
 		reset_path_room(env);
 		// Si c est le dernier path on ne free pas, la fct free_exit va free

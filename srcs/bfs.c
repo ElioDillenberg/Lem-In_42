@@ -173,9 +173,10 @@ int		get_path(t_env *env)
 		ft_printf("index = %d\n", index);
 		ft_printf("save = %d\n", save);
 		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
-		//ici on souhaite donc plutot mettre a zero le tunnel allant de INDEX a SAVE
-//		env->tu_tab[save][index] = 0;
-		env->tu_tab[index][save] = -1;
+		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a 0, en fonction de si le chemin dans le sens inverse est a 1 ou a 0
+		env->tu_tab[index][save] = env->tu_tab[save][index] == 0 ? -1 : 0;
+		ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
+		ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
 		if (!(tmp = ft_strrev(ft_itoa(index))))
 			return (-1);
 		if (!(env->path = ft_joinfree(env->path, tmp)))

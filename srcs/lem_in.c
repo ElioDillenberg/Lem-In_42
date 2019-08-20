@@ -122,9 +122,9 @@ int			main(int argc, char **argv)
 	set_max_path(env);
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	/*
-	   Tant qu on a pqs trouve tous les chemin possible on cherche
+	   Tant qu on a pas trouve tous les chemin possible on cherche
 	   Chaque chemin possede une entree et une sortie disctinct :
-	   Le chemin 1 va partie de start pour aller a la room A
+	   Le chemin 1 va partir de start pour aller a la room A
 	   Le chemin 2 va partir de staart et aller dans la room B
 	   Idem pour la sortie
 	   Actuellemt on recher tous les chemin theoriquemt possible, maais si tu llance big.txt on se rend compte que lq plupart de chemins seront intilisees.
@@ -139,8 +139,10 @@ int			main(int argc, char **argv)
 		// Extraction du chemin pere fils et destruction des tunnels utilisee
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
+		// if we have detected a or several tunnels to destroy we need to destroy it/them, reset our path and 
 		if (env->tu_cut == 1)
-			cut_and_reset(env);
+			if (cut_and_reset(env) == -1)
+				return (free_all(env, 0, -1));
 		// Reset des rooms
 		reset_path_room(env);
 		// Si c est le dernier path on ne free pas, la fct free_exit va free

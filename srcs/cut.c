@@ -5,7 +5,7 @@
 ** This function will parse env->tu_tab to check wether or not we have found a "-1"
 ** if one has been found, it means we need to cut all the 
 */
-void     cut_and_reset(t_env *env)
+int     cut_and_reset(t_env *env)
 {
     int i;
     int j;
@@ -26,4 +26,8 @@ void     cut_and_reset(t_env *env)
     }
     env->tu_cut = 0;
     env->nb_path = 0;
+    ft_memdel((void**)&(env->path));
+    if (!(env->path = ft_strnew(0)))
+        return (-1);
+    return (0);
 }

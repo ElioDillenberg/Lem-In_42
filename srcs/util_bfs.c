@@ -19,6 +19,7 @@
 Pour connaitre le maximum de path possible on regarde le nombre de tunnel sur start et end
 Puis on choisis le plus petit de deux
 */
+
 void set_max_path(t_env *env)
 {
   int start;
@@ -41,7 +42,10 @@ void set_max_path(t_env *env)
       end++;
     j++;
   }
+  //chosing between connections between start and end
 	env->max_path = start > end ? end : start;
+  //chosing between max_path and number of ants
+  env->max_path = env->nt_rm[0] < env->max_path ? env->nt_rm[0] : env->max_path;
 }
 
 /*
@@ -63,21 +67,21 @@ int		check_path(t_env *env)
   if (env->nb_path)
   {
     if (!(tab = ft_strsplit(env->path, '|')))
-	{
-		ft_memdel((void**)env->path_tab);
-		return (-1);
-	}
-    while (tab[++i])
-    {
-      //Si le chemin n est valide on ne le traite pas (il commence par un espace au lieu de commencer par lindex de start)
-      if (tab[i][0] != ' ')
-        if (create_path_tab(env, tab[i], (env->nb_path - 1) - j++) == -1)
-		{
-			free_tab(tab);
-			return (-1);
-		}
+	  {
+		  ft_memdel((void**)env->path_tab);
+		  return (-1);
+	  }
+  while (tab[++i])
+  {
+    //Si le chemin n est valide on ne le traite pas (il commence par un espace au lieu de commencer par lindex de start)
+    if (tab[i][0] != ' ')
+      if (create_path_tab(env, tab[i], (env->nb_path - 1) - j++) == -1)
+      {
+        free_tab(tab);
+        return (-1);
+      }
 		// (env->nb_path - 1) -j pour que le premier chemin trouvé (le plus court) soit a l index 0
-    }
+  }
   }
   free_tab(tab);
   return (0);

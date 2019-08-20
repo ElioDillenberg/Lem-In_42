@@ -130,7 +130,7 @@ void				print_lst(t_env *env);
 ******************************** cut.c ****************************************
 */
 
-void				cut_and_reset(t_env *env);
+int					cut_and_reset(t_env *env);
 
 char				**ft_split(char const *s, char c);
 

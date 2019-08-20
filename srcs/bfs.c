@@ -87,6 +87,7 @@ int		ft_bfs(t_env *env, int start)
 {
 	int i;
 	int index;
+	t_room	*tmp;
 
 	// ajout de la room start a la liste
 	if (add_room_path(env, env->rm_tab[start]) == -1)
@@ -105,7 +106,6 @@ int		ft_bfs(t_env *env, int start)
 				// Si une connection a ete trouve avec une autre room on renseigne son parent, on marque que la case a ete explorer et on l add a la liste
 				env->rm_tab[i]->path = 1;
 				env->rm_tab[i]->parent = index;
-				//ATTENTION PEUT ETRE PROTECTION NECESSAIRE ICI EN DESSOUS?
 				if (add_room_path(env, env->rm_tab[i]) == -1)
 					return (-1);
 			}
@@ -121,6 +121,7 @@ int		ft_bfs(t_env *env, int start)
 		if ((*env->rm_lst_path)->end)
 			env->nb_path++;
 	}
+	tmp = (*env->rm_lst_path);
 	return (0);
 }
 
@@ -174,7 +175,7 @@ int		get_path(t_env *env)
 		// ft_printf("index = %d\n", index);
 		// ft_printf("save = %d\n", save);
 		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
-		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a 0, en fonction de si le chemin dans le sens inverse est a 1 ou a 0
+		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a -2, en fonction de si le chemin dans le sens inverse est a 1 ou a -1
 		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
 		if (env->tu_tab[save][index] == -1)
 		{
@@ -199,5 +200,72 @@ int		get_path(t_env *env)
 				return (-1);
 	}
 	env->path = ft_strrev(env->path);
+	return (0);
+}
+
+int		add_path_index(t_path **path, int index)
+{
+	t_path	*new;
+	t_path	*tmp;
+
+	if (!(new = (t_path*)malloc(sizeof(t_path))))
+		return (-1);
+	new->index = index;
+	new->len = 0;
+	new->nb = 0;
+	if (*path == NULL)
+		*path = new;
+	else
+	{
+		new->next_room = *path;
+		*path = new;
+	}
+	return (0);
+}
+
+int		get_path_2(t_env *env)
+{
+	int 	parent;
+	int 	index;
+	int 	save;
+	t_path	*path;
+	t_room	*cr;
+
+	path = NULL;
+	//On prends l index de la case end et on cherche son pere
+	index = env->nt_rm[1] - 1;
+	parent = env->rm_tab[index]->parent;
+	if (add_path_index(&path, index) == -1)
+		return (-1);
+	// Tant qu on est pas sur la case start (qui na pas de pere ;( ) on continue)
+	while (env->rm_tab[index]->parent != -1)
+	{
+		save = index;
+		parent = env->rm_tab[index]->parent;
+		index = env->rm_tab[parent]->index;
+		// ft_printf("index = %d\n", index);
+		// ft_printf("save = %d\n", save);
+		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
+		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a -2, en fonction de si le chemin dans le sens inverse est a 1 ou a -1
+		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
+		if (env->tu_tab[save][index] == -1)
+		{
+			env->tu_tab[index][save] = -2;
+			env->tu_tab[save][index] = -2;
+			env->tu_cut = 1;
+		}
+		else
+			env->tu_tab[index][save] = -1;
+		// ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
+		// ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
+		if (add_path_index(&path, index) == -1)
+			return (-1);
+	}
+	cr = path;
+	while (cr != NULL)
+	{
+		path->len++;
+		cr = cr->next_room;
+	}
 	return (0);
 }

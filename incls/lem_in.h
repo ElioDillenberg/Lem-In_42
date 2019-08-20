@@ -34,15 +34,25 @@ typedef struct		s_room
 	struct s_room	*next;
 }					t_room;
 
+typedef struct		s_path
+{
+	int				nb;
+	int				len;
+	int				index;
+	struct s_path	*next_path;
+	struct s_path	*next_room;
+}					t_path;
+
 typedef struct		s_env
 {
+	t_path			**path_lst;
 	t_room			**rm_lst;
 	t_room			**rm_lst_path;
 	t_room			**rm_tab;
 	int				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
-	char			*path;
+	//char			*path;
 	int				nb_path;
 	int				max_path;
 	int				nt_rm[2];

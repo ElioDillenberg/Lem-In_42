@@ -136,10 +136,10 @@ int			main(int argc, char **argv)
 		// Parcours des rooms et creation de lien pere - fils
 		if (ft_bfs(env, 0) == -1)
 			return (free_all(env, 0, -1));
-		// Extraction du chemin pere fils et destruction des tunnels utilisee
+		// Extraction du chemin pere fils et on bouche les tunnels utilises
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
-		// if we have detected a or several tunnels to destroy we need to destroy it/them, reset our path and 
+		// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and 
 		if (env->tu_cut == 1)
 			if (cut_and_reset(env) == -1)
 				return (free_all(env, 0, -1));

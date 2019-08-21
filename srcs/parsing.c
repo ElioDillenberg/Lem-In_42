@@ -48,6 +48,7 @@ int parsing(t_env *env)
 	start_end[1] = 0;
 	command = 0;
 	index = 0;
+	//ft_printf("ADR OF RM_LST IN PARSING = %p\n", env->rm_lst);
 	while ((ret = get_next_line(0, &line, 1)) && ret != -1 && ret != 0)
 	{
 		if (line[0] == '#' && line[1] != '#')

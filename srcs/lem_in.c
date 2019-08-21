@@ -89,6 +89,7 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
+	//this can be removed since we dont use path anymore
 	if (!(env->path = ft_strnew(0)))
 	{
 		ft_memdel((void**)env->rm_lst_path);
@@ -96,8 +97,18 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
-	env->rm_tab = NULL;
+	//if (!(env->path_lst = (t_path**)malloc(sizeof(t_path*) * 2)))
+	// {
+		// ft_memdel((void**)env->rm_lst_path);
+		// ft_memdel((void**)env->rm_lst);
+		// ft_memdel((void**)&env);
+		// return (NULL);
+	// }
+	//env->path_lst[0] = NULL;
+	//env->path_lst[1] = NULL;
 	env->nb_path = 0;
+	//env->path_i = 0;
+	env->rm_tab = NULL;
 	env->tu_cut = 0;
 	return (env);
 }
@@ -136,6 +147,7 @@ int			main(int argc, char **argv)
 		// Parcours des rooms et creation de lien pere - fils
 		if (ft_bfs(env, 0) == -1)
 			return (free_all(env, 0, -1));
+		// Parcours du tableau de 
 		// Extraction du chemin pere fils et on bouche les tunnels utilises
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
@@ -149,6 +161,8 @@ int			main(int argc, char **argv)
 		if (env->nb_path != env->max_path && (*env->rm_lst_path))
 			ft_roomdel(env->rm_lst_path);
 		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
+		// -> pas vraiment enfaite, il faudrait que cette boucle fasse partie d'une autre boucle. qui compare tour a tour:
+		// 1 chemin, 2 chemins, 3 chemins, 4 chemins, 5 chemins et ainsi de suite
 	}
 	// Supprime si il y a des path non valide
 	// Puis affiche les path

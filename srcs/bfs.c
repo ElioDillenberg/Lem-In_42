@@ -138,10 +138,17 @@ int		get_path(t_env *env)
 	int index;
 	int save;
 	char *tmp;
+	t_path	*path;
+	t_path	*cr;
 
+	path = NULL;
 	//On prends l index de la case end et on cherche son pere
 	index = env->nt_rm[1] - 1;
+	ft_printf("TEST1\n");
 	parent = env->rm_tab[index]->parent;
+	ft_printf("TEST1\n");
+	if (add_path_index(&path, index, env) == -1)
+		return (-1);
 	// On join son nom dans le path suivis d un espace pour delimiter
 	if (!(tmp = ft_strrev(ft_itoa(index))))
 		return (-1);
@@ -198,15 +205,23 @@ int		get_path(t_env *env)
 		if (env->rm_tab[index]->parent != -1)
 			if (!(env->path = ft_joinfree(env->path, " ")))
 				return (-1);
+		if (add_path_index(&path, index, env) == -1)
+			return (-1);
+	}
+	cr = path;
+	while (cr != NULL)
+	{
+		path->len++;
+		cr = cr->next_room;
 	}
 	env->path = ft_strrev(env->path);
+	add_path_lst(env, path);
 	return (0);
 }
 
-int		add_path_index(t_path **path, int index)
+int		add_path_index(t_path **path, int index, t_env *env)
 {
 	t_path	*new;
-	t_path	*tmp;
 
 	if (!(new = (t_path*)malloc(sizeof(t_path))))
 		return (-1);
@@ -214,13 +229,46 @@ int		add_path_index(t_path **path, int index)
 	new->len = 0;
 	new->nb = 0;
 	if (*path == NULL)
+	{
 		*path = new;
+		new->len = 1;
+		new->nb = env->nb_path;
+	}
 	else
 	{
 		new->next_room = *path;
 		*path = new;
+		new->len = new->next_room->len + 1;
+		new->nb = new->next_room->nb;
+		new->next_room->nb = 0;
+		new->next_room->len = 0;
 	}
 	return (0);
+}
+
+void	add_path_lst(t_env *env, t_path *path)
+{
+	t_path	*cr;
+	int		i;
+
+	i = 1;
+	cr = env->path_lst[env->path_i];
+	if (env->path_lst[env->path_i] == NULL)
+	{
+		path->nb = i;
+		env->path_lst[env->path_i] = path;
+	}
+	else
+	{
+		i++;
+		while (cr->next_path != NULL)
+		{
+			cr = cr->next_path;
+			i++;
+		}
+		cr->next_path = path;
+		path->nb = i;
+	}
 }
 
 int		get_path_2(t_env *env)
@@ -229,13 +277,13 @@ int		get_path_2(t_env *env)
 	int 	index;
 	int 	save;
 	t_path	*path;
-	t_room	*cr;
+	t_path	*cr;
 
 	path = NULL;
 	//On prends l index de la case end et on cherche son pere
 	index = env->nt_rm[1] - 1;
 	parent = env->rm_tab[index]->parent;
-	if (add_path_index(&path, index) == -1)
+	if (add_path_index(&path, index, env) == -1)
 		return (-1);
 	// Tant qu on est pas sur la case start (qui na pas de pere ;( ) on continue)
 	while (env->rm_tab[index]->parent != -1)
@@ -258,7 +306,7 @@ int		get_path_2(t_env *env)
 			env->tu_tab[index][save] = -1;
 		// ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
 		// ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
-		if (add_path_index(&path, index) == -1)
+		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}
 	cr = path;
@@ -267,5 +315,6 @@ int		get_path_2(t_env *env)
 		path->len++;
 		cr = cr->next_room;
 	}
+	add_path_lst(env, path);
 	return (0);
 }

@@ -52,12 +52,13 @@ typedef struct		s_env
 	int				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
-	//char			*path;
+	char			*path;
 	int				nb_path;
 	int				max_path;
 	int				nt_rm[2];
 	int				rm_len;
 	int				ret;
+	int				path_i;
 	int				tu_cut;
 }					t_env;
 
@@ -103,7 +104,10 @@ int					free_room_lst(t_room **head, int opt);
 int					add_room_path(t_env *env, t_room *room);
 int					delete_room_path(t_env *env);
 int 				ft_bfs(t_env *env, int index);
+int					add_path_index(t_path **path, int index, t_env *env);
+void				add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
+int					get_path_2(t_env *env);
 void 				reset_path_room(t_env *env);
 /*
 ******************************** util_BFS.c *************************************

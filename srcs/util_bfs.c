@@ -46,6 +46,9 @@ void set_max_path(t_env *env)
 	env->max_path = start > end ? end : start;
   //chosing between max_path and number of ants
   env->max_path = env->nt_rm[0] < env->max_path ? env->nt_rm[0] : env->max_path;
+  ft_printf("start = %d\n", start);
+  ft_printf("end = %d\n", end);
+  ft_printf("env->nt_rm = %d\n", env->nt_rm[0]);
 }
 
 /*

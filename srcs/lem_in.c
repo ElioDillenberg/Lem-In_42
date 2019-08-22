@@ -97,17 +97,18 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
-	//if (!(env->path_lst = (t_path**)malloc(sizeof(t_path*) * 2)))
-	// {
-		// ft_memdel((void**)env->rm_lst_path);
-		// ft_memdel((void**)env->rm_lst);
-		// ft_memdel((void**)&env);
-		// return (NULL);
-	// }
-	//env->path_lst[0] = NULL;
-	//env->path_lst[1] = NULL;
+	if (!(env->path_lst = (t_path**)malloc(sizeof(t_path*) * 2)))
+	{
+		ft_memdel((void**)env->rm_lst_path);
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
+	env->path_tab = NULL;
+	env->path_lst[0] = NULL;
+	env->path_lst[1] = NULL;
 	env->nb_path = 0;
-	//env->path_i = 0;
+	env->path_i = 0;
 	env->rm_tab = NULL;
 	env->tu_cut = 0;
 	return (env);
@@ -125,6 +126,14 @@ int			main(int argc, char **argv)
 		return (-1);
 	if (!(env = init_env(env)))
 		return (-1);
+	ft_printf("env->path_lst = %p\n", env->path_lst);
+	ft_printf("env->rm_lst = %p\n", env->rm_lst);
+	ft_printf("env->rm_lst_path = %p\n", env->rm_lst_path);
+	ft_printf("env->rm_tab = %p\n", env->rm_tab);
+	ft_printf("env->tu_tab = %p\n", env->tu_tab);
+	ft_printf("env->path_tab = %p\n", env->path_tab);
+	ft_printf("env->to_print = %p\n", env->to_print);
+	ft_printf("env->path = %p\n", env->path);
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
 	ft_putstr(env->to_print);

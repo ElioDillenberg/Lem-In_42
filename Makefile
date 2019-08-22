@@ -57,6 +57,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(LIBFT): FORCE
 	@echo "$(BLUE)⚡️ CHECKING LIBFT.A. . . . . . . . . . . . . . . . $(YELLOW)"
 	@make -C libft/
+	@echo "$(NOCOLOR)"
 
 FORCE:
 

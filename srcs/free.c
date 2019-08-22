@@ -65,9 +65,9 @@ void	free_int_tab(t_env *env, int size, int choose)
 	while (i < size)
 	{
 		if (choose == 0)
-			ft_memdel((void **)&(env)->tu_tab[i]);
+			ft_memdel((void **)&(env->tu_tab[i]));
 		else if (choose == 1)
-			ft_memdel((void **)&(env)->path_tab[i]);
+			ft_memdel((void **)&(env->path_tab[i]));
 		i++;
 	}
 	if (choose == 0)
@@ -81,7 +81,7 @@ void ft_roomdel(t_room **room)
 	if (!(*room))
 		return ;
 	while ((*room)->next)
-		ft_roomdel(&(*room)->next);
+		ft_roomdel(&((*room)->next));
 	ft_roomdelone(room);
 }
 
@@ -89,7 +89,9 @@ void	ft_roomdelone(t_room **room)
 {
 	if (!room)
 		return ;
-	ft_memdel((void **)&(*room)->name);
+	ft_printf("this is adr of *room->name : %p\n", (*room)->name);
+	ft_memdel((void **)&((*room)->name));
+	ft_printf("FREED THAT SHIET!\n");
 	ft_memdel((void **)room);
 	(*room) = NULL;
 }

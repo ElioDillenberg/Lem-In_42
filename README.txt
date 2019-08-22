@@ -38,3 +38,12 @@ Il nous cherche tous les chemins directs. Or on souhaite:
 - 3 chemins les plus courts
 - etc...
 pour ca on change le BF pour qu'il ne mette a zero que les tunnels dans le sens pris. On relance ensuite un BFS une seconds fois.
+
+J'ai depuis ton depart modifie plusieurs choses:
+- plus de segfault/leaks sur le parsing
+- j'ai rajoute un tableau de deux cases qui contiennent chacun une liste doublement chainee (afin de stocker les N chemins trouves et alterner pour comparer l'opti)
+- il faudra voir ce qu'on fait de check_path, j'ai pas encore bien compris la fonction et pourquoi on en a besoin, mais a priori on aura plus besoin car on la nouvelle liste doublement chainee avec tous les paths crees.
+- Il nous faut maintenant: une fonction qui compare N chemins pour X fourmis avec N - 1 chemins pour X fourmis (on utilise path_lst[0] et path_lst[1] qui contienent
+respectivement N - 1 chemins et N chemins)
+- Il nous faut une fonction qui englode notre bfs+get_path, et qui limite le nombre de chemins que l'on veut trouver (d'abord 1, puis 2, puis 3, puis 4 et qui compare a chaque fois pour voir si on a besoin de continuer a chercher des chemnins)
+- Il faut modifier notre BFS, de maniere a ce qu'il reste coherent lorsque l'on parcours notre graphe en remontant le courant (cas de chemins empruntes etant deja empruntes dans l'autre sense)

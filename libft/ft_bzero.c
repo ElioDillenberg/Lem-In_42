@@ -21,7 +21,7 @@ void		ft_bzero(void *s, size_t n)
 		return ;
 	while (n > 0)
 	{
-		*result = '\0';
+		*result = 0;
 		result++;
 		n--;
 	}

@@ -50,27 +50,8 @@ int parsing(t_env *env)
 	start_end[1] = 0;
 	command = 0;
 	index = 0;
-	// ON  A MODIFIE CA ATTENTION!!!!!!!
-	//fd = open("map/test4.txt", O_RDONLY);
-	// ft_printf("env->path_lst = %p\n", env->path_lst);
-	// ft_printf("env->rm_lst = %p\n", env->rm_lst);
-	// ft_printf("env->rm_lst_path = %p\n", env->rm_lst_path);
-	// ft_printf("env->rm_tab = %p\n", env->rm_tab);
-	// ft_printf("env->tu_tab = %p\n", env->tu_tab);
-	// ft_printf("env->path_tab = %p\n", env->path_tab);
-	// ft_printf("env->to_print = %p\n", env->to_print);
-	// ft_printf("env->path = %p\n", env->path);
-	//ft_printf("ADR OF RM_LST IN PARSING = %p\n", env->rm_lst);
 	while ((ret = get_next_line(0, &line, 1)) && ret != -1 && ret != 0)
 	{
-		// ft_printf("env->path_lst = %p\n", env->path_lst);
-		// ft_printf("env->rm_lst = %p\n", env->rm_lst);
-		// ft_printf("env->rm_lst_path = %p\n", env->rm_lst_path);
-		// ft_printf("env->rm_tab = %p\n", env->rm_tab);
-		// ft_printf("env->tu_tab = %p\n", env->tu_tab);
-		// ft_printf("env->path_tab = %p\n", env->path_tab);
-		// ft_printf("env->to_print = %p\n", env->to_print);
-		// ft_printf("env->path = %p\n", env->path);
 		if (line[0] == '#' && line[1] != '#')
 		{
 			if (start_end[0] == 1 || start_end[1] == 1)

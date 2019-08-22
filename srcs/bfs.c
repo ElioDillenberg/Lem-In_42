@@ -142,11 +142,10 @@ int		get_path(t_env *env)
 	t_path	*cr;
 
 	path = NULL;
+	cr = NULL;
 	//On prends l index de la case end et on cherche son pere
 	index = env->nt_rm[1] - 1;
-	ft_printf("TEST1\n");
 	parent = env->rm_tab[index]->parent;
-	ft_printf("TEST1\n");
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
 	// On join son nom dans le path suivis d un espace pour delimiter
@@ -179,8 +178,6 @@ int		get_path(t_env *env)
 		save = index;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
-		// ft_printf("index = %d\n", index);
-		// ft_printf("save = %d\n", save);
 		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
 		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a -2, en fonction de si le chemin dans le sens inverse est a 1 ou a -1
 		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
@@ -192,8 +189,6 @@ int		get_path(t_env *env)
 		}
 		else
 			env->tu_tab[index][save] = -1;
-		// ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
-		// ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
 		if (!(tmp = ft_strrev(ft_itoa(index))))
 			return (-1);
 		if (!(env->path = ft_joinfree(env->path, tmp)))
@@ -233,10 +228,13 @@ int		add_path_index(t_path **path, int index, t_env *env)
 		*path = new;
 		new->len = 1;
 		new->nb = env->nb_path;
+		new->next_room = NULL;
+		new->next_path = NULL;
 	}
 	else
 	{
 		new->next_room = *path;
+		new->next_path = NULL;
 		*path = new;
 		new->len = new->next_room->len + 1;
 		new->nb = new->next_room->nb;
@@ -291,8 +289,6 @@ int		get_path_2(t_env *env)
 		save = index;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
-		// ft_printf("index = %d\n", index);
-		// ft_printf("save = %d\n", save);
 		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
 		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a -2, en fonction de si le chemin dans le sens inverse est a 1 ou a -1
 		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
@@ -304,8 +300,6 @@ int		get_path_2(t_env *env)
 		}
 		else
 			env->tu_tab[index][save] = -1;
-		// ft_printf("env->tu_tab[save][index] = %d\n", env->tu_tab[save][index]);
-		// ft_printf("env->tu_tab[index][save] = %d\n", env->tu_tab[index][save]);
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}

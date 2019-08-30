@@ -183,11 +183,7 @@ int			main(int argc, char **argv)
 			ft_printf("DEBUG6\n");
 		}
 		if (env->lf_path > 1)
-		{
 				ft_printf("Chemin opti : %d\n", get_opti_path(env));
-				ft_path_lst_del(&(env->path_lst[env->cr_path]));
-		}
-
 		if (env->lf_path > 1)
 			if (get_opti_path(env) != env->cr_path)
 				break ;
@@ -225,9 +221,14 @@ int			main(int argc, char **argv)
 						ft_printf("\n");
 					}
 ////////////////
-
+	env->cr_path = env->cr_path == 0 ? 1 : 0;
+if (env->lf_path > 1)
+{
+	ft_path_lst_del(&(env->path_lst[env->cr_path]));
 		env->path_lst[env->cr_path] = NULL;
-		env->cr_path = env->cr_path == 0 ? 1 : 0;
+}
+
+
 		ft_printf("lf_path = %d\n", env->lf_path);
 		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
 		// env->path_lst[env->cr_path] = NULL;

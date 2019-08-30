@@ -163,6 +163,7 @@ int			main(int argc, char **argv)
 			// Extraction du chemin pere fils et on bouche les tunnels utilises
 			if (get_path(env) == -1)
 				return (free_all(env, 0, -1));
+			ft_printf("nb_path = %d\n", env->nb_path);
 			ft_printf("lf_path = %d\n", env->lf_path);
 			ft_printf("DEBUG3\n");
 			// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and

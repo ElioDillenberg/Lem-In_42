@@ -108,7 +108,6 @@ t_env *init_env(t_env *env)
 	env->path_lst[0] = NULL;
 	env->path_lst[1] = NULL;
 	env->nb_path = 0;
-	env->path_i = 0;
 	env->rm_tab = NULL;
 	env->tu_cut = 0;
 	env->lf_path = 0;
@@ -147,25 +146,30 @@ int			main(int argc, char **argv)
 	while (env->lf_path < env->max_path)
 	{
 		env->lf_path++;
+		ft_printf("lf_path = %d\n", env->lf_path);
 		env->nb_path = 0;
 		ft_printf("MDR\n");
 		while (env->nb_path < env->lf_path)
 		{
 			ft_printf("DEBUG1\n");
+			ft_printf("nb_path = %d\n", env->nb_path);
 	//		view_tunnel_by_name(env);
 			// Parcours des rooms et creation de lien pere - fils
 			if (ft_bfs(env, 0) == -1)
 				return (free_all(env, 0, -1));
+			ft_printf("lf_path = %d\n", env->lf_path);
 			ft_printf("DEBUG2\n");
 			// Parcours du tableau de
 			// Extraction du chemin pere fils et on bouche les tunnels utilises
 			if (get_path(env) == -1)
 				return (free_all(env, 0, -1));
+			ft_printf("lf_path = %d\n", env->lf_path);
 			ft_printf("DEBUG3\n");
 			// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and
 			if (env->tu_cut == 1)
 				if (cut_and_reset(env) == -1)
 					return (free_all(env, 0, -1));
+			ft_printf("lf_path = %d\n", env->lf_path);
 			ft_printf("DEBUG4\n");
 			// Reset des rooms
 			reset_path_room(env);
@@ -173,6 +177,7 @@ int			main(int argc, char **argv)
 			// Si c est le dernier path on ne free pas, la fct free_exit va free
 			if (env->nb_path != env->max_path && (*env->rm_lst_path))
 				ft_roomdel(env->rm_lst_path);
+			ft_printf("lf_path = %d\n", env->lf_path);
 			ft_printf("DEBUG6\n");
 		}
 		if (env->lf_path > 1)
@@ -180,16 +185,21 @@ int			main(int argc, char **argv)
 		if (env->lf_path > 1)
 			if (get_opti_path(env) != env->cr_path)
 				break ;
+		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		// env->path_lst[env->cr_path] = NULL;
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
+		ft_printf("lf_path = %d\n", env->lf_path);
+		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		// env->path_lst[env->cr_path] = NULL;
 		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
 		// -> pas vraiment enfaite, il faudrait que cette boucle fasse partie d'une autre boucle. qui compare tour a tour:
 		// 1 chemin, 2 chemins, 3 chemins, 4 chemins, 5 chemins et ainsi de suite
 	}
 	// Supprime si il y a des path non valide
 	// Puis affiche les path
-	if (env->nb_path > 0)
-		if (check_path(env) == -1)
-			return (free_all(env, 0, -1));
+	// if (env->nb_path > 0)
+		// if (check_path(env) == -1)
+			// return (free_all(env, 0, -1));
 	// Parcours du tableau de path
 	// int i = 0;
 	// int j;

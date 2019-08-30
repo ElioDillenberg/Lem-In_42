@@ -27,7 +27,7 @@ int     cut_and_reset(t_env *env)
     env->tu_cut = 0;
     env->nb_path = 0;
     ft_path_lst_del(&(env->path_lst[env->cr_path]));
-    env->path_lst[0] = NULL;
+    env->path_lst[env->cr_path] = NULL;
     // if (env->path_lst[0])
         // ft_memdel((void**)&(env->path_lst[0]));
     // ft_path_lst_del(&(env->path_lst[1]));

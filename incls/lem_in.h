@@ -58,7 +58,6 @@ typedef struct		s_env
 	int				nt_rm[2];
 	int				rm_len;
 	int				ret;
-	int				path_i;
 	int				tu_cut;
 	int				lf_path;
 	int				cr_path;

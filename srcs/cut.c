@@ -8,7 +8,7 @@
 int     cut_and_reset(t_env *env)
 {
     int i;
-    int j;
+    int j;      
     
     i = 0;
     while (i < env->nt_rm[1])
@@ -26,6 +26,11 @@ int     cut_and_reset(t_env *env)
     }
     env->tu_cut = 0;
     env->nb_path = 0;
+    ft_path_lst_del(&(env->path_lst[0]));
+    env->path_lst[0] = NULL;
+    // if (env->path_lst[0])
+        // ft_memdel((void**)&(env->path_lst[0]));
+    // ft_path_lst_del(&(env->path_lst[1]));
     ft_memdel((void**)&(env->path));
     if (!(env->path = ft_strnew(0)))
         return (-1);

@@ -47,3 +47,5 @@ J'ai depuis ton depart modifie plusieurs choses:
 respectivement N - 1 chemins et N chemins)
 - Il nous faut une fonction qui englode notre bfs+get_path, et qui limite le nombre de chemins que l'on veut trouver (d'abord 1, puis 2, puis 3, puis 4 et qui compare a chaque fois pour voir si on a besoin de continuer a chercher des chemnins)
 - Il faut modifier notre BFS, de maniere a ce qu'il reste coherent lorsque l'on parcours notre graphe en remontant le courant (cas de chemins empruntes etant deja empruntes dans l'autre sense)
+
+TO DO VENDREDI 30/08

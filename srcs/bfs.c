@@ -79,6 +79,67 @@ int			delete_room_path(t_env *env)
 }
 
 /*
+   On ajoute structure t_path contenant l'index de la room a ajouter a notre path
+   */
+
+int		add_path_index(t_path **path, int index, t_env *env)
+{
+	t_path	*new;
+
+	if (!(new = (t_path*)malloc(sizeof(t_path))))
+		return (-1);
+	new->index = index;
+	if (*path == NULL)
+	{
+		*path = new;
+		new->len = 0;
+		new->nb = env->nb_path;
+		new->next_room = NULL;
+		new->next_path = NULL;
+	}
+	else
+	{
+		new->next_room = *path;
+		new->next_path = NULL;
+		*path = new;
+		new->len = new->next_room->len + 1;
+		new->nb = new->next_room->nb;
+		new->next_room->nb = 0;
+		new->next_room->len = 0;
+	}
+	return (0);
+}
+
+/*
+   On ajoute le path trouve a notre liste de paths
+   */
+
+void	add_path_lst(t_env *env, t_path *path)
+{
+	t_path	*cr;
+	int		i;
+
+	i = 1;
+	cr = env->path_lst[env->path_i];
+	if (env->path_lst[env->path_i] == NULL)
+	{
+		path->nb = i;
+		env->path_lst[env->path_i] = path;
+	}
+	else
+	{
+		i++;
+		while (cr->next_path != NULL)
+		{
+			cr = cr->next_path;
+			i++;
+		}
+		cr->next_path = path;
+		path->nb = i;
+	}
+}
+
+/*
    Parcours de graphe en largeur, cf BFS. Pour chaque enfant,
    son parent est spécifié dans room->parent pour ensuite recreer le chemin
    */
@@ -203,112 +264,7 @@ int		get_path(t_env *env)
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}
-	cr = path;
-	while (cr != NULL)
-	{
-		path->len++;
-		cr = cr->next_room;
-	}
 	env->path = ft_strrev(env->path);
-	add_path_lst(env, path);
-	return (0);
-}
-
-int		add_path_index(t_path **path, int index, t_env *env)
-{
-	t_path	*new;
-
-	if (!(new = (t_path*)malloc(sizeof(t_path))))
-		return (-1);
-	new->index = index;
-	new->len = 0;
-	new->nb = 0;
-	if (*path == NULL)
-	{
-		*path = new;
-		new->len = 1;
-		new->nb = env->nb_path;
-		new->next_room = NULL;
-		new->next_path = NULL;
-	}
-	else
-	{
-		new->next_room = *path;
-		new->next_path = NULL;
-		*path = new;
-		new->len = new->next_room->len + 1;
-		new->nb = new->next_room->nb;
-		new->next_room->nb = 0;
-		new->next_room->len = 0;
-	}
-	return (0);
-}
-
-void	add_path_lst(t_env *env, t_path *path)
-{
-	t_path	*cr;
-	int		i;
-
-	i = 1;
-	cr = env->path_lst[env->path_i];
-	if (env->path_lst[env->path_i] == NULL)
-	{
-		path->nb = i;
-		env->path_lst[env->path_i] = path;
-	}
-	else
-	{
-		i++;
-		while (cr->next_path != NULL)
-		{
-			cr = cr->next_path;
-			i++;
-		}
-		cr->next_path = path;
-		path->nb = i;
-	}
-}
-
-int		get_path_2(t_env *env)
-{
-	int 	parent;
-	int 	index;
-	int 	save;
-	t_path	*path;
-	t_path	*cr;
-
-	path = NULL;
-	//On prends l index de la case end et on cherche son pere
-	index = env->nt_rm[1] - 1;
-	parent = env->rm_tab[index]->parent;
-	if (add_path_index(&path, index, env) == -1)
-		return (-1);
-	// Tant qu on est pas sur la case start (qui na pas de pere ;( ) on continue)
-	while (env->rm_tab[index]->parent != -1)
-	{
-		save = index;
-		parent = env->rm_tab[index]->parent;
-		index = env->rm_tab[parent]->index;
-		//on considere tu_tab[save][index] comme le tunnel allant DE save A index
-		//on decide de mettre la case du tableau qui vient d'etre prise a -1 ou a -2, en fonction de si le chemin dans le sens inverse est a 1 ou a -1
-		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
-		if (env->tu_tab[save][index] == -1)
-		{
-			env->tu_tab[index][save] = -2;
-			env->tu_tab[save][index] = -2;
-			env->tu_cut = 1;
-		}
-		else
-			env->tu_tab[index][save] = -1;
-		if (add_path_index(&path, index, env) == -1)
-			return (-1);
-	}
-	cr = path;
-	while (cr != NULL)
-	{
-		path->len++;
-		cr = cr->next_room;
-	}
 	add_path_lst(env, path);
 	return (0);
 }

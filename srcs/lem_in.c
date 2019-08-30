@@ -185,6 +185,20 @@ int			main(int argc, char **argv)
 		i++;
 		ft_printf("\n");
 	}
+	t_path	*cr_path = env->path_lst[0];
+	t_path	*cr_room = NULL;
+	while (cr_path != NULL)
+	{
+		ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
+		cr_room = cr_path;
+		while (cr_room != NULL)
+		{
+			ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
+			cr_room = cr_room->next_room;
+		}
+		cr_path = cr_path->next_path;
+		ft_printf("\n");
+	}
 	// A free ou a supprimer c est juste pour afficher les diffrents path
 	//	if (check_input(room_lst, nb_ants) == -1)
 	//		return (free_room_lst(&room_lst, 1));

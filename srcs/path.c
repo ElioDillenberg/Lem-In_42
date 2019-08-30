@@ -94,6 +94,8 @@ int   get_opti_path(t_env *env)
 
   path_one = env->path_lst[0];
   path_two = env->path_lst[1];
+  ft_printf("one : %p \n", env->path_lst[0]);
+    ft_printf("two : %p \n", env->path_lst[1]);
   if (!path_one || !path_two)
     return (-1);
   ft_printf("test\n");
@@ -107,7 +109,7 @@ int   get_opti_path(t_env *env)
     nb_path++;
   }
   ft_printf("size_one : %d / nb_path : %d \n", size_one, nb_path);
-  size_one = (size_one + env->nt_rm[0]) / nb_path;
+  size_one = (size_one + env->nt_rm[0] - 1) / nb_path;
   nb_path = 0;
   while (path_two)
   {
@@ -116,7 +118,7 @@ int   get_opti_path(t_env *env)
     nb_path++;
   }
   ft_printf("size_two : %d / nb_path : %d \n", size_two, nb_path);
-  size_two = (size_two + env->nt_rm[0]) / nb_path;
+  size_two = (size_two + env->nt_rm[0] - 1) / nb_path;
   ft_printf("roubd one : %d / round two : %d \n", size_one, size_two);
   return (size_one < size_two ? 0 : 1);
 }

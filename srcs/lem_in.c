@@ -108,9 +108,10 @@ t_env *init_env(t_env *env)
 	env->path_lst[0] = NULL;
 	env->path_lst[1] = NULL;
 	env->nb_path = 0;
-	env->path_i = 0;
 	env->rm_tab = NULL;
 	env->tu_cut = 0;
+	env->lf_path = 0;
+	env->cr_path = 0;
 	return (env);
 }
 
@@ -132,9 +133,11 @@ int			main(int argc, char **argv)
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
 	set_max_path(env);
+	t_path	*cr_path = env->path_lst[0];
+	t_path	*cr_room = NULL;
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	/*
-	   Tant qu on a pas trouve tous les chemin possible on cherche
+	   Tant qu on a pas trouve tous les chemins possible on cherche
 	   Chaque chemin possede une entree et une sortie disctinct :
 	   Le chemin 1 va partir de start pour aller a la room A
 	   Le chemin 2 va partir de staart et aller dans la room B
@@ -142,53 +145,118 @@ int			main(int argc, char **argv)
 	   Actuellemt on recher tous les chemin theoriquemt possible, maais si tu llance big.txt on se rend compte que lq plupart de chemins seront intilisees.
 	   Donc faudra opti la dessus car c est la partie la plus chronophage de l algo
 	   */
-	while (env->nb_path < env->max_path)
+	while (env->lf_path < env->max_path)
 	{
-//		view_tunnel_by_name(env);
-		// Parcours des rooms et creation de lien pere - fils
-		if (ft_bfs(env, 0) == -1)
-			return (free_all(env, 0, -1));
-		// Parcours du tableau de
-		// Extraction du chemin pere fils et on bouche les tunnels utilises
-		if (get_path(env) == -1)
-			return (free_all(env, 0, -1));
-		// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and
-		if (env->tu_cut == 1)
-			if (cut_and_reset(env) == -1)
+		env->lf_path++;
+		ft_printf("lf_path = %d\n", env->lf_path);
+		env->nb_path = 0;
+		ft_printf("MDR\n");
+		while (env->nb_path < env->lf_path)
+		{
+			ft_printf("DEBUG1\n");
+			ft_printf("nb_path = %d\n", env->nb_path);
+	//		view_tunnel_by_name(env);
+			// Parcours des rooms et creation de lien pere - fils
+			if (ft_bfs(env, 0) == -1)
 				return (free_all(env, 0, -1));
-		// Reset des rooms
-		reset_path_room(env);
-		// Si c est le dernier path on ne free pas, la fct free_exit va free
-		if (env->nb_path != env->max_path && (*env->rm_lst_path))
-			ft_roomdel(env->rm_lst_path);
-		if (env->nb_path > 1)
-			 ft_printf("Chemin opti : %d\n", get_opti_path(env));
+			ft_printf("lf_path = %d\n", env->lf_path);
+			ft_printf("DEBUG2\n");
+			// Parcours du tableau de
+			// Extraction du chemin pere fils et on bouche les tunnels utilises
+			if (get_path(env) == -1)
+				return (free_all(env, 0, -1));
+			ft_printf("lf_path = %d\n", env->lf_path);
+			ft_printf("DEBUG3\n");
+			// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and
+			if (env->tu_cut == 1)
+				if (cut_and_reset(env) == -1)
+					return (free_all(env, 0, -1));
+			ft_printf("lf_path = %d\n", env->lf_path);
+			ft_printf("DEBUG4\n");
+			// Reset des rooms
+			reset_path_room(env);
+			ft_printf("DEBUG5\n");
+			// Si c est le dernier path on ne free pas, la fct free_exit va free
+			if (env->nb_path != env->max_path && (*env->rm_lst_path))
+				ft_roomdel(env->rm_lst_path);
+			ft_printf("lf_path = %d\n", env->lf_path);
+			ft_printf("DEBUG6\n");
+		}
+		if (env->lf_path > 1)
+		{
+				ft_printf("Chemin opti : %d\n", get_opti_path(env));
+				ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		}
+
+		if (env->lf_path > 1)
+			if (get_opti_path(env) != env->cr_path)
+				break ;
+
+	////////		////////
+			cr_path = env->path_lst[0];
+			cr_room = NULL;
+			ft_printf("PATH_LST 0 : ");
+			while (cr_path != NULL)
+				{
+					ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
+					cr_room = cr_path;
+					while (cr_room != NULL)
+					{
+						ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
+						cr_room = cr_room->next_room;
+					}
+					cr_path = cr_path->next_path;
+					ft_printf("\n");
+				}
+				ft_printf("PATH_LST 1 : ");
+		cr_path = env->path_lst[1];
+			cr_room = NULL;
+
+				while (cr_path != NULL)
+					{
+						ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
+						cr_room = cr_path;
+						while (cr_room != NULL)
+						{
+							ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
+							cr_room = cr_room->next_room;
+						}
+						cr_path = cr_path->next_path;
+						ft_printf("\n");
+					}
+////////////////
+
+		env->path_lst[env->cr_path] = NULL;
+		env->cr_path = env->cr_path == 0 ? 1 : 0;
+		ft_printf("lf_path = %d\n", env->lf_path);
+		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		// env->path_lst[env->cr_path] = NULL;
 		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
 		// -> pas vraiment enfaite, il faudrait que cette boucle fasse partie d'une autre boucle. qui compare tour a tour:
 		// 1 chemin, 2 chemins, 3 chemins, 4 chemins, 5 chemins et ainsi de suite
 	}
 	// Supprime si il y a des path non valide
 	// Puis affiche les path
-	if (env->nb_path > 0)
-		if (check_path(env) == -1)
-			return (free_all(env, 0, -1));
+	// if (env->nb_path > 0)
+		// if (check_path(env) == -1)
+			// return (free_all(env, 0, -1));
 	// Parcours du tableau de path
-	int i = 0;
-	int j;
-	while (i < env->nb_path)
-	{
-		ft_printf("PATH [%d] : ", i);
-		j = 0;
-		while (env->path_tab[i][j] != -1)
-		{
-			ft_printf("[Index : %d | Salle : %s] - ", env->path_tab[i][j], env->rm_tab[env->path_tab[i][j]]->name);
-			j++;
-		}
-		i++;
-		ft_printf("\n");
-	}
-	t_path	*cr_path = env->path_lst[0];
-	t_path	*cr_room = NULL;
+	// int i = 0;
+	// int j;
+	// while (i < env->nb_path)
+	// {
+		// ft_printf("PATH [%d] : ", i);
+		// j = 0;
+		// while (env->path_tab[i][j] != -1)
+		// {
+			// ft_printf("[Index : %d | Salle : %s] - ", env->path_tab[i][j], env->rm_tab[env->path_tab[i][j]]->name);
+			// j++;
+		// }
+		// i++;
+		// ft_printf("\n");
+	// }
+	cr_path = env->path_lst[env->cr_path];
+	cr_room = NULL;
 	while (cr_path != NULL)
 	{
 		ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);

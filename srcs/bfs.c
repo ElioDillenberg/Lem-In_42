@@ -120,11 +120,11 @@ void	add_path_lst(t_env *env, t_path *path)
 	int		i;
 
 	i = 1;
-	cr = env->path_lst[env->path_i];
-	if (env->path_lst[env->path_i] == NULL)
+	cr = env->path_lst[env->cr_path];
+	if (env->path_lst[env->cr_path] == NULL)
 	{
 		path->nb = i;
-		env->path_lst[env->path_i] = path;
+		env->path_lst[env->cr_path] = path;
 	}
 	else
 	{
@@ -176,6 +176,7 @@ int		ft_bfs(t_env *env, int start)
 		if (!(*env->rm_lst_path))
 		{
 			env->max_path = env->nb_path;
+			env->nb_path++;
 			return (0);
 		}
 		// Si on a trouve la room end on incremente le nb de path trouve
@@ -264,6 +265,8 @@ int		get_path(t_env *env)
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}
+	ft_printf("path->len = %d", path->len);
+	ft_printf("and path->index = %d\n", path->index);
 	env->path = ft_strrev(env->path);
 	add_path_lst(env, path);
 	return (0);

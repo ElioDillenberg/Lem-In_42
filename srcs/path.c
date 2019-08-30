@@ -83,3 +83,40 @@ int find_path(t_env *env, int index, int path_nbr)
     find_path(env, i, path_nbr);
   return (0);
 }
+
+int   get_opti_path(t_env *env)
+{
+  int size_one;
+  int size_two;
+  int nb_path;
+  t_path *path_one;
+  t_path *path_two;
+
+  path_one = env->path_lst[0];
+  path_two = env->path_lst[1];
+  if (!path_one || !path_two)
+    return (-1);
+  ft_printf("test\n");
+  size_one = 0;
+  size_two = 0;
+  nb_path = 0;
+  while (path_one)
+  {
+    size_one += path_one->len;
+    path_one = path_one->next_path;
+    nb_path++;
+  }
+  ft_printf("size_one : %d / nb_path : %d \n", size_one, nb_path);
+  size_one = (size_one + env->nt_rm[0]) / nb_path;
+  nb_path = 0;
+  while (path_two)
+  {
+    size_two += path_two->len;
+    path_two = path_two->next_path;
+    nb_path++;
+  }
+  ft_printf("size_two : %d / nb_path : %d \n", size_two, nb_path);
+  size_two = (size_two + env->nt_rm[0]) / nb_path;
+  ft_printf("roubd one : %d / round two : %d \n", size_one, size_two);
+  return (size_one < size_two ? 0 : 1);
+}

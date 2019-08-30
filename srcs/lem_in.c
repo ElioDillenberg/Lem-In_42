@@ -148,11 +148,11 @@ int			main(int argc, char **argv)
 		// Parcours des rooms et creation de lien pere - fils
 		if (ft_bfs(env, 0) == -1)
 			return (free_all(env, 0, -1));
-		// Parcours du tableau de 
+		// Parcours du tableau de
 		// Extraction du chemin pere fils et on bouche les tunnels utilises
 		if (get_path(env) == -1)
 			return (free_all(env, 0, -1));
-		// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and 
+		// if we have detected one or several tunnels to destroy we need to destroy it/them, reset our path and
 		if (env->tu_cut == 1)
 			if (cut_and_reset(env) == -1)
 				return (free_all(env, 0, -1));
@@ -161,6 +161,8 @@ int			main(int argc, char **argv)
 		// Si c est le dernier path on ne free pas, la fct free_exit va free
 		if (env->nb_path != env->max_path && (*env->rm_lst_path))
 			ft_roomdel(env->rm_lst_path);
+		if (env->nb_path > 1)
+			 ft_printf("Chemin opti : %d\n", get_opti_path(env));
 		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
 		// -> pas vraiment enfaite, il faudrait que cette boucle fasse partie d'une autre boucle. qui compare tour a tour:
 		// 1 chemin, 2 chemins, 3 chemins, 4 chemins, 5 chemins et ainsi de suite

@@ -147,7 +147,7 @@ void				print_lst(t_env *env);
 */
 
 int					cut_and_reset(t_env *env);
-
+int   get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
 
 #endif

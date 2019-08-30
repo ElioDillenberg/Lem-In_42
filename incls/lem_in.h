@@ -60,6 +60,8 @@ typedef struct		s_env
 	int				ret;
 	int				path_i;
 	int				tu_cut;
+	int				lf_path;
+	int				cr_path;
 }					t_env;
 
 /*

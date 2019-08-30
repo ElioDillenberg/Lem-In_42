@@ -176,6 +176,7 @@ int		ft_bfs(t_env *env, int start)
 		if (!(*env->rm_lst_path))
 		{
 			env->max_path = env->nb_path;
+			env->nb_path++;
 			return (0);
 		}
 		// Si on a trouve la room end on incremente le nb de path trouve

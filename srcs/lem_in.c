@@ -133,6 +133,8 @@ int			main(int argc, char **argv)
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
 	set_max_path(env);
+	t_path	*cr_path = env->path_lst[0];
+	t_path	*cr_room = NULL;
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	/*
 	   Tant qu on a pas trouve tous les chemins possible on cherche
@@ -181,12 +183,50 @@ int			main(int argc, char **argv)
 			ft_printf("DEBUG6\n");
 		}
 		if (env->lf_path > 1)
+		{
 				ft_printf("Chemin opti : %d\n", get_opti_path(env));
+				ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		}
+
 		if (env->lf_path > 1)
 			if (get_opti_path(env) != env->cr_path)
 				break ;
-		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
-		// env->path_lst[env->cr_path] = NULL;
+
+	////////		////////
+			cr_path = env->path_lst[0];
+			cr_room = NULL;
+			ft_printf("PATH_LST 0 : ");
+			while (cr_path != NULL)
+				{
+					ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
+					cr_room = cr_path;
+					while (cr_room != NULL)
+					{
+						ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
+						cr_room = cr_room->next_room;
+					}
+					cr_path = cr_path->next_path;
+					ft_printf("\n");
+				}
+				ft_printf("PATH_LST 1 : ");
+		cr_path = env->path_lst[1];
+			cr_room = NULL;
+
+				while (cr_path != NULL)
+					{
+						ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
+						cr_room = cr_path;
+						while (cr_room != NULL)
+						{
+							ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
+							cr_room = cr_room->next_room;
+						}
+						cr_path = cr_path->next_path;
+						ft_printf("\n");
+					}
+////////////////
+
+		env->path_lst[env->cr_path] = NULL;
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
 		ft_printf("lf_path = %d\n", env->lf_path);
 		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
@@ -215,8 +255,8 @@ int			main(int argc, char **argv)
 		// i++;
 		// ft_printf("\n");
 	// }
-	t_path	*cr_path = env->path_lst[env->cr_path];
-	t_path	*cr_room = NULL;
+	cr_path = env->path_lst[env->cr_path];
+	cr_room = NULL;
 	while (cr_path != NULL)
 	{
 		ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);

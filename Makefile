@@ -52,7 +52,7 @@ $(NAME): $(LIBFT) $(OBJS) $(INCLS) Makefile
 	@echo "$(GREEN)TOUT EST -----------------------------------> OK$(NOCOLOR)"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	    $(CC) $(CFLAGS) -c -o $@ $<
+	    $(CC) -g3 $(CFLAGS) -c -o $@ $<
 
 $(LIBFT): FORCE
 	@echo "$(BLUE)⚡️ CHECKING LIBFT.A. . . . . . . . . . . . . . . . $(YELLOW)"

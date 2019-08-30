@@ -94,6 +94,8 @@ int   get_opti_path(t_env *env)
 
   path_one = env->path_lst[0];
   path_two = env->path_lst[1];
+  ft_printf("one : %p \n", env->path_lst[0]);
+    ft_printf("two : %p \n", env->path_lst[1]);
   if (!path_one || !path_two)
     return (-1);
   ft_printf("test\n");

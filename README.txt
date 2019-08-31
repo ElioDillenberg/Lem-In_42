@@ -48,4 +48,8 @@ respectivement N - 1 chemins et N chemins)
 - Il nous faut une fonction qui englode notre bfs+get_path, et qui limite le nombre de chemins que l'on veut trouver (d'abord 1, puis 2, puis 3, puis 4 et qui compare a chaque fois pour voir si on a besoin de continuer a chercher des chemnins)
 - Il faut modifier notre BFS, de maniere a ce qu'il reste coherent lorsque l'on parcours notre graphe en remontant le courant (cas de chemins empruntes etant deja empruntes dans l'autre sense)
 
-TO DO VENDREDI 30/08
+DONE SAMEDI 31/08
+-> regle le probleme de passage de rm_lst[0] a rm_lst[1]
+---> on supprime maintenant a chaque passage, et on relance un BFS de zero. On pourrait optimiser ca par la suite en ne supprimant que si on a besoin de peter des chemins et en faisant des copies des chemins precedents si aucun chemin n'a du etre casse
+--> Il faudra regler le probleme dans le BFS lorsqu'on casse un chemin (il faut creer une boucle separee, qui "remonte le temps")
+--> Il faut implementer une regle -> si je remonte le temps, je dois chercher a arreter de remonter le temps des que possible (si j'ai le choix entre remonter le temps ou non, je prefere ne pas remonter le temmps!)

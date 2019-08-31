@@ -176,6 +176,7 @@ int		ft_bfs(t_env *env, int start)
 		if (!(*env->rm_lst_path))
 		{
 			env->max_path = env->nb_path;
+			env->nb_path++;
 			return (0);
 		}
 		// Si on a trouve la room end on incremente le nb de path trouve
@@ -198,10 +199,9 @@ int		get_path(t_env *env)
 	int parent;
 	int index;
 	int save;
-	char *tmp;
 	t_path	*path;
 	t_path	*cr;
-
+	
 	path = NULL;
 	cr = NULL;
 	//On prends l index de la case end et on cherche son pere
@@ -209,31 +209,6 @@ int		get_path(t_env *env)
 	parent = env->rm_tab[index]->parent;
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
-	// On join son nom dans le path suivis d un espace pour delimiter
-	if (!(tmp = ft_strrev(ft_itoa(index))))
-		return (-1);
-	if (!(env->path = ft_strrev(env->path)))
-	{
-		ft_memdel((void**)&tmp);
-		return (-1);
-	}
-	if (!(env->path = ft_joinfree(env->path, "|")))
-	{
-		ft_memdel((void**)&tmp);
-		return (-1);
-	}
-	if (!(env->path = ft_joinfree(env->path, tmp)))
-	{
-		ft_memdel((void**)&tmp);
-		return (-1);
-	}
-	if (!(env->path = ft_joinfree(env->path, " ")))
-	{
-		ft_memdel((void**)&tmp);
-		return (-1);
-	}
-	ft_memdel((void **)&tmp);
-	// Tant qu on est pas sur la case start (qui na pas de pere ;( ) on continue)
 	while (env->rm_tab[index]->parent != -1)
 	{
 		save = index;
@@ -250,23 +225,9 @@ int		get_path(t_env *env)
 		}
 		else
 			env->tu_tab[index][save] = -1;
-		if (!(tmp = ft_strrev(ft_itoa(index))))
-			return (-1);
-		if (!(env->path = ft_joinfree(env->path, tmp)))
-		{
-			ft_memdel((void**)&tmp);
-			return (-1);
-		}
-		ft_memdel((void **)&tmp);
-		if (env->rm_tab[index]->parent != -1)
-			if (!(env->path = ft_joinfree(env->path, " ")))
-				return (-1);
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}
-	ft_printf("path->len = %d", path->len);
-	ft_printf("and path->index = %d\n", path->index);
-	env->path = ft_strrev(env->path);
 	add_path_lst(env, path);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/12 17:14:14 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/08/31 15:48:36 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ int			main(int argc, char **argv)
 	//view_tunnel_by_name(env);
 	ft_printf("\n\n");
 	set_max_path(env);
-	t_path	*cr_path = env->path_lst[0];
-	t_path	*cr_room = NULL;
 	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	t_path	*cr_path_print = env->path_lst[0];
 	t_path	*cr_room_print = NULL;
@@ -196,21 +194,12 @@ int			main(int argc, char **argv)
 		ft_printf("\n");
 		if (env->lf_path > 1)
 		{
-<<<<<<< HEAD
 			ft_printf("Chemin opti : %d\n", get_opti_path(env));
 			ft_printf("env->cr_path = %d\n", env->cr_path);
-=======
-				ft_printf("Chemin opti : %d\n", get_opti_path(env));
-				ft_path_lst_del(&(env->path_lst[env->cr_path]));
-		}
-
-		if (env->lf_path > 1)
->>>>>>> origin
 			if (get_opti_path(env) != env->cr_path)
 			{
 				ft_printf("ON BREAK MAINTENANT!!!\n");
 				break ;
-<<<<<<< HEAD
 			}
 			else
 			{
@@ -220,82 +209,6 @@ int			main(int argc, char **argv)
 			ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
 			env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
-=======
-
-	////////		////////
-			cr_path = env->path_lst[0];
-			cr_room = NULL;
-			ft_printf("PATH_LST 0 : ");
-			while (cr_path != NULL)
-				{
-					ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
-					cr_room = cr_path;
-					while (cr_room != NULL)
-					{
-						ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
-						cr_room = cr_room->next_room;
-					}
-					cr_path = cr_path->next_path;
-					ft_printf("\n");
-				}
-				ft_printf("PATH_LST 1 : ");
-		cr_path = env->path_lst[1];
-			cr_room = NULL;
-
-				while (cr_path != NULL)
-					{
-						ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
-						cr_room = cr_path;
-						while (cr_room != NULL)
-						{
-							ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
-							cr_room = cr_room->next_room;
-						}
-						cr_path = cr_path->next_path;
-						ft_printf("\n");
-					}
-////////////////
-
-		env->path_lst[env->cr_path] = NULL;
-		env->cr_path = env->cr_path == 0 ? 1 : 0;
-		ft_printf("lf_path = %d\n", env->lf_path);
-		// ft_path_lst_del(&(env->path_lst[env->cr_path]));
-		// env->path_lst[env->cr_path] = NULL;
-		//ICI, FAIRE EN SORTE DE BASCULER SUR LE DEUXIEME ESPACE DE STOCKAGE DE PATHS, EN FONCTION DE CE QUE J'AURAI DECIDE
-		// -> pas vraiment enfaite, il faudrait que cette boucle fasse partie d'une autre boucle. qui compare tour a tour:
-		// 1 chemin, 2 chemins, 3 chemins, 4 chemins, 5 chemins et ainsi de suite
-	}
-	// Supprime si il y a des path non valide
-	// Puis affiche les path
-	// if (env->nb_path > 0)
-		// if (check_path(env) == -1)
-			// return (free_all(env, 0, -1));
-	// Parcours du tableau de path
-	// int i = 0;
-	// int j;
-	// while (i < env->nb_path)
-	// {
-		// ft_printf("PATH [%d] : ", i);
-		// j = 0;
-		// while (env->path_tab[i][j] != -1)
-		// {
-			// ft_printf("[Index : %d | Salle : %s] - ", env->path_tab[i][j], env->rm_tab[env->path_tab[i][j]]->name);
-			// j++;
-		// }
-		// i++;
-		// ft_printf("\n");
-	// }
-	cr_path = env->path_lst[env->cr_path];
-	cr_room = NULL;
-	while (cr_path != NULL)
-	{
-		ft_printf("PATH [%d] (len = %d) : ", cr_path->nb, cr_path->len);
-		cr_room = cr_path;
-		while (cr_room != NULL)
-		{
-			ft_printf("[Index : %d | Salle : %s] - ", cr_room->index, env->rm_tab[cr_room->index]->name);
-			cr_room = cr_room->next_room;
->>>>>>> origin
 		}
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
 		ft_printf("----------\n");

@@ -204,12 +204,12 @@ int			main(int argc, char **argv)
 			else
 			{
 			ft_printf("ON DOIT EFFACER LE PRECEDENT ET RELANCER BFS FRAIS\n");
-			cut_and_reset(env, 0);
-			reset_path_room(env);
 			ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
 			env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
+		cut_and_reset(env, 0);
+		reset_path_room(env);
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
 		ft_printf("----------\n");
 	}

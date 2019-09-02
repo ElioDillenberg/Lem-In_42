@@ -124,8 +124,7 @@ void				free_tab(char **tab);
 */
 int					find_path(t_env *env, int index, int path_nbr);
 int 				get_connection(t_env *env, int i, int index, int path_nbr);
-int					get_connection_free(t_env *env, int i, int index,
-		int path_nbr);
+int					get_connection_free(t_env *env, int i, int index, int path_nbr);
 int					choose_room(t_env *env, int path_nbr, int index);
 /*
 ******************************** Util_path.c ***********************************
@@ -147,8 +146,8 @@ void				print_lst(t_env *env);
 ******************************** cut.c ****************************************
 */
 
-int					cut_and_reset(t_env *env);
-int   get_opti_path(t_env *env);
+void				cut_and_reset(t_env *env, int opt);
+int   				get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
 
 #endif

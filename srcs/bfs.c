@@ -89,6 +89,8 @@ int		add_path_index(t_path **path, int index, t_env *env)
 	if (!(new = (t_path*)malloc(sizeof(t_path))))
 		return (-1);
 	new->index = index;
+	new->ant = 0;
+	new->prev_room = NULL;
 	if (*path == NULL)
 	{
 		*path = new;
@@ -96,6 +98,7 @@ int		add_path_index(t_path **path, int index, t_env *env)
 		new->nb = env->nb_path;
 		new->next_room = NULL;
 		new->next_path = NULL;
+		new->tail_path = new;
 	}
 	else
 	{
@@ -106,6 +109,9 @@ int		add_path_index(t_path **path, int index, t_env *env)
 		new->nb = new->next_room->nb;
 		new->next_room->nb = 0;
 		new->next_room->len = 0;
+		new->tail_path = new->next_room->tail_path;
+		new->next_room->tail_path = NULL;
+		new->next_room->prev_room = new;
 	}
 	return (0);
 }

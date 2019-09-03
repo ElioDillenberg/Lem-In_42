@@ -17,6 +17,7 @@ void       result(t_env *env)
 {
     t_path  *cr;
 
+<<<<<<< HEAD
     cr = NULL;
     ft_printf("\n");
     while (env->ants_end < env->nt_rm[0])
@@ -49,4 +50,9 @@ void       result(t_env *env)
         }
         ft_printf("\n");
     }    
+=======
+    cr = env->path_lst[env->cr_path];
+    if (env->cr_path == 0)
+        return;
+>>>>>>> 15344258423ad593248ecff76a0980b7b79d3f61
 }

@@ -1,5 +1,4 @@
-4
-#This it the typical example
+6
 #rooms
 ##start
 start 0 0

@@ -50,7 +50,6 @@ int		free_all(t_env *env, int opt, int ret)
 	ft_path_lst_del(&(env->path_lst[1]));
 	ft_memdel((void**)&(env)->path_lst);
 	ft_roomdel(env->rm_lst);
-	// ft_memdel((void**)&(env)->path);
 	ft_memdel((void **)&(env)->rm_lst_path);
 	ft_memdel((void **)&(env)->rm_lst);
 	ft_memdel((void **)&(env)->rm_tab);
@@ -113,6 +112,7 @@ void	ft_pathdel(t_path **path)
 	}
 	ft_memdel((void**)&cr);
 }
+
 void	ft_path_lst_del(t_path **path_lst)
 {
 	t_path	*cr;

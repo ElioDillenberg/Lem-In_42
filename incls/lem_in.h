@@ -39,8 +39,11 @@ typedef struct		s_path
 	int				nb;
 	int				len;
 	int				index;
+	int				ant;
 	struct s_path	*next_path;
+	struct s_path	*tail_path;
 	struct s_path	*next_room;
+	struct s_path	*prev_room;
 }					t_path;
 
 typedef struct		s_env
@@ -53,6 +56,8 @@ typedef struct		s_env
 	int 			**path_tab;
 	char			*to_print;
 	char			*path;
+	int				ants_end;
+	int				next_ant;
 	int				nb_path;
 	int				max_path;
 	int				nt_rm[2];
@@ -149,5 +154,11 @@ void				print_lst(t_env *env);
 void				cut_and_reset(t_env *env, int opt);
 int   				get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
+
+/*
+******************************** result.c *************************************
+*/
+
+void				result(t_env *env);
 
 #endif

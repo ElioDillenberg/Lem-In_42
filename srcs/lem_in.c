@@ -104,6 +104,8 @@ t_env *init_env(t_env *env)
 	env->tu_cut = 0;
 	env->lf_path = 0;
 	env->cr_path = 0;
+	env->ants_end = 0;
+	env->next_ant = 1;
 	return (env);
 }
 
@@ -122,12 +124,11 @@ int			main(int argc, char **argv)
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
 	ft_putstr(env->to_print);
-	//view_tunnel_by_name(env);
-	ft_printf("\n\n");
+	// ft_printf("\n\n");
 	set_max_path(env);
-	ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
-	t_path	*cr_path_print = env->path_lst[0];
-	t_path	*cr_room_print = NULL;
+	// ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
+	// t_path	*cr_path_print = env->path_lst[0];
+	// t_path	*cr_room_print = NULL;
 	/*
 	   Tant qu on a pas trouve tous les chemins possible on cherche
 	   Chaque chemin possede une entree et une sortie disctinct :
@@ -140,7 +141,7 @@ int			main(int argc, char **argv)
 	while (env->lf_path < env->max_path)
 	{
 		env->lf_path++;
-		ft_printf("----------\nlf_path = %d\n", env->lf_path);
+		// ft_printf("----------\nlf_path = %d\n", env->lf_path);
 		env->nb_path = 0;
 		while (env->nb_path < env->lf_path)
 		{
@@ -160,50 +161,51 @@ int			main(int argc, char **argv)
 			if (env->nb_path != env->max_path && (*env->rm_lst_path))
 				ft_roomdel(env->rm_lst_path);
 		}
-		cr_path_print = env->path_lst[0];
-		cr_room_print = NULL;
-		ft_printf("PATH_LST 0 : \n");
-		while (cr_path_print != NULL)
-		{
-			ft_printf("PATH [%d] (len = %d) : ", cr_path_print->nb, cr_path_print->len);
-			cr_room_print = cr_path_print;
-			while (cr_room_print != NULL)
-			{
-				ft_printf("[Index : %d | Salle : %s] - ", cr_room_print->index, env->rm_tab[cr_room_print->index]->name);
-				cr_room_print = cr_room_print->next_room;
-			}
-			cr_path_print = cr_path_print->next_path;
-			ft_printf("\n");
-		}
-		ft_printf("\n");
-		ft_printf("PATH_LST 1 : \n");
-		cr_path_print = env->path_lst[1];
-		cr_room_print = NULL;
-		while (cr_path_print != NULL)
-		{
-			ft_printf("PATH [%d] (len = %d) : ", cr_path_print->nb, cr_path_print->len);
-			cr_room_print = cr_path_print;
-			while (cr_room_print != NULL)
-			{
-				ft_printf("[Index : %d | Salle : %s] - ", cr_room_print->index, env->rm_tab[cr_room_print->index]->name);
-				cr_room_print = cr_room_print->next_room;
-			}
-			cr_path_print = cr_path_print->next_path;
-			ft_printf("\n");
-		}
-		ft_printf("\n");
+		// cr_path_print = env->path_lst[0];
+		// cr_room_print = NULL;
+		// // ft_printf("PATH_LST 0 : \n");
+		// while (cr_path_print != NULL)
+		// {
+		// 	// ft_printf("PATH [%d] (len = %d) : ", cr_path_print->nb, cr_path_print->len);
+		// 	cr_room_print = cr_path_print;
+		// 	while (cr_room_print != NULL)
+		// 	{
+		// 		ft_printf("[Index : %d | Salle : %s] - ", cr_room_print->index, env->rm_tab[cr_room_print->index]->name);
+		// 		cr_room_print = cr_room_print->next_room;
+		// 	}
+		// 	cr_path_print = cr_path_print->next_path;
+		// 	ft_printf("\n");
+		// }
+		// ft_printf("\n");
+		// ft_printf("PATH_LST 1 : \n");
+		// cr_path_print = env->path_lst[1];
+		// cr_room_print = NULL;
+		// while (cr_path_print != NULL)
+		// {
+		// 	// ft_printf("PATH [%d] (len = %d) : ", cr_path_print->nb, cr_path_print->len);
+		// 	cr_room_print = cr_path_print;
+		// 	while (cr_room_print != NULL)
+		// 	{
+		// 		// ft_printf("[Index : %d | Salle : %s] - ", cr_room_print->index, env->rm_tab[cr_room_print->index]->name);
+		// 		cr_room_print = cr_room_print->next_room;
+		// 	}
+		// 	cr_path_print = cr_path_print->next_path;
+		// 	// ft_printf("\n");
+		// }
+		// // ft_printf("\n");
 		if (env->lf_path > 1)
 		{
-			ft_printf("Chemin opti : %d\n", get_opti_path(env));
-			ft_printf("env->cr_path = %d\n", env->cr_path);
+			// ft_printf("Chemin opti : %d\n", get_opti_path(env));
+			// ft_printf("env->cr_path = %d\n", env->cr_path);
 			if (get_opti_path(env) != env->cr_path)
 			{
-				ft_printf("ON BREAK MAINTENANT!!!\n");
+				// ft_printf("ON BREAK MAINTENANT!!!\n");
+				env->cr_path = env->cr_path == 0 ? 1 : 0;
 				break ;
 			}
 			else
 			{
-			ft_printf("ON DOIT EFFACER LE PRECEDENT ET RELANCER BFS FRAIS\n");
+			// ft_printf("ON DOIT EFFACER LE PRECEDENT ET RELANCER BFS FRAIS\n");
 			ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
 			env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
@@ -211,8 +213,10 @@ int			main(int argc, char **argv)
 		cut_and_reset(env, 0);
 		reset_path_room(env);
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
-		ft_printf("----------\n");
+		// ft_printf("----------\n");
 	}
-	ft_printf("REACHED THE END \n");
+	// ft_printf("REACHED THE END -- Getting result...\n");
+	result(env);
+	// ft_printf("FREEING AND CYA NERDS\n");
 	return (free_all(env, 0, 0));
 }

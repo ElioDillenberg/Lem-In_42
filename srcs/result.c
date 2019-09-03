@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 19:30:01 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/02 19:30:03 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/03 16:46:40 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void       result(t_env *env)
 {
     t_path  *cr;
 
-<<<<<<< HEAD
     cr = NULL;
     ft_printf("\n");
     while (env->ants_end < env->nt_rm[0])
@@ -50,9 +49,7 @@ void       result(t_env *env)
         }
         ft_printf("\n");
     }    
-=======
     cr = env->path_lst[env->cr_path];
     if (env->cr_path == 0)
         return;
->>>>>>> 15344258423ad593248ecff76a0980b7b79d3f61
 }

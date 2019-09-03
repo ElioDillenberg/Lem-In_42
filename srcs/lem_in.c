@@ -218,5 +218,14 @@ int			main(int argc, char **argv)
 	// ft_printf("REACHED THE END -- Getting result...\n");
 	result(env);
 	// ft_printf("FREEING AND CYA NERDS\n");
+	env->toprint = ft_strnew(0);
+	strcat_big("bonjour", env);
+	strcat_big(" salut", env);
+	strcat_big(" |||||||", env);
+	strcat_big("123456789", env);
+	strcat_big("012345678910", env);
+	if (env->buffer[0] != '\0')
+		env->toprint = ft_strjoin(env->toprint, env->buffer);
+	ft_printf("[%s]\n", env->toprint);
 	return (free_all(env, 0, 0));
 }

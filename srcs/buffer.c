@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 10:28:20 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/04 10:28:21 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/04 11:45:08 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int strcat_big(char *src, char **dest, t_env *env)
+int		strcat_big(char *src, char **dest, t_env *env)
 {
 	int i;
 	int index;
 	int len;
 
-	i = 0;
+	i = -1;
 	index = env->buffer_len;
 	len = ft_strlen(src) + 1;
 	env->map_len += len;
@@ -29,23 +29,20 @@ int strcat_big(char *src, char **dest, t_env *env)
 	{
 		env->tmp = *dest;
 		if (!(*dest = ft_strjoin(env->tmp, env->buffer)))
-      return (0);
+			return (0);
 		ft_memdel((void **)&(env)->tmp);
 		reset_buffer(env);
 		index = env->buffer_len;
 	}
-	while (src[i])
-	{
+	while (src[++i])
 		env->buffer[index + i] = src[i];
-		i++;
-	}
 	env->buffer[index + i] = '\n';
-  env->buffer[index + i + 1] = '\0';
+	env->buffer[index + i + 1] = '\0';
 	env->buffer_len += i + 1;
 	return (1);
 }
 
-void reset_buffer(t_env *env)
+void	reset_buffer(t_env *env)
 {
 	int i;
 
@@ -58,7 +55,7 @@ void reset_buffer(t_env *env)
 	env->buffer_len = 0;
 }
 
-t_env *check_buffer(t_env *env, char **dest)
+t_env	*check_buffer(t_env *env, char **dest)
 {
 	if (env->buffer[0] != '\0')
 	{

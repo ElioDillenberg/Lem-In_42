@@ -207,7 +207,7 @@ int		get_path(t_env *env)
 	int save;
 	t_path	*path;
 	t_path	*cr;
-	
+
 	path = NULL;
 	cr = NULL;
 	//On prends l index de la case end et on cherche son pere

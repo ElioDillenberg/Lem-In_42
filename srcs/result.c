@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <unistd.h>
 
-void       result(t_env *env)
+int     result(t_env *env)
 {
     t_path  *cr;
 
@@ -35,7 +35,8 @@ void       result(t_env *env)
                 //looping through the path starting from end until we reach first room before start
                 if (cr->ant)
                 {
-                    ft_printf("L%d-%s ", cr->ant, env->rm_tab[cr->index]->name);
+                    if (ft_printf("L%d-%s ", cr->ant, env->rm_tab[cr->index]->name) == -1)
+                        return (-1);
                     if (cr->next_room == NULL)
                         env->ants_end++;
                     else
@@ -50,7 +51,5 @@ void       result(t_env *env)
         }
         write(1, "\n", 1);
     }
-    cr = env->path_lst[env->cr_path];
-    if (env->cr_path == 0)
-        return;
+    return (0);
 }

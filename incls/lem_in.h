@@ -167,6 +167,6 @@ char				**ft_split(char const *s, char c);
 ******************************** result.c *************************************
 */
 
-void				result(t_env *env);
+int					result(t_env *env);
 
 #endif

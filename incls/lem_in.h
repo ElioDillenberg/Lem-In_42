@@ -12,7 +12,7 @@
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-# define BUF_SIZE 15
+# define BUF_SIZE 10000
 # include <string.h>
 # include <stdbool.h>
 
@@ -56,10 +56,12 @@ typedef struct		s_env
 	int				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
-	char 			*toprint;
+	char 			*map;
 	char			*path;
 	char			buffer[BUF_SIZE];
+	char			*tmp;
 	int       buffer_len;
+	int       map_len;
 	int				ants_end;
 	int				next_ant;
 	int				nb_path;
@@ -150,8 +152,9 @@ char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
 void				print_lst(t_env *env);
-int strcat_big(char *src, t_env *env);
+int strcat_big(char *src, char **dest, t_env *env);
 void reset_buffer(t_env *env);
+t_env				*check_buffer(t_env *env, char **dest);
 /*
 ******************************** cut.c ****************************************
 */

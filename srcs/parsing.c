@@ -56,14 +56,14 @@ int parsing(t_env *env)
 		{
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));
-			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 		}
 		else if (line[0] == '#' && line[1] == '#')
 		{
 			if (get_command(line, start_end) == -1)
 				return (exit_parsing(&line, 0, env));
-			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
@@ -71,7 +71,7 @@ int parsing(t_env *env)
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));
 			env->nt_rm[0] = ft_atoui(line);
-			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 			index++;
 		}
@@ -81,7 +81,7 @@ int parsing(t_env *env)
 			{
 				if (add_room(line, env->rm_lst, start_end) == -1)
 					return (exit_parsing(&line, -1, env));
-				if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				if (!(strcat_big(line, &(env)->map, env)))
 					return (exit_parsing(&line, -1, env));
 			}
 			else if (is_tunnel(line, env->rm_lst) != -1)
@@ -94,7 +94,7 @@ int parsing(t_env *env)
 					return (exit_parsing(&line, -1, env));
 				get_tunnel(env, line);
 				index++;
-				if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+				if (!(strcat_big(line, &(env)->map, env)))
 					return (exit_parsing(&line, -1, env));
 			}
 			else
@@ -105,12 +105,13 @@ int parsing(t_env *env)
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));
 			get_tunnel(env, line);
-			if (!(env->to_print = ft_strjoinlemin(&(env)->to_print, &line, 1)))
+			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 		}
 		else
 			return (exit_parsing(&line, 0, env));
 		ft_memdel((void**)&line);
 	}
+	env = check_buffer(env, &(env)->map);
 	return (exit_parsing(&line, 0, env));
 }

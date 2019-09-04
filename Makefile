@@ -19,7 +19,7 @@ LIBFT = libft/libft.a
 OBJDIR = objs
 SRCDIR = srcs
 
-SC = $(addsuffix .c, lem_in get_parsing_tools parsing \
+SC = $(addsuffix .c, lem_in get_parsing_tools parsing  buffer \
 	   is_parsing_tools is_tunnel free path util_path util bfs util_bfs cut result)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))

@@ -96,6 +96,7 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
+	env->map =ft_strnew(0);
 	env->path_tab = NULL;
 	env->path_lst[0] = NULL;
 	env->path_lst[1] = NULL;
@@ -106,6 +107,7 @@ t_env *init_env(t_env *env)
 	env->cr_path = 0;
 	env->ants_end = 0;
 	env->next_ant = 1;
+	env->map_len = 0;
 	return (env);
 }
 
@@ -216,16 +218,9 @@ int			main(int argc, char **argv)
 		// ft_printf("----------\n");
 	}
 	// ft_printf("REACHED THE END -- Getting result...\n");
-	result(env);
 	// ft_printf("FREEING AND CYA NERDS\n");
-	env->toprint = ft_strnew(0);
-	strcat_big("bonjour", env);
-	strcat_big(" salut", env);
-	strcat_big(" |||||||", env);
-	strcat_big("123456789", env);
-	strcat_big("012345678910", env);
-	if (env->buffer[0] != '\0')
-		env->toprint = ft_strjoin(env->toprint, env->buffer);
-	ft_printf("[%s]\n", env->toprint);
+	write(1, env->map, env->map_len);
+	result(env);
+	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));
 }

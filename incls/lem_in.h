@@ -41,6 +41,7 @@ typedef struct		s_path
 	int				len;
 	int				index;
 	int				ant;
+	int				strt_ants;
 	struct s_path	*next_path;
 	struct s_path	*tail_path;
 	struct s_path	*next_room;
@@ -73,6 +74,8 @@ typedef struct		s_env
 	int				lf_path;
 	int				cr_path;
 	int				round;
+	int				mod_ants;
+	int				total_rounds;
 }					t_env;
 
 /*

@@ -73,6 +73,7 @@ int		add_path_index(t_path **path, int index, t_env *env)
 		return (-1);
 	new->index = index;
 	new->ant = 0;
+	new->strt_ants = 0;
 	new->next_path = NULL;
 	new->prev_room = NULL;
 	new->tail_path = NULL;

@@ -109,6 +109,8 @@ t_env *init_env(t_env *env)
 	env->next_ant = 1;
 	env->map_len = 0;
 	env->round = 0;
+	env->mod_ants = 0;
+	env->total_rounds = 0;
 	return (env);
 }
 

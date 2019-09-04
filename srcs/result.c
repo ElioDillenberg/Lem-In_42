@@ -14,11 +14,20 @@
 #include "../libft/libft.h"
 #include <unistd.h>
 
+//creer ici la fonction qui va me permettre de recuperer le nombre de fourmis par chemins
+void    get_strt_ants(t_env *env)
+{
+    t_path  *cr;
+
+    cr = env->path_lst[env->cr_path];
+}
+
 int     result(t_env *env)
 {
     t_path  *cr;
 
     cr = NULL;
+    ft_printf("env->total_rounds = %d\nenv->mod_ants = %d\n", env->total_rounds, env->mod_ants);
     write(1, "\n", 1);
     while (env->ants_end < env->nt_rm[0])
     {

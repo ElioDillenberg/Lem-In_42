@@ -12,7 +12,7 @@
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
-# define BUF_SIZE 10000
+# define BUF_SIZE 4096
 # include <string.h>
 # include <stdbool.h>
 

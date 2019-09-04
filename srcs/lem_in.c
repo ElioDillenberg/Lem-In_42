@@ -219,6 +219,7 @@ int			main(int argc, char **argv)
 	}
 	// ft_printf("REACHED THE END -- Getting result...\n");
 	// ft_printf("FREEING AND CYA NERDS\n");
+	reset_buffer(env);
 	write(1, env->map, env->map_len);
 	result(env);
 	ft_memdel((void **)&(env)->map);

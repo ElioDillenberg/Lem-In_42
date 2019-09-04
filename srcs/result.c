@@ -12,17 +12,20 @@
 
 #include "../incls/lem_in.h"
 #include "../libft/libft.h"
+#include <unistd.h>
 
 void       result(t_env *env)
 {
     t_path  *cr;
 
     cr = NULL;
-    ft_printf("\n");
+    write(1, "\n", 1);
     while (env->ants_end < env->nt_rm[0])
     {
         //looping while not all ants have arrived
         cr = env->path_lst[env->cr_path];
+        if (!cr)
+          env->cr_path = env->cr_path == 1 ? 0 : 1;
         while (cr != NULL)
         {
             //looping while we still have paths
@@ -47,8 +50,8 @@ void       result(t_env *env)
             }
             cr = cr->next_path;
         }
-        ft_printf("\n");
-    }    
+        write(1, "\n", 1);
+    }
     cr = env->path_lst[env->cr_path];
     if (env->cr_path == 0)
         return;

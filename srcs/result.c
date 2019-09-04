@@ -26,6 +26,8 @@ int     result(t_env *env)
         cr = env->path_lst[env->cr_path];
         if (!cr)
           env->cr_path = env->cr_path == 1 ? 0 : 1;
+        else
+          env->round++;
         while (cr != NULL)
         {
             //looping while we still have paths to explore
@@ -51,5 +53,6 @@ int     result(t_env *env)
         }
         write(1, "\n", 1);
     }
+    env->round--;
     return (0);
 }

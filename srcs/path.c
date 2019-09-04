@@ -89,6 +89,7 @@ int   get_opti_path(t_env *env)
   int size_one;
   int size_two;
   int nb_path;
+  int nb_path2;
   t_path *path_one;
   t_path *path_two;
 
@@ -99,20 +100,29 @@ int   get_opti_path(t_env *env)
   size_one = 0;
   size_two = 0;
   nb_path = 0;
+  nb_path2=0;
   while (path_one)
   {
     size_one += path_one->len;
     path_one = path_one->next_path;
     nb_path++;
   }
-  size_one = (size_one + env->nt_rm[0] - 1) / nb_path + (size_one + env->nt_rm[0] - 1) % nb_path;
-  nb_path = 0;
+  size_one = ((size_one + env->nt_rm[0] - 1) / nb_path);
   while (path_two)
   {
     size_two += path_two->len;
     path_two = path_two->next_path;
-    nb_path++;
+    nb_path2++;
   }
-  size_two = (size_two + env->nt_rm[0] - 1) / nb_path + (size_two + env->nt_rm[0] - 1) % nb_path;
+  size_two = ((size_two + env->nt_rm[0] - 1) / nb_path2);
+  ft_printf("s1 : %d | s2 : %d\n", size_one, size_two);
+  ft_printf("nbr path 1 : %d | nbr path 2 : %d\n", nb_path, nb_path2);
+  if (size_one == size_two)
+  {
+    if (env->cr_path == 1)
+      return (1);
+    else
+      return (0);
+  }
   return (size_one < size_two ? 0 : 1);
 }

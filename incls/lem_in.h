@@ -72,6 +72,7 @@ typedef struct		s_env
 	int				tu_cut;
 	int				lf_path;
 	int				cr_path;
+	int				round;
 }					t_env;
 
 /*

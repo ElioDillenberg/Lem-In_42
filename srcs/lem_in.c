@@ -108,6 +108,7 @@ t_env *init_env(t_env *env)
 	env->ants_end = 0;
 	env->next_ant = 1;
 	env->map_len = 0;
+	env->round = 0;
 	return (env);
 }
 
@@ -222,8 +223,11 @@ int			main(int argc, char **argv)
 	// ft_printf("REACHED THE END -- Getting result...\n");
 	// ft_printf("FREEING AND CYA NERDS\n");
 	reset_buffer(env);
-	write(1, env->map, env->map_len);
+	//write(1, env->map, env->map_len);
 	result(env);
+	if (env->round)
+		ft_printf("[ROUNDS : %d]\n", env->round);
+	ft_printf("NBR PATH %d\n", env->nb_path);
 	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));
 }

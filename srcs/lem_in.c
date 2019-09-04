@@ -128,6 +128,8 @@ int			main(int argc, char **argv)
 	ft_putstr(env->to_print);
 	// ft_printf("\n\n");
 	set_max_path(env);
+	if (env->max_path == 0)
+		return(free_all(env, 0, 0));
 	// ft_printf("MAX NBR OF PATH: %d\n", env->max_path);
 	// t_path	*cr_path_print = env->path_lst[0];
 	// t_path	*cr_room_print = NULL;

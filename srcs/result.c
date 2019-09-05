@@ -15,16 +15,17 @@
 #include <unistd.h>
 
 //creer ici la fonction qui va me permettre de recuperer le nombre de fourmis par chemins
-void    get_strt_ants(t_env *env)
+int    get_strt_ants(t_env *env)
 {
     t_path  *cr;
     int     total_ants;
     int     to_send;
+    int      mod;
 
-    ft_printf("COUCOU\n");
     to_send = 0;
     total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
+    mod = env->mod_ants;
     if (!cr)
     {
         env->cr_path = env->cr_path == 1 ? 0 : 1;
@@ -32,7 +33,8 @@ void    get_strt_ants(t_env *env)
     }
     while (cr != NULL)
     {
-        to_send = env->total_rounds - cr->len + 1;
+        if ((to_send = env->total_rounds - cr->len + 1) == 0)
+          return (0);
         if (total_ants >= to_send)
         {
             cr->strt_ants = to_send;
@@ -46,7 +48,7 @@ void    get_strt_ants(t_env *env)
         if (env->mod_ants > 0)
         {
             cr->strt_ants++;
-            env->mod_ants--;
+            mod--;
         }
         cr = cr->next_path;
     }
@@ -56,11 +58,14 @@ void    get_strt_ants(t_env *env)
         env->cr_path = env->cr_path == 1 ? 0 : 1;
         cr = env->path_lst[env->cr_path];
     }
+    /*
     while (cr != NULL)
     {
         ft_printf("strt_ants is %d for path %d\n", cr->strt_ants, cr->nb);
         cr = cr->next_path;
     }
+    */
+    return (1);
 }
 
 int     result(t_env *env)
@@ -70,11 +75,11 @@ int     result(t_env *env)
 
     cr = NULL;
     ft_printf("env->total_rounds = %d\nenv->mod_ants = %d\n", env->total_rounds, env->mod_ants);
-    get_strt_ants(env);
+    //get_strt_ants(env);
     write(1, "\n", 1);
     cr = env->path_lst[env->cr_path];
     if (!cr)
-          env->cr_path = env->cr_path == 1 ? 0 : 1;
+        env->cr_path = env->cr_path == 1 ? 0 : 1;
     while (env->ants_end < env->nt_rm[0])
     {
         //looping while not all ants have arrived

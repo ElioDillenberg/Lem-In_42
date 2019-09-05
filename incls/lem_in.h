@@ -169,7 +169,7 @@ char				**ft_split(char const *s, char c);
 /*
 ******************************** result.c *************************************
 */
-
+int    get_strt_ants(t_env *env);
 int					result(t_env *env);
 
 #endif

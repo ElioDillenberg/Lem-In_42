@@ -207,6 +207,7 @@ int			main(int argc, char **argv)
 			if (get_opti_path(env) != env->cr_path)
 			{
 				// ft_printf("ON BREAK MAINTENANT!!!\n");
+				if (env->lf_path > 2)
 				env->cr_path = env->cr_path == 0 ? 1 : 0;
 				break ;
 			}
@@ -228,7 +229,7 @@ int			main(int argc, char **argv)
 	//write(1, env->map, env->map_len);
 	result(env);
 	if (env->round)
-		ft_printf("[ROUNDS : %d]\n", env->round);
+		ft_printf("[ROUNDS : %d]\n", env->total_rounds);
 	ft_printf("NBR PATH %d\n", env->nb_path);
 	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));

@@ -36,4 +36,3 @@ int     get_option(t_env *env, char **argv)
     }
     return (0);
 }
-

@@ -61,8 +61,8 @@ typedef struct		s_env
 	char			*path;
 	char			buffer[BUF_SIZE];
 	char			*tmp;
-	int       buffer_len;
-	int       map_len;
+	int       		buffer_len;
+	int       		map_len;
 	int				ants_end;
 	int				next_ant;
 	int				nb_path;
@@ -125,7 +125,6 @@ int 				ft_bfs(t_env *env, int index);
 int					add_path_index(t_path **path, int index, t_env *env);
 void				add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
-int					get_path_2(t_env *env);
 void 				reset_path_room(t_env *env);
 /*
 ******************************** util_BFS.c *************************************
@@ -156,8 +155,8 @@ char				*ft_joinfree(char *s1, char *s2);
 char				*ft_strrev(char *str);
 char				*ft_strndup(const char *s1, size_t n);
 void				print_lst(t_env *env);
-int strcat_big(char *src, char **dest, t_env *env);
-void reset_buffer(t_env *env);
+int					strcat_big(char *src, char **dest, t_env *env);
+void				reset_buffer(t_env *env);
 t_env				*check_buffer(t_env *env, char **dest);
 /*
 ******************************** cut.c ****************************************

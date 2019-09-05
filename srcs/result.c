@@ -18,28 +18,72 @@
 void    get_strt_ants(t_env *env)
 {
     t_path  *cr;
+    int     total_ants;
+    int     to_send;
 
+    ft_printf("COUCOU\n");
+    to_send = 0;
+    total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
+    if (!cr)
+    {
+        env->cr_path = env->cr_path == 1 ? 0 : 1;
+        cr = env->path_lst[env->cr_path];
+    }
+    while (cr != NULL)
+    {
+        to_send = env->total_rounds - cr->len + 1;
+        if (total_ants >= to_send)
+        {
+            cr->strt_ants = to_send;
+            total_ants -= to_send;
+        }
+        else
+        {
+            cr->strt_ants = total_ants;
+            total_ants = 0;
+        }
+        if (env->mod_ants > 0)
+        {
+            cr->strt_ants++;
+            env->mod_ants--;
+        }
+        cr = cr->next_path;
+    }
+    cr = env->path_lst[env->cr_path];
+    if (!cr)
+    {
+        env->cr_path = env->cr_path == 1 ? 0 : 1;
+        cr = env->path_lst[env->cr_path];
+    }
+    while (cr != NULL)
+    {
+        ft_printf("strt_ants is %d for path %d\n", cr->strt_ants, cr->nb);
+        cr = cr->next_path;
+    }
 }
 
 int     result(t_env *env)
 {
     t_path  *cr;
+    t_path  *head;
 
     cr = NULL;
     ft_printf("env->total_rounds = %d\nenv->mod_ants = %d\n", env->total_rounds, env->mod_ants);
+    get_strt_ants(env);
     write(1, "\n", 1);
+    cr = env->path_lst[env->cr_path];
+    if (!cr)
+          env->cr_path = env->cr_path == 1 ? 0 : 1;
     while (env->ants_end < env->nt_rm[0])
     {
         //looping while not all ants have arrived
         cr = env->path_lst[env->cr_path];
-        if (!cr)
-          env->cr_path = env->cr_path == 1 ? 0 : 1;
-        else
-          env->round++;
+        env->round++;
         while (cr != NULL)
         {
             //looping while we still have paths to explore
+            head = cr;
             cr = cr->tail_path;
             while (cr->prev_room != NULL)
             {
@@ -54,8 +98,11 @@ int     result(t_env *env)
                         cr->next_room->ant = cr->ant;
                     cr->ant = 0;
                 }
-                if (cr->prev_room->len && env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0])
+                if (cr->prev_room->len && env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0] && head->strt_ants > 0)
+                {
                     cr->ant = env->next_ant++;
+                    head->strt_ants--;
+                }
                 cr = cr->prev_room;
             }
             cr = cr->next_path;

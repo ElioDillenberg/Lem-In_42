@@ -228,7 +228,7 @@ int			main(int argc, char **argv)
 	//write(1, env->map, env->map_len);
 	result(env);
 	if (env->round)
-		ft_printf("[ROUNDS : %d]\n", env->round);
+		ft_printf("[ROUNDS : %d]\n", env->total_rounds);
 	ft_printf("NBR PATH %d\n", env->nb_path);
 	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));

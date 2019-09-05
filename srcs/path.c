@@ -83,7 +83,7 @@ int find_path(t_env *env, int index, int path_nbr)
     find_path(env, i, path_nbr);
   return (0);
 }
-
+/*
 int   get_opti_path(t_env *env)
 {
   int size_one;
@@ -94,6 +94,7 @@ int   get_opti_path(t_env *env)
   int mod_two;
   t_path *path_one;
   t_path *path_two;
+
 
   path_one = env->path_lst[0];
   path_two = env->path_lst[1];
@@ -141,4 +142,36 @@ int   get_opti_path(t_env *env)
   env->mod_ants = size_one < size_two ? mod_one : mod_two;
   env->total_rounds = size_one < size_two ? size_one : size_two;
   return (size_one < size_two ? 0 : 1);
+}
+*/
+int   get_opti_path(t_env *env)
+{
+  t_path *path;
+  int nb_path;
+  int size;
+  int rounds;
+  int mod;
+
+  path = env->path_lst[env->cr_path];
+  size = 0;
+  nb_path = 0;
+  while (path)
+  {
+    size += path->len;
+    nb_path++;
+    path = path->next_path;
+  }
+  mod = (size + env->nt_rm[0]) % nb_path;
+  rounds = ((size + env->nt_rm[0]) / nb_path) - 1;
+  rounds += mod > 0 ? 1 : 0;
+  if (env->total_rounds >= rounds || env->total_rounds == 0)
+  {
+    if (get_strt_ants(env))
+    {
+      env->mod_ants = mod;
+      env->total_rounds = rounds;
+      return (env->cr_path);
+    }
+  }
+  return (env->cr_path == 1 ? 0 : 1);
 }

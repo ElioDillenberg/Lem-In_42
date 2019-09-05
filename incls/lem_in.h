@@ -76,6 +76,9 @@ typedef struct		s_env
 	int				round;
 	int				mod_ants;
 	int				total_rounds;
+	int				opt_rounds;
+	char			*opt_file_path;
+	int				opt_paths;
 }					t_env;
 
 /*
@@ -171,5 +174,11 @@ char				**ft_split(char const *s, char c);
 */
 
 int					result(t_env *env);
+
+/*
+******************************** result.c *************************************
+*/
+
+int					get_option(t_env *env, char **argv);
 
 #endif

@@ -41,6 +41,9 @@ int		free_all(t_env *env, int opt, int ret)
 	i = -1;
 	if (env->to_print)
 		ft_memdel((void**)&(env)->to_print);
+	if (env->opt_file_path)
+		ft_memdel((void**)&(env)->opt_file_path);
+	ft_memdel((void**)&(env)->map);
 	// if (env->nb_path)
 		// free_int_tab(env, env->nb_path, 1);
 	if (env->max_path)

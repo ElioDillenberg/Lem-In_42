@@ -96,7 +96,8 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
-	env->map =ft_strnew(0);
+	if (!(env->map = ft_strnew(0)))
+		return (NULL);
 	env->path_tab = NULL;
 	env->path_lst[0] = NULL;
 	env->path_lst[1] = NULL;
@@ -111,6 +112,9 @@ t_env *init_env(t_env *env)
 	env->round = 0;
 	env->mod_ants = 0;
 	env->total_rounds = 0;
+	env->opt_rounds = 0;
+	env->opt_paths = 0;
+	env->opt_file_path = NULL;
 	return (env);
 }
 
@@ -122,10 +126,11 @@ int			main(int argc, char **argv)
 	to_find = 1;
 	(void)argv;
 	env = NULL;
-	if (argc > 1)
-		return (-1);
 	if (!(env = init_env(env)))
 		return (-1);
+	if (argc > 1)
+		if (get_option(env, argv) == -1)
+			return (free_all(env, 0, 0));
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
 	ft_putstr(env->to_print);
@@ -222,8 +227,6 @@ int			main(int argc, char **argv)
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
 		// ft_printf("----------\n");
 	}
-	// ft_printf("REACHED THE END -- Getting result...\n");
-	// ft_printf("FREEING AND CYA NERDS\n");
 	reset_buffer(env);
 	//write(1, env->map, env->map_len);
 	result(env);

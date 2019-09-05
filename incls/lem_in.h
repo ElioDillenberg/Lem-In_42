@@ -154,11 +154,11 @@ void				free_tab(char **tab);
 /*
 ******************************** Util.c ****************************************
 */
-void				view_tunnel_by_name(t_env *env);
-char				*ft_joinfree(char *s1, char *s2);
-char				*ft_strrev(char *str);
-char				*ft_strndup(const char *s1, size_t n);
-void				print_lst(t_env *env);
+// void				view_tunnel_by_name(t_env *env);
+// char				*ft_joinfree(char *s1, char *s2);
+// char				*ft_strrev(char *str);
+// char				*ft_strndup(const char *s1, size_t n);
+// void				print_lst(t_env *env);
 int					strcat_big(char *src, char **dest, t_env *env);
 void				reset_buffer(t_env *env);
 t_env				*check_buffer(t_env *env, char **dest);
@@ -173,13 +173,13 @@ char				**ft_split(char const *s, char c);
 /*
 ******************************** result.c *************************************
 */
-int    get_strt_ants(t_env *env);
+int					get_strt_ants(t_env *env);
 int					result(t_env *env);
 
 /*
 ******************************** result.c *************************************
 */
-void print_path(t_env *env);
-int					get_option(t_env *env, char **argv);
+int					print_path(t_env *env);
+int					get_option(t_env *env, char **argv, int argc);
 
 #endif

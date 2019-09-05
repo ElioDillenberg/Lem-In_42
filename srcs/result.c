@@ -58,13 +58,6 @@ int    get_strt_ants(t_env *env)
         env->cr_path = env->cr_path == 1 ? 0 : 1;
         cr = env->path_lst[env->cr_path];
     }
-    /*
-    while (cr != NULL)
-    {
-        ft_printf("strt_ants is %d for path %d\n", cr->strt_ants, cr->nb);
-        cr = cr->next_path;
-    }
-    */
     return (1);
 }
 
@@ -72,12 +65,10 @@ int     result(t_env *env)
 {
     t_path  *cr;
     t_path  *head;
-    char buffer[1];
+    char    buffer[1];
+    int     no_space;
 
     cr = NULL;
-    ft_printf("env->total_rounds = %d\nenv->mod_ants = %d\n", env->total_rounds, env->mod_ants);
-    //get_strt_ants(env);
-    write(1, "\n", 1);
     cr = env->path_lst[env->cr_path];
     if (!cr)
         env->cr_path = env->cr_path == 1 ? 0 : 1;
@@ -86,6 +77,7 @@ int     result(t_env *env)
         //looping while not all ants have arrived
         cr = env->path_lst[env->cr_path];
         env->round++;
+        no_space = 0;
         if (env->opt_turn)
         {
           buffer[0] = '\0';
@@ -101,7 +93,8 @@ int     result(t_env *env)
                 //looping through the path starting from end until we reach first room before start
                 if (cr->ant)
                 {
-                    if (ft_printf("L%d-%s ", cr->ant, env->rm_tab[cr->index]->name) == -1)
+                    no_space == 0 ? no_space = 1 : write(1, " ", 1);
+                    if (ft_printf("L%d-%s", cr->ant, env->rm_tab[cr->index]->name) == -1)
                         return (-1);
                     if (cr->next_room == NULL)
                         env->ants_end++;

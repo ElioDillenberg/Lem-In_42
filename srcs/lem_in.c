@@ -130,7 +130,7 @@ int			main(int argc, char **argv)
 	if (!(env = init_env(env)))
 		return (-1);
 	if (argc > 1)
-		if (get_option(env, argv) == -1)
+		if (get_option(env, argv, argc) == -1)
 			return (free_all(env, 0, 0));
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
@@ -233,7 +233,8 @@ int			main(int argc, char **argv)
 	//write(1, env->map, env->map_len);
 	result(env);
 	if (env->round && env->opt_rounds)
-		ft_printf("[ROUNDS : %d]\n", env->total_rounds);
+		if (ft_printf("\n[ROUNDS : %d]\n", env->total_rounds) == -1)
+			return (free_all(env, 0, -1));
 	if (env->opt_paths)
 		print_path(env);
 	ft_memdel((void **)&(env)->map);

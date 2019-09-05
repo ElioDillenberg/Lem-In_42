@@ -207,6 +207,7 @@ int			main(int argc, char **argv)
 			if (get_opti_path(env) != env->cr_path)
 			{
 				// ft_printf("ON BREAK MAINTENANT!!!\n");
+				if (env->lf_path > 2)
 				env->cr_path = env->cr_path == 0 ? 1 : 0;
 				break ;
 			}

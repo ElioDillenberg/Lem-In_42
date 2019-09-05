@@ -164,14 +164,13 @@ int   get_opti_path(t_env *env)
   mod = (size + env->nt_rm[0]) % nb_path;
   rounds = ((size + env->nt_rm[0]) / nb_path) - 1;
   rounds += mod > 0 ? 1 : 0;
-  if (env->total_rounds >= rounds || env->total_rounds == 0)
+  if (env->total_rounds == 0)
+    env->total_rounds = rounds;
+  if (env->total_rounds >= rounds && get_strt_ants(env))
   {
-    if (get_strt_ants(env))
-    {
-      env->mod_ants = mod;
-      env->total_rounds = rounds;
-      return (env->cr_path);
-    }
+    env->mod_ants = mod;
+    env->total_rounds = rounds;
+    return (env->cr_path);
   }
   return (env->cr_path == 1 ? 0 : 1);
 }

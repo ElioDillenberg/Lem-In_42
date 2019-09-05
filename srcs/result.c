@@ -22,8 +22,6 @@ int    get_strt_ants(t_env *env)
     int     to_send;
     int      mod;
 
-    ft_printf("COUCOU\n");
-    ft_printf("TOTAL ANTS : %d\n", env->nt_rm[0]);
     to_send = 0;
     total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
@@ -60,11 +58,13 @@ int    get_strt_ants(t_env *env)
         env->cr_path = env->cr_path == 1 ? 0 : 1;
         cr = env->path_lst[env->cr_path];
     }
+    /*
     while (cr != NULL)
     {
         ft_printf("strt_ants is %d for path %d\n", cr->strt_ants, cr->nb);
         cr = cr->next_path;
     }
+    */
     return (1);
 }
 
@@ -79,7 +79,7 @@ int     result(t_env *env)
     write(1, "\n", 1);
     cr = env->path_lst[env->cr_path];
     if (!cr)
-          env->cr_path = env->cr_path == 1 ? 0 : 1;
+        env->cr_path = env->cr_path == 1 ? 0 : 1;
     while (env->ants_end < env->nt_rm[0])
     {
         //looping while not all ants have arrived

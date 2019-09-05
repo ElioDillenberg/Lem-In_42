@@ -115,6 +115,7 @@ t_env *init_env(t_env *env)
 	env->opt_rounds = 0;
 	env->opt_paths = 0;
 	env->opt_file_path = NULL;
+	env->opt_turn = 0;
 	return (env);
 }
 

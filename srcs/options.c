@@ -24,6 +24,8 @@ int     get_option(t_env *env, char **argv)
     }
     else if (ft_strcmp(argv[1], "-paths") == 0)
         env->opt_paths = 1;
+    else if (ft_strcmp(argv[1], "-turn") == 0)
+        env->opt_turn = 1;
     else
     {
         ft_putstr("\nusage: ./lem_in [option]\n");

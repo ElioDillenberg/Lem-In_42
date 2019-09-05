@@ -72,6 +72,7 @@ int     result(t_env *env)
 {
     t_path  *cr;
     t_path  *head;
+    char buffer[1];
 
     cr = NULL;
     ft_printf("env->total_rounds = %d\nenv->mod_ants = %d\n", env->total_rounds, env->mod_ants);
@@ -85,7 +86,12 @@ int     result(t_env *env)
         //looping while not all ants have arrived
         cr = env->path_lst[env->cr_path];
         env->round++;
-        while (cr != NULL)
+        if (env->opt_turn)
+        {
+          buffer[0] = '\0';
+          read(1, buffer, 1);
+        }
+        while (cr != NULL && ((env->opt_turn && buffer[0] != '\0') || env->opt_turn == 0))
         {
             //looping while we still have paths to explore
             head = cr;

@@ -38,3 +38,24 @@ int     get_option(t_env *env, char **argv)
     }
     return (0);
 }
+
+void print_path(t_env *env)
+{
+  t_path  *cr_path_print;
+  t_path *cr_room_print;
+
+  cr_path_print = env->path_lst[env->cr_path];
+   while (cr_path_print != NULL)
+   {
+   	ft_printf("PATH [%d] (len = %d) : ", cr_path_print->nb, cr_path_print->len);
+   	cr_room_print = cr_path_print;
+   	while (cr_room_print != NULL)
+  	{
+  		 ft_printf("[Index : %d | Salle : %s] - ", cr_room_print->index, env->rm_tab[cr_room_print->index]->name);
+   		cr_room_print = cr_room_print->next_room;
+   	}
+   	cr_path_print = cr_path_print->next_path;
+   	 ft_printf("\n");
+   }
+ ft_printf("\n");
+}

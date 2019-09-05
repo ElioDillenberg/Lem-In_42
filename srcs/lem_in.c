@@ -234,6 +234,8 @@ int			main(int argc, char **argv)
 	result(env);
 	if (env->round && env->opt_rounds)
 		ft_printf("[ROUNDS : %d]\n", env->total_rounds);
+	if (env->opt_paths)
+		print_path(env);
 	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));
 }

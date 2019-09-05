@@ -179,7 +179,7 @@ int					result(t_env *env);
 /*
 ******************************** result.c *************************************
 */
-
+void print_path(t_env *env);
 int					get_option(t_env *env, char **argv);
 
 #endif

@@ -43,14 +43,15 @@ int parsing(t_env *env)
 	int		index;
 	int		command;
 	int		ret;
-	//int		fd;
+	int		fd;
 
 	line = NULL;
 	start_end[0] = 0;
 	start_end[1] = 0;
 	command = 0;
 	index = 0;
-	while ((ret = get_next_line(0, &line, 1)) && ret != -1 && ret != 0)
+	fd = env->opt_file_path ? open(env->opt_file_path, O_RDONLY) : 0;
+	while ((ret = get_next_line(fd, &line, 1)) && ret != -1 && ret != 0)
 	{
 		if (line[0] == '#' && line[1] != '#')
 		{

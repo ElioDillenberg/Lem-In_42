@@ -128,7 +128,7 @@ int			main(int argc, char **argv)
 		return (-1);
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
-	ft_putstr(env->to_print);
+	ft_putstr(env->map);
 	// ft_printf("\n\n");
 	set_max_path(env);
 	if (env->max_path == 0)

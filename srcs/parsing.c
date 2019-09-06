@@ -78,7 +78,7 @@ int parsing(t_env *env)
 		}
 		else if (index == 1)
 		{
-			if (is_tunnel(line, env->rm_lst) == -2 || is_room(line, env->rm_lst) == -2)
+			if (is_tunnel(line, env->rm_lst, 0) == -2 || is_room(line, env->rm_lst) == -2)
 				return (exit_parsing(&line, -1, env));
 			if (is_room(line, env->rm_lst) != -1)
 			{
@@ -87,7 +87,7 @@ int parsing(t_env *env)
 				if (!(strcat_big(line, &(env)->map, env)))
 					return (exit_parsing(&line, -1, env));
 			}
-			else if (is_tunnel(line, env->rm_lst) != -1)
+			else if (is_tunnel(line, env->rm_lst, 0) != -1)
 			{
 				if (start_end[0] == 1 || start_end[1] == 1)
 					return (exit_parsing(&line, 0, env));
@@ -103,9 +103,9 @@ int parsing(t_env *env)
 			else
 				return (exit_parsing(&line, 0, env));
 		}
-		else if (index == 2 && is_tunnel(line, env->rm_lst) != -1)
+		else if (index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
 		{
-			if (is_tunnel(line, env->rm_lst) == -2)
+			if (is_tunnel(line, env->rm_lst, 1) == -2)
 				return (exit_parsing(&line, -1, env));
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));

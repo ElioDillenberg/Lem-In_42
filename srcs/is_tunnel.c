@@ -27,7 +27,7 @@ int		init_tu_tab(int ***tu_tab, int *nt_rm)
 	return (0);
 }
 
-int		is_tunnel(char *line, t_room **room_lst)
+int		is_tunnel(char *line, t_room **room_lst, int opt)
 {
 	size_t	i;
 	size_t	cmp;
@@ -38,6 +38,8 @@ int		is_tunnel(char *line, t_room **room_lst)
 	cr = *room_lst;
 	while (line[i] != '-' && line[i] != '\0')
 		i++;
+	if (line[i] == '\0' && opt == 1)
+		return (-2);
 	if (line[i] == '-')
 		line[i] = '\0';
 	else
@@ -52,7 +54,7 @@ int		is_tunnel(char *line, t_room **room_lst)
 		cr = cr->next;
 	}
 	line[i] = '-';
-	while (*line != '-' && *line)
+	while (*line != '-' && *line != '\0')
 		line++;
 	if (*line == '-')
 		line++;
@@ -92,7 +94,7 @@ void	get_tunnel(t_env *env, char *line)
 		one++;
 	}
 	line[i] = '-';
-	while (*line != '-' && *line)
+	while (*line != '-' && *line != '\0')
 		line++;
 	line++;
 	while (two < env->nt_rm[1])

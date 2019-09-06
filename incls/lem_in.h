@@ -107,7 +107,7 @@ int					is_room(char *line, t_room **room_lst);
 /*
 ******************************** Is_tunnel.c ***********************************
 */
-int					is_tunnel(char *line, t_room **room_lst);
+int					is_tunnel(char *line, t_room **room_lst, int opt);
 void				get_tunnel(t_env *env, char *line);
 int					init_tu_tab(int ***tub_tab, int *nt_rm);
 /*

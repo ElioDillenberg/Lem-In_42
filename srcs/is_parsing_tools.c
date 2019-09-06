@@ -139,7 +139,7 @@ int		is_room(char *line, t_room **room_lst)
 	cr = *room_lst;
 	i = 0;
 	if (*line == 'L')
-		return (-1);
+		return (-2);
 	while (line[i] != ' ' && line[i])
 		i++;
 	if (!(test = ft_strnew(i)))
@@ -150,7 +150,7 @@ int		is_room(char *line, t_room **room_lst)
 		if (ft_strcmp(test, cr->name) == 0)
 		{
 			free(test);
-			return (-1);
+			return (-2);
 		}
 		cr = cr->next;
 	}

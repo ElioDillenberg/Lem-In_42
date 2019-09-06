@@ -213,27 +213,29 @@ int			main(int argc, char **argv)
 			if (get_opti_path(env) != env->cr_path)
 			{
 				// ft_printf("ON BREAK MAINTENANT!!!\n");
-				if (env->lf_path > 2)
 				env->cr_path = env->cr_path == 0 ? 1 : 0;
 				break ;
 			}
 			else
 			{
-			// ft_printf("ON DOIT EFFACER LE PRECEDENT ET RELANCER BFS FRAIS\n");
-			ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
-			env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
+				// ft_printf("ON DOIT EFFACER LE PRECEDENT ET RELANCER BFS FRAIS\n");
+				ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
+				env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
 		cut_and_reset(env, 0);
 		reset_path_room(env);
-		env->cr_path = env->cr_path == 0 ? 1 : 0;
+		if (env->lf_path < env->max_path )
+			env->cr_path = env->cr_path == 0 ? 1 : 0;
 		// ft_printf("----------\n");
 	}
 	reset_buffer(env);
+	print_path(env);
+	ft_printf("lf path %d", env->lf_path);
 	//write(1, env->map, env->map_len);
 	result(env);
 	if (env->round && env->opt_rounds)
-		if (ft_printf("\n[ROUNDS : %d]\n", env->total_rounds) == -1)
+		if (ft_printf("\n[ROUNDS : %d]\n", env->round) == -1)
 			return (free_all(env, 0, -1));
 	if (env->opt_paths)
 		print_path(env);

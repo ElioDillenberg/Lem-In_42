@@ -70,8 +70,6 @@ int     result(t_env *env)
 
     cr = NULL;
     cr = env->path_lst[env->cr_path];
-    if (!cr)
-        env->cr_path = env->cr_path == 1 ? 0 : 1;
     while (env->ants_end < env->nt_rm[0])
     {
         //looping while not all ants have arrived
@@ -104,7 +102,7 @@ int     result(t_env *env)
                         cr->next_room->ant = cr->ant;
                     cr->ant = 0;
                 }
-                if (cr->prev_room->len && env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0] && head->strt_ants > 0)
+                if ((cr->prev_room->len && env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0] && head->strt_ants > 0) || head->len == 1 || (env->lf_path == 1 && cr->prev_room->len && env->ants_end < env->nt_rm[0] &&env->next_ant <= env->nt_rm[0]) )
                 {
                     cr->ant = env->next_ant++;
                     head->strt_ants--;

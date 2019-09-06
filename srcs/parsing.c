@@ -25,6 +25,7 @@
 
 static int exit_parsing(char **line, int ret, t_env *env)
 {
+	env = check_buffer(env, &(env)->map);
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0);
 	env->ret = ret;
@@ -56,21 +57,21 @@ int parsing(t_env *env)
 		if (line[0] == '#' && line[1] != '#')
 		{
 			if (start_end[0] == 1 || start_end[1] == 1)
-				return (exit_parsing(&line, 0, env));
+				return (exit_parsing(&line, -1, env));
 			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 		}
 		else if (line[0] == '#' && line[1] == '#')
 		{
 			if (get_command(line, start_end) == -1)
-				return (exit_parsing(&line, 0, env));
+				return (exit_parsing(&line, -1, env));
 			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
 		}
 		else if (index == 0 && is_ant_nb(line) != -1)
 		{
 			if (start_end[0] == 1 || start_end[1] == 1)
-				return (exit_parsing(&line, 0, env));
+				return (exit_parsing(&line, -1, env));
 			env->nt_rm[0] = ft_atoui(line);
 			if (!(strcat_big(line, &(env)->map, env)))
 				return (exit_parsing(&line, -1, env));
@@ -78,7 +79,7 @@ int parsing(t_env *env)
 		}
 		else if (index == 1)
 		{
-			if (is_tunnel(line, env->rm_lst, 0) == -2 || is_room(line, env->rm_lst) == -2)
+			if (is_room(line, env->rm_lst) == -2 && index == 1)
 				return (exit_parsing(&line, -1, env));
 			if (is_room(line, env->rm_lst) != -1)
 			{
@@ -90,7 +91,7 @@ int parsing(t_env *env)
 			else if (is_tunnel(line, env->rm_lst, 0) != -1)
 			{
 				if (start_end[0] == 1 || start_end[1] == 1)
-					return (exit_parsing(&line, 0, env));
+					return (exit_parsing(&line, -1, env));
 				if (!(env->nt_rm[1] = build_room_tab(env->rm_lst, &(env)->rm_tab)))
 					return (exit_parsing(&line, -1, env));
 				if (init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
@@ -101,12 +102,12 @@ int parsing(t_env *env)
 					return (exit_parsing(&line, -1, env));
 			}
 			else
-				return (exit_parsing(&line, 0, env));
+				return (exit_parsing(&line, -1, env));
 		}
 		else if (index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
 		{
 			if (is_tunnel(line, env->rm_lst, 1) == -2)
-				return (exit_parsing(&line, -1, env));
+				return (exit_parsing(&line, 0, env));
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));
 			get_tunnel(env, line);
@@ -114,9 +115,8 @@ int parsing(t_env *env)
 				return (exit_parsing(&line, -1, env));
 		}
 		else
-			return (exit_parsing(&line, 0, env));
+			return (exit_parsing(&line, -1, env));
 		ft_memdel((void**)&line);
 	}
-	env = check_buffer(env, &(env)->map);
 	return (exit_parsing(&line, 0, env));
 }

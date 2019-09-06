@@ -155,7 +155,7 @@ int		is_room(char *line, t_room **room_lst)
 		cr = cr->next;
 	}
 	free(test);
-	while (*line != ' ' && line)
+	while (*line != ' ' && *line)
 	{
 		if (*line == '-')
 			return (-1);

@@ -17,7 +17,7 @@
 /*
 ** Below function checks wether given line can be used at data for the nb of
 ** ants to place within ##start
-*/ 
+*/
 
 int		is_ant_nb(char *line)
 {
@@ -67,6 +67,8 @@ static int	is_coordinate(char *line)
 
 	i = 0;
 	x = 0;
+	if (*line == '\0')
+		return (-1);
 	while (*line == 32 || (9 <= *line && *line <= 13))
 		line++;
 	if (line[i] == '-' || line[i] == '+')
@@ -126,7 +128,7 @@ static int	check_coordinates(char *line, t_room **room_lst)
 /*
 ** Below function and the three above statics have the purpose to check wether
 ** given line is receivable data to build a new room
-*/ 
+*/
 
 int		is_room(char *line, t_room **room_lst)
 {

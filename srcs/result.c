@@ -82,6 +82,8 @@ int     result(t_env *env)
         {
           buffer[0] = '\0';
           read(1, buffer, 1);
+          if (env->opt_turn && buffer[0] == '\0')
+            return (-1);
         }
         while (cr != NULL && ((env->opt_turn && buffer[0] != '\0') || env->opt_turn == 0))
         {

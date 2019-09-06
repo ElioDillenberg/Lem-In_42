@@ -78,6 +78,8 @@ int parsing(t_env *env)
 		}
 		else if (index == 1)
 		{
+			if (is_tunnel(line, env->rm_lst) == -2)
+				return (exit_parsing(&line, -1, env));
 			if (is_room(line, env->rm_lst) != -1)
 			{
 				if (add_room(line, env->rm_lst, start_end) == -1)
@@ -103,6 +105,8 @@ int parsing(t_env *env)
 		}
 		else if (index == 2 && is_tunnel(line, env->rm_lst) != -1)
 		{
+			if (is_tunnel(line, env->rm_lst) == -2)
+				return (exit_parsing(&line, -1, env));
 			if (start_end[0] == 1 || start_end[1] == 1)
 				return (exit_parsing(&line, 0, env));
 			get_tunnel(env, line);

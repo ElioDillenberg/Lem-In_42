@@ -78,7 +78,7 @@ int parsing(t_env *env)
 		}
 		else if (index == 1)
 		{
-			if (is_tunnel(line, env->rm_lst) == -2)
+			if (is_tunnel(line, env->rm_lst) == -2 || is_room(line, env->rm_lst) == -2)
 				return (exit_parsing(&line, -1, env));
 			if (is_room(line, env->rm_lst) != -1)
 			{

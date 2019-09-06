@@ -162,6 +162,6 @@ int		is_room(char *line, t_room **room_lst)
 		line++;
 	}
 	if (check_coordinates(line, room_lst) == -1)
-		return (-1);
+		return (-2);
 	return (0);
 }

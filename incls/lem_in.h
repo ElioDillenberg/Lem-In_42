@@ -173,7 +173,7 @@ char				**ft_split(char const *s, char c);
 /*
 ******************************** result.c *************************************
 */
-int					get_strt_ants(t_env *env);
+int					get_strt_ants(t_env *env, int rounds, int mod);
 int					result(t_env *env);
 
 /*

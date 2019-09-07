@@ -106,7 +106,7 @@ int   get_opti_path(t_env *env)
   rounds += mod > 0 ? 1 : 0;
   if (env->total_rounds == 0)
     env->total_rounds = rounds;
-  if (env->total_rounds >= rounds && get_strt_ants(env))
+  if (env->total_rounds >= rounds && get_strt_ants(env, rounds, mod))
   {
     env->mod_ants = mod;
     env->total_rounds = rounds;

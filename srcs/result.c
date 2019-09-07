@@ -15,25 +15,26 @@
 #include <unistd.h>
 
 //creer ici la fonction qui va me permettre de recuperer le nombre de fourmis par chemins
-int    get_strt_ants(t_env *env)
+int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
 {
     t_path  *cr;
     int     total_ants;
     int     to_send;
-    int      mod;
+    // int     mod;
+    // added rounds_cr instead of env->total_rouds and mod_cr instead of mod
 
     to_send = 0;
     total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
-    mod = env->mod_ants;
-    if (!cr)
-    {
-        env->cr_path = env->cr_path == 1 ? 0 : 1;
-        cr = env->path_lst[env->cr_path];
-    }
+    // mod = env->mod_ants;
+    // if (!cr)
+    // {
+        // env->cr_path = env->cr_path == 1 ? 0 : 1;
+        // cr = env->path_lst[env->cr_path];
+    // }
     while (cr != NULL)
     {
-        if ((to_send = env->total_rounds - cr->len + 1) == 0)
+        if ((to_send = rounds_cr - cr->len + 1) <= 0)
           return (0);
         if (total_ants >= to_send)
         {
@@ -48,7 +49,7 @@ int    get_strt_ants(t_env *env)
         if (env->mod_ants > 0)
         {
             cr->strt_ants++;
-            mod--;
+            mod_cr--;
         }
         cr = cr->next_path;
     }

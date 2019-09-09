@@ -148,7 +148,6 @@ int			main(int argc, char **argv)
 		reset_path_room(env);
 		while (env->nb_path < env->lf_path)
 		{
-			ft_printf("LOOP1\n");
 			if (ft_bfs(env, 0) == -1)
 				return (free_all(env, 0, -1));
 			if (get_path(env) == -1)
@@ -177,6 +176,7 @@ int			main(int argc, char **argv)
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
 	}
+	print_path(env);
 	reset_buffer(env);
 	result(env);
 	if (env->round && env->opt_rounds)

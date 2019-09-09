@@ -213,7 +213,7 @@ int		ft_bfs(t_env *env, int start)
 							env->rm_tab[i]->parent = index;
 							if (add_room_path(env, env->rm_tab[i]) == -1)
 								return (-1);
-								if (env->rm_tab[i]->end)
+							if (env->rm_tab[i]->end)
 							{
 								env->nb_path++;
 								return (0);
@@ -249,7 +249,8 @@ int		ft_bfs(t_env *env, int start)
 		}
 		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
 		{
-			env->nb_path++;
+			env->nb_path += env->lf_path;
+			ft_printf("ON EST LA\n");
 			if (!(*env->rm_lst_path))
 				return (-1);
 		}

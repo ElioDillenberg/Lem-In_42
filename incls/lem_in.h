@@ -26,12 +26,12 @@ typedef struct		s_room
 	bool			start;
 	bool			end;
 	bool			ant_here;
+	bool			visited;
 	size_t			ant;
 	int				index;
 	int				x;
 	int				y;
 	int				path;
-	int				visited;
 	int				parent;
 	struct s_room	*next;
 }					t_room;

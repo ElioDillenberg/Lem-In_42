@@ -44,6 +44,7 @@ int		add_room_path(t_env *env, t_room *room)
 	new_room->index = room->index;
 	new_room->parent = room->parent;
 	new_room->end = room->end;
+	new_room->visited = 0;
 	if (*(env->rm_lst_path) == NULL)
 	{
 		*(env->rm_lst_path) = new_room;
@@ -145,6 +146,77 @@ int		ft_bfs(t_env *env, int start)
 				env->rm_tab[i]->parent = index;
 				if (add_room_path(env, env->rm_tab[i]) == -1)
 					return (-1);
+			}
+		}
+		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
+		{
+			env->nb_path++;
+			if (!(*env->rm_lst_path))
+				return (-1);
+		}
+	}
+	return (0);
+}
+
+int		ft_bfs(t_env *env, int start)
+{
+	int i;
+	int index;
+
+	if (add_room_path(env, env->rm_tab[start]) == -1)
+		return (-1);
+	while (*env->rm_lst_path && !(*env->rm_lst_path)->end)
+	{
+		i = -1;
+		index = (*env->rm_lst_path)->index;
+		delete_room_path(env);
+		while (++i < env->nt_rm[1])
+		{
+			if (env->tu_tab[index][i] == 1 && !env->rn_tab[i]->path) && i)
+			{
+				if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == false && env->rm_tab[index]->visited == true)
+				{
+					ft_printf("DEBUG2\n");
+					if (env->tu_tab[i][index] == -1)
+					{
+						ft_printf("DEBUG3\n");
+						env->rm_tab[i]->path = 1;
+						env->rm_tab[i]->parent = index;
+						if (add_room_path(env, env->rm_tab[i]) == -1)
+							return (-1);
+					}
+				}
+				else if (env->rm_tab[index]->parent > 0 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
+				{
+					ft_printf("DEBUG5\n");
+					if (env->tu_tab[i][index] == -1)
+					{
+						ft_printf("DEBUG6\n");
+						if (ft_better_way(env, index) == 0)
+						{
+							ft_printf("DEBUG7\n");
+							env->rm_tab[i]->path = 1;
+							env->rm_tab[i]->parent = index;
+							if (add_room_path(env, env->rm_tab[i]) == -1)
+								return (-1);
+						}
+					}
+					else
+					{
+						ft_printf("DEBUG8\n");
+						env->rm_tab[i]->path = 1;
+						env->rm_tab[i]->parent = index;
+						if (add_room_path(env, env->rm_tab[i]) == -1)
+							return (-1);
+					}
+				}
+				else
+				{
+					env->rm_tab[i]->path = 1;
+					env->rm_tab[i]->parent = index;
+					if (add_room_path(env, env->rm_tab[i]) == -1)
+						return (-1);
+				}
 			}
 		}
 		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)

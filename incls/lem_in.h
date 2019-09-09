@@ -31,6 +31,7 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				visited;
 	int				parent;
 	struct s_room	*next;
 }					t_room;

@@ -131,6 +131,7 @@ int					add_path_index(t_path **path, int index, t_env *env);
 void				add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
 void 				reset_path_room(t_env *env);
+int					ft_better_way(t_env *env, int index);
 /*
 ******************************** util_BFS.c *************************************
 */
@@ -167,7 +168,7 @@ t_env				*check_buffer(t_env *env, char **dest);
 ******************************** cut.c ****************************************
 */
 
-void				cut_and_reset(t_env *env, int opt);
+void				cut_and_reset(t_env *env, int opt, int visited);
 int   				get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
 

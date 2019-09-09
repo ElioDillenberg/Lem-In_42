@@ -109,7 +109,6 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 	{
 		cr->index = len;
 		(*rm_tab)[len] = cr;
-		cr->visited = false;
 		prev = cr;
 		cr = cr->next;
 		len++;

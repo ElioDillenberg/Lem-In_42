@@ -43,11 +43,9 @@ int		free_all(t_env *env, int opt, int ret)
 		ft_memdel((void**)&(env)->to_print);
 	if (env->opt_file_path)
 		ft_memdel((void**)&(env)->opt_file_path);
-	ft_memdel((void**)&(env)->map);
-	// if (env->nb_path)
-		// free_int_tab(env, env->nb_path, 1);
 	if (env->max_path)
 		ft_roomdel(env->rm_lst_path);
+	ft_memdel((void**)&(env)->map);
 	free_int_tab(env, env->nt_rm[1], 0);
 	ft_path_lst_del(&(env->path_lst[0]));
 	ft_path_lst_del(&(env->path_lst[1]));

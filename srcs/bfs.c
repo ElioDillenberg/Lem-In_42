@@ -126,6 +126,20 @@ void	add_path_lst(t_env *env, t_path *path)
 	}
 }
 
+int		ft_better_way(t_env *env, int index)
+{
+	int	i;
+
+	i = -1;
+	while (++i < env->nt_rm[1])
+	{
+		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
+			if (env->tu_tab[i][index] != -1)
+				return (1);
+	}
+	return (0);
+}
+
 // int		ft_bfs(t_env *env, int start)
 // {
 // 	int i;
@@ -176,38 +190,47 @@ int		ft_bfs(t_env *env, int start)
 			{
 				if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == false && env->rm_tab[index]->visited == true)
 				{
-					ft_printf("DEBUG2\n");
 					if (env->tu_tab[i][index] == -1)
 					{
-						ft_printf("DEBUG3\n");
 						env->rm_tab[i]->path = 1;
 						env->rm_tab[i]->parent = index;
 						if (add_room_path(env, env->rm_tab[i]) == -1)
 							return (-1);
+						if (env->rm_tab[i]->end)
+						{
+							env->nb_path++;
+							return (0);
+						}
 					}
 				}
 				else if (env->rm_tab[index]->parent > 0 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
 				{
-					ft_printf("DEBUG5\n");
 					if (env->tu_tab[i][index] == -1)
 					{
-						ft_printf("DEBUG6\n");
 						if (ft_better_way(env, index) == 0)
 						{
-							ft_printf("DEBUG7\n");
 							env->rm_tab[i]->path = 1;
 							env->rm_tab[i]->parent = index;
 							if (add_room_path(env, env->rm_tab[i]) == -1)
 								return (-1);
+								if (env->rm_tab[i]->end)
+							{
+								env->nb_path++;
+								return (0);
+							}
 						}
 					}
 					else
 					{
-						ft_printf("DEBUG8\n");
 						env->rm_tab[i]->path = 1;
 						env->rm_tab[i]->parent = index;
 						if (add_room_path(env, env->rm_tab[i]) == -1)
 							return (-1);
+						if (env->rm_tab[i]->end)
+						{
+							env->nb_path++;
+							return (0);
+						}
 					}
 				}
 				else
@@ -216,6 +239,11 @@ int		ft_bfs(t_env *env, int start)
 					env->rm_tab[i]->parent = index;
 					if (add_room_path(env, env->rm_tab[i]) == -1)
 						return (-1);
+					if (env->rm_tab[i]->end)
+					{
+						env->nb_path++;
+						return (0);
+					}
 				}
 			}
 		}
@@ -246,6 +274,7 @@ int		get_path(t_env *env)
 	while (env->rm_tab[index]->parent != -1)
 	{
 		save = index;
+		env->rm_tab[index]->visited = true;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
 		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;

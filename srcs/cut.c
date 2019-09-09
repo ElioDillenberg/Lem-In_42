@@ -5,7 +5,7 @@
 ** This function will parse env->tu_tab to check wether or not we have found a "-1"
 ** if one has been found, it means we need to cut all the 
 */
-void     cut_and_reset(t_env *env, int opt)
+void     cut_and_reset(t_env *env, int opt, int visited)
 {
     int i;
     int j;      
@@ -14,6 +14,8 @@ void     cut_and_reset(t_env *env, int opt)
     while (i < env->nt_rm[1])
     {
         j = 0;
+        if (visited == true)
+            env->rm_tab[i]->visited = false;
         while (j < env->nt_rm[1])
         {
             if (env->tu_tab[i][j] == -2)

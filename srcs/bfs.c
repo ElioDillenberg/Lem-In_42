@@ -55,6 +55,31 @@ int		add_room_path(t_env *env, t_room *room)
 	return (0);
 }
 
+int		add_room_path_first(t_env *env, t_room *room)
+{
+	t_room	*new_room;
+	t_room	*first;
+
+	first = *(env->rm_lst_path);
+	if (!(new_room = (t_room*)ft_memalloc(sizeof(t_room))))
+		return (-1);
+	if (!(new_room->name = ft_strdup(room->name)))
+	{
+		ft_memdel((void**)&new_room);
+		return (-1);
+	}
+	new_room->index = room->index;
+	new_room->parent = room->parent;
+	new_room->end = room->end;
+	if (*(env->rm_lst_path) == NULL)
+	{
+		*(env->rm_lst_path) = new_room;
+		return (0);
+	}
+	new_room->next = first;
+	return (0);
+}
+
 int		delete_room_path(t_env *env)
 {
 	t_room	*room;
@@ -129,11 +154,17 @@ int		ft_bfs(t_env *env, int start)
 {
 	int i;
 	int index;
+	int save_index;
+	int insert;
+	int tunnel;
 
 	if (add_room_path(env, env->rm_tab[start]) == -1)
 		return (-1);
+	tunnel = 0;
 	while (*env->rm_lst_path && !(*env->rm_lst_path)->end)
 	{
+		insert = 0;
+		save_index = -1;
 		i = -1;
 		index = (*env->rm_lst_path)->index;
 		delete_room_path(env);
@@ -141,13 +172,38 @@ int		ft_bfs(t_env *env, int start)
 		{
 			if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
 			{
-				env->rm_tab[i]->path = 1;
-				env->rm_tab[i]->parent = index;
-				if (add_room_path(env, env->rm_tab[i]) == -1)
-					return (-1);
+				if (env->tu_tab[i][index] != -1)
+				{
+					insert = 1;
+					if (tunnel > 0)
+					{
+						ft_printf("Tunnel : %d {salle %s}\n", tunnel, env->rm_tab[i]->name);
+						env->rm_tab[i]->parent = index;
+						if (add_room_path(env, env->rm_tab[index]) == -1)
+							return (-1);
+						tunnel--;
+					}
+					else
+					{
+						env->rm_tab[i]->path = 1;
+						env->rm_tab[i]->parent = index;
+						if (add_room_path(env, env->rm_tab[i]) == -1)
+							return (-1);
+					}
+				}
+				else
+					save_index = i;
 			}
 		}
-		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
+		if (save_index != -1 && insert == 0)
+		{
+			env->rm_tab[save_index]->path = 1;
+			env->rm_tab[save_index]->parent = index;
+			if (add_room_path(env, env->rm_tab[save_index]) == -1)
+				return (-1);
+			tunnel++;
+		}
+		else if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
 		{
 			env->nb_path++;
 			if (!(*env->rm_lst_path))

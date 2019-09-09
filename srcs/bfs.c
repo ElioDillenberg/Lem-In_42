@@ -15,13 +15,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	reset_path_room(t_env *env)
+void	reset_path_room(t_env *env, int opt)
 {
 	int i;
 
 	i = 0;
 	while (i < env->nt_rm[1])
 	{
+		if (opt == 1)
+			env->rm_tab[i]->is_path = 0;
 		env->rm_tab[i]->path = 0;
 		env->rm_tab[i]->parent = -1;
 		i++;
@@ -41,6 +43,7 @@ int		add_room_path(t_env *env, t_room *room)
 		ft_memdel((void**)&new_room);
 		return (-1);
 	}
+	new_room->is_path = room->is_path;
 	new_room->index = room->index;
 	new_room->parent = room->parent;
 	new_room->end = room->end;
@@ -150,64 +153,84 @@ void	add_path_lst(t_env *env, t_path *path)
 	}
 }
 
+int		ft_better_way(t_env *env, int index)
+{
+	int	i;
+
+	i = -1;
+	while (++i < env->nt_rm[1])
+	{
+		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i && env->rm_tab[i]->is_path == 0)
+			if (env->tu_tab[i][index] == -1)
+				return (i);
+	}
+	return (-1);
+}
+
+int		ft_better_exit(t_env *env, int index)
+{
+	int	i;
+
+	i = -1;
+	while (++i < env->nt_rm[1])
+	{
+		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i && env->rm_tab[i]->is_path == 0)
+				return (i);
+	}
+	return (-1);
+}
+
 int		ft_bfs(t_env *env, int start)
 {
 	int i;
 	int index;
-	int save_index;
 	int insert;
-	int tunnel;
+	int parent;
 
 	if (add_room_path(env, env->rm_tab[start]) == -1)
 		return (-1);
-	tunnel = 0;
 	while (*env->rm_lst_path && !(*env->rm_lst_path)->end)
 	{
-		insert = 0;
-		save_index = -1;
 		i = -1;
 		index = (*env->rm_lst_path)->index;
 		delete_room_path(env);
+		parent = env->rm_tab[index]->parent;
 		while (++i < env->nt_rm[1])
 		{
-			if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
+			if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i && env->rm_tab[i]->parent == -1)
 			{
-				if (env->tu_tab[i][index] != -1)
+				if (parent != -1 && env->rm_tab[parent]->is_path == 1 && env->rm_tab[index]->is_path == 1)
 				{
-					insert = 1;
-					if (tunnel > 0)
+					ft_printf("ENTER");
+					env->rm_tab[i]->path = 1;
+					env->rm_tab[i]->parent = index;
+					if (add_room_path(env, env->rm_tab[i]) == -1)
+						return (-1);
+					if ((insert = ft_better_exit(env, i)) > -1)
 					{
-						ft_printf("Tunnel : %d {salle %s}\n", tunnel, env->rm_tab[i]->name);
-						env->rm_tab[i]->parent = index;
-						if (add_room_path(env, env->rm_tab[index]) == -1)
-							return (-1);
-						tunnel--;
+						env->rm_tab[insert]->path = 1;
+						env->rm_tab[insert]->parent = i;
 					}
-					else
-					{
+				}
+				else if (env->rm_tab[i]->is_path == 0)
+				{
 						env->rm_tab[i]->path = 1;
 						env->rm_tab[i]->parent = index;
 						if (add_room_path(env, env->rm_tab[i]) == -1)
 							return (-1);
-					}
+						if ((insert = ft_better_way(env, i)) > -1)
+							{
+								env->rm_tab[insert]->path = 1;
+								env->rm_tab[insert]->parent = i;
+						}
 				}
-				else
-					save_index = i;
 			}
 		}
-		if (save_index != -1 && insert == 0)
-		{
-			env->rm_tab[save_index]->path = 1;
-			env->rm_tab[save_index]->parent = index;
-			if (add_room_path(env, env->rm_tab[save_index]) == -1)
-				return (-1);
-			tunnel++;
-		}
-		else if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
+		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
 		{
 			env->nb_path++;
 			if (!(*env->rm_lst_path))
-				return (-1);
+				return (1);
 		}
 	}
 	return (0);
@@ -232,6 +255,7 @@ int		get_path(t_env *env)
 		save = index;
 		parent = env->rm_tab[index]->parent;
 		index = env->rm_tab[parent]->index;
+			env->rm_tab[parent]->is_path = 1;
 		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
 		if (env->tu_tab[save][index] == -1)
 		{

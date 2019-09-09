@@ -31,6 +31,7 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				is_path;
 	int				parent;
 	struct s_room	*next;
 }					t_room;
@@ -129,7 +130,7 @@ int 				ft_bfs(t_env *env, int index);
 int					add_path_index(t_path **path, int index, t_env *env);
 void				add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
-void 				reset_path_room(t_env *env);
+void 				reset_path_room(t_env *env, int opt);
 /*
 ******************************** util_BFS.c *************************************
 */

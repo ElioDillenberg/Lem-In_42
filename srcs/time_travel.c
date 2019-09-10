@@ -32,9 +32,9 @@ static int	add_room_path_tt(t_env *env, t_room *room)
 	new_room->parent = room->parent;
 	new_room->end = room->end;
 	new_room->visited = 0;
-	if (*(env->rm_lst_path) == NULL)
+	if (*(env->rm_lst_path_tt) == NULL)
 	{
-		*(env->rm_lst_path) = new_room;
+		*(env->rm_lst_path_tt) = new_room;
 		return (0);
 	}
 	while (last->next != NULL)
@@ -101,7 +101,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 					else
 					{
 						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = index;
+						env->rm_tab[i]->parent = indextt;
                         env->rm_tab[i]->dfs = env->rm_tab[indextt]->dfs + 1;
 						if (add_room_path_tt(env, env->rm_tab[i]) == -1)
 							return (-1);
@@ -128,10 +128,6 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 			}
         }
     }
-    if (!(*env->rm_lst_path_tt))
-        ft_printf("on est arrives a la fin!\n");
-    else if ((*env->rm_lst_path_tt)->end)
-        ft_printf("on est arrives a end!\n");
     ft_roomdel(env->rm_lst_path_tt);
     return (0);
 }

@@ -178,15 +178,20 @@ int			main(int argc, char **argv)
 				env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
-		if (env->finish == 1)
-			break ;
 		cut_and_reset(env, 0, 1);
 		reset_path_room(env);
+		if (env->finish == 1)
+			break ;
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
 	}
+	ft_printf("CR PATH : %d\n", env->cr_path);
+	print_path(env);
 	if (env->path_lst[env->cr_path]->strt_ants == 0)
-		env->path_lst[env->cr_path]->strt_ants =  env->nt_rm[0];
+	{
+		ft_printf("REWORK\n");
+		get_strt_ants(env, env->total_rounds, env->mod_ants);
+	}
 	reset_buffer(env);
 	result(env);
 	if (env->round && env->opt_rounds)

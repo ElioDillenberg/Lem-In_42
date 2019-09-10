@@ -25,9 +25,7 @@ int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
     total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
     if (env->nb_path == 0)
-    {
       cr->strt_ants = env->nt_rm[0];
-    }
     while (cr != NULL)
     {
         if ((to_send = rounds_cr - cr->len + 1) <= 0)
@@ -47,6 +45,7 @@ int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
             cr->strt_ants++;
             mod_cr--;
         }
+
         cr = cr->next_path;
     }
     cr = env->path_lst[env->cr_path];
@@ -55,6 +54,14 @@ int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
         env->cr_path = env->cr_path == 1 ? 0 : 1;
         cr = env->path_lst[env->cr_path];
     }
+    cr = env->path_lst[env->cr_path];
+    while (cr != NULL)
+    {
+      if (cr->strt_ants <= 0)
+        return (0);
+      cr = cr->next_path;
+    }
+    cr = env->path_lst[env->cr_path];
     return (1);
 }
 

@@ -92,7 +92,7 @@ int parsing(t_env *env)
 			{
 				if (start_end[0] == 1 || start_end[1] == 1)
 					return (exit_parsing(&line, -1, env));
-				if (!(env->nt_rm[1] = build_room_tab(env->rm_lst, &(env)->rm_tab)))
+				if ((env->nt_rm[1] = build_room_tab(env->rm_lst, &(env)->rm_tab)) == -1)
 					return (exit_parsing(&line, -1, env));
 				if (init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
 					return (exit_parsing(&line, -1, env));

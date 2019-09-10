@@ -39,6 +39,8 @@ int		set_room_data(char *line, t_room *room, int *start_end)
 	room->ant_here = false;
 	room->ant = 0;
 	room->parent = -1;
+	room->visited = false;
+	room->path = 0;
 	room->next = NULL;
 	if (get_room(line, room) == -1)
 		return (-1);
@@ -116,6 +118,7 @@ t_env *init_env(t_env *env)
 	env->opt_paths = 0;
 	env->opt_file_path = NULL;
 	env->opt_turn = 0;
+	env->finish = 0;
 	return (env);
 }
 
@@ -123,6 +126,7 @@ int			main(int argc, char **argv)
 {
 	t_env *env;
 	int to_find;
+	int ret;
 
 	to_find = 1;
 	(void)argv;
@@ -142,14 +146,24 @@ int			main(int argc, char **argv)
 	{
 		env->lf_path++;
 		env->nb_path = 0;
+		cut_and_reset(env, 0, 1);
+		reset_path_room(env);
 		while (env->nb_path < env->lf_path)
 		{
-			if (ft_bfs(env, 0) == -1)
+			if ((ret = ft_bfs(env, 0)) == -1)
+			{
+				print_path(env);
 				return (free_all(env, 0, -1));
+			}
+			if (ret == 1)
+			{
+				env->nb_path = env->max_path;
+				break ;
+			}
 			if (get_path(env) == -1)
 				return (free_all(env, 0, -1));
 			if (env->tu_cut == 1)
-				cut_and_reset(env, 1);
+				cut_and_reset(env, 1, 1);
 			reset_path_room(env);
 			if (env->nb_path != env->max_path && (*env->rm_lst_path))
 				ft_roomdel(env->rm_lst_path);
@@ -167,7 +181,7 @@ int			main(int argc, char **argv)
 				env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
-		cut_and_reset(env, 0);
+		cut_and_reset(env, 0, 1);
 		reset_path_room(env);
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
@@ -179,6 +193,5 @@ int			main(int argc, char **argv)
 			return (free_all(env, 0, -1));
 	if (env->opt_paths)
 		print_path(env);
-	ft_memdel((void **)&(env)->map);
 	return (free_all(env, 0, 0));
 }

@@ -25,6 +25,7 @@
 
 static int exit_parsing(char **line, int ret, t_env *env)
 {
+	//ft_printf("CODERROR : %d\n", ret);
 	env = check_buffer(env, &(env)->map);
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0);
@@ -32,7 +33,7 @@ static int exit_parsing(char **line, int ret, t_env *env)
 	return (ret);
 }
 
-int if_start_end(t_env *env, char *line)
+int if_comment(t_env *env, char *line)
 {
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
 		return (-1);
@@ -41,7 +42,7 @@ int if_start_end(t_env *env, char *line)
 	return (1);
 }
 
-int		if_comment(t_env *env, char *line)
+int		if_start_end(t_env *env, char *line)
 {
 	if (get_command(line, env->parse->start_end) == -1)
 		return (-1);
@@ -116,12 +117,12 @@ int parsing(t_env *env)
 	{
 		if (line[0] == '#' && line[1] != '#')
 		{
-			if ((if_start_end(env, line)) == -1)
+			if ((if_comment(env, line)) == -1)
 				return (exit_parsing(&line, -1, env));
 		}
 		else if ((line[0] == '#' && line[1] == '#'))
 		{
-			if ((if_comment(env,line)) == -1)
+			if ((if_start_end(env,line)) == -1)
 				return (exit_parsing(&line, -2, env));
 		}
 		else if (env->parse->index == 0 && is_ant_nb(line) != -1)

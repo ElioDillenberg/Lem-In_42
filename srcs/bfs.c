@@ -142,42 +142,11 @@ int		ft_better_way(t_env *env, int index)
 	return (0);
 }
 
-// int		ft_bfs(t_env *env, int start)
-// {
-// 	int i;
-// 	int index;
-
-// 	if (add_room_path(env, env->rm_tab[start]) == -1)
-// 		return (-1);
-// 	while (*env->rm_lst_path && !(*env->rm_lst_path)->end)
-// 	{
-// 		i = -1;
-// 		index = (*env->rm_lst_path)->index;
-// 		delete_room_path(env);
-// 		while (++i < env->nt_rm[1])
-// 		{
-// 			if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
-// 			{
-// 				env->rm_tab[i]->path = 1;
-// 				env->rm_tab[i]->parent = index;
-// 				if (add_room_path(env, env->rm_tab[i]) == -1)
-// 					return (-1);
-// 			}
-// 		}
-// 		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
-// 		{
-// 			env->nb_path++;
-// 			if (!(*env->rm_lst_path))
-// 				return (-1);
-// 		}
-// 	}
-// 	return (0);
-// }
-
 int		ft_bfs(t_env *env, int start)
 {
 	int i;
 	int index;
+	int	ret_tt;
 
 	if (add_room_path(env, env->rm_tab[start]) == -1)
 		return (-1);
@@ -192,46 +161,15 @@ int		ft_bfs(t_env *env, int start)
 			{
 				if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == false && env->rm_tab[index]->visited == true)
 				{
-					if (env->tu_tab[i][index] == -1)
-					{
-						env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
-						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = index;
-						if (add_room_path(env, env->rm_tab[i]) == -1)
+					ret_tt = bfs_time_travel(env, index, env->rm_tab[index]->dfs + 1);
+					if (ret_tt == -1)
+						return(-1);
+					if (ret_tt)
+					{ 
+						env->rm_tab[ret_tt]->dfs = env->rm_tab[index]->dfs + 1;
+						if (add_room_path(env, env->rm_tab[ret_tt]) == -1)
 							return (-1);
-						if (env->rm_tab[i]->end)
-						{
-							env->nb_path++;
-							return (0);
-						}
-					}
-				}
-				else if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
-				{
-					if (env->tu_tab[i][index] == -1)
-					{
-						if (ft_better_way(env, index) == 0)
-						{
-							env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
-							env->rm_tab[i]->path = 1;
-							env->rm_tab[i]->parent = index;
-							if (add_room_path(env, env->rm_tab[i]) == -1)
-								return (-1);
-							if (env->rm_tab[i]->end)
-							{
-								env->nb_path++;
-								return (0);
-							}
-						}
-					}
-					else
-					{
-						env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
-						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = index;
-						if (add_room_path(env, env->rm_tab[i]) == -1)
-							return (-1);
-						if (env->rm_tab[i]->end)
+						if (env->rm_tab[ret_tt]->end)
 						{
 							env->nb_path++;
 							return (0);
@@ -256,7 +194,6 @@ int		ft_bfs(t_env *env, int start)
 		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
 		{
 			env->nb_path += env->lf_path;
-			ft_printf("ON EST LA\n");
 			if (!(*env->rm_lst_path))
 			{
 				env->finish = 1;

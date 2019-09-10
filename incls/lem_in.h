@@ -181,5 +181,11 @@ t_env				*check_buffer(t_env *env, char **dest);
 */
 void 				set_max_path(t_env *env);
 int   				get_opti_path(t_env *env);
+/*
+******************************** Path.c *************************************
+*/
+int					bfs_time_travel(t_env *env, int index, int dfs_tt);
+
+
 
 #endif

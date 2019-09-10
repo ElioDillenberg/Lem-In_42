@@ -68,7 +68,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
         delete_room_path_tt(env);
         while (++i < env->nt_rm[1])
         {
-            if (env->tu_tab[indextt][i] == 1 && !env->rm_tab[itt]->path && i)
+            if (env->tu_tab[indextt][i] == 1 && !env->rm_tab[i]->path && i)
 			{
 				if (env->rm_tab[indextt]->parent != -1 && env->rm_tab[env->rm_tab[indextt]->parent]->visited == false && env->rm_tab[indextt]->visited == true)
 				{
@@ -131,7 +131,8 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
     }
     if (!(*env->rm_lst_path_tt))
         ft_printf("on est arrives a la fin!\n");
-    else if (*env->rm_lst_path_tt->end)
+    else if ((*env->rm_lst_path_tt)->end)
         ft_printf("on est arrives a end!\n");
     ft_roomdel(env->rm_lst_path_tt);
+    return (0);
 }

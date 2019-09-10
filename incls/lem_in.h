@@ -20,6 +20,16 @@
 ******************************** Structures ************************************
 */
 
+typedef struct		s_parse
+{
+	int		start_end[2];
+	int		index;
+	int		command;
+	int		ret;
+	int		fd;
+	char	*line;
+}					t_parse;
+
 typedef struct		s_room
 {
 	char			*name;
@@ -33,6 +43,7 @@ typedef struct		s_room
 	int				y;
 	int				path;
 	int				parent;
+	int				dfs;
 	struct s_room	*next;
 }					t_room;
 
@@ -56,6 +67,7 @@ typedef struct		s_env
 	t_room			**rm_lst_path;
 	t_room			**rm_lst_path_tt;
 	t_room			**rm_tab;
+	t_parse			*parse;
 	int				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
@@ -130,15 +142,15 @@ int 				ft_bfs(t_env *env, int index);
 int					add_path_index(t_path **path, int index, t_env *env);
 void				add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
-void 				reset_path_room(t_env *env);
+void 				reset_path_room(t_env *env, int opt);
 int					ft_better_way(t_env *env, int index);
 /*
 ******************************** Room.c ****************************************
 */
-int		set_room_data(char *line, t_room *room, int *start_end);
-int			add_room(char *line, t_room **head, int *command);
-void ft_roomdel(t_room **room);
-void	ft_roomdelone(t_room **room);
+int					set_room_data(char *line, t_room *room, int *start_end);
+int					add_room(char *line, t_room **head, int *command);
+void 				ft_roomdel(t_room **room);
+void				ft_roomdelone(t_room **room);
 /*
 ******************************** Cut.c ****************************************
 */
@@ -167,7 +179,7 @@ t_env				*check_buffer(t_env *env, char **dest);
 /*
 ******************************** Path.c *************************************
 */
-void set_max_path(t_env *env);
-int   get_opti_path(t_env *env);
+void 				set_max_path(t_env *env);
+int   				get_opti_path(t_env *env);
 
 #endif

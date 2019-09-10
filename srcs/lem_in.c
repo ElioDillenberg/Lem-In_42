@@ -40,8 +40,17 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
-	if (!(env->rm_lst_path_tt) = (t_room**)ft_memalos(sizeof(t_room*)))
+	if (!(env->parse = (t_parse *)ft_memalloc(sizeof(t_parse))))
 	{
+		ft_memdel((void**)env->path_lst);
+		ft_memdel((void**)env->rm_lst_path);
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
+	if (!(env->rm_lst_path_tt = (t_room**)ft_memalloc(sizeof(t_room *))))
+	{
+		ft_memdel((void**)env->parse);
 		ft_memdel((void**)env->path_lst);
 		ft_memdel((void**)env->rm_lst_path);
 		ft_memdel((void**)env->rm_lst);
@@ -51,6 +60,7 @@ t_env *init_env(t_env *env)
 	if (!(env->map = ft_strnew(0)))
 	{
 		ft_memdel((void**)env->rm_lst_path_tt);
+		ft_memdel((void**)env->parse);
 		ft_memdel((void**)env->path_lst);
 		ft_memdel((void**)env->rm_lst_path);
 		ft_memdel((void**)env->rm_lst);
@@ -104,7 +114,7 @@ int			main(int argc, char **argv)
 		env->lf_path++;
 		env->nb_path = 0;
 		cut_and_reset(env, 0, 1);
-		reset_path_room(env);
+		reset_path_room(env, 1);
 		while (env->nb_path < env->lf_path)
 		{
 			if ((ret = ft_bfs(env, 0)) == -1)
@@ -118,7 +128,7 @@ int			main(int argc, char **argv)
 				return (free_all(env, 0, -1));
 			if (env->tu_cut == 1)
 				cut_and_reset(env, 1, 1);
-			reset_path_room(env);
+			reset_path_room(env, 1);
 			if (env->nb_path != env->max_path && (*env->rm_lst_path))
 				ft_roomdel(env->rm_lst_path);
 		}
@@ -135,8 +145,6 @@ int			main(int argc, char **argv)
 				env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
-		cut_and_reset(env, 0, 1);
-		reset_path_room(env);
 		if (env->finish == 1)
 			break ;
 		if (env->lf_path < env->max_path )

@@ -81,6 +81,7 @@ typedef struct		s_env
 	char			*opt_file_path;
 	int				opt_paths;
 	int				opt_turn;
+	int finish;
 }					t_env;
 
 /*

@@ -203,7 +203,7 @@ int		ft_bfs(t_env *env, int start)
 						}
 					}
 				}
-				else if (env->rm_tab[index]->parent > 0 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
+				else if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
 				{
 					if (env->tu_tab[i][index] == -1)
 					{
@@ -252,7 +252,11 @@ int		ft_bfs(t_env *env, int start)
 			env->nb_path += env->lf_path;
 			ft_printf("ON EST LA\n");
 			if (!(*env->rm_lst_path))
-				return (-1);
+			{
+				return (1);
+				env->finish = 1;
+			}
+
 		}
 	}
 	return (0);

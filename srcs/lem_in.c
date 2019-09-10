@@ -118,6 +118,7 @@ t_env *init_env(t_env *env)
 	env->opt_paths = 0;
 	env->opt_file_path = NULL;
 	env->opt_turn = 0;
+	env->finish = 0;
 	return (env);
 }
 
@@ -125,6 +126,7 @@ int			main(int argc, char **argv)
 {
 	t_env *env;
 	int to_find;
+	int ret;
 
 	to_find = 1;
 	(void)argv;
@@ -148,8 +150,16 @@ int			main(int argc, char **argv)
 		reset_path_room(env);
 		while (env->nb_path < env->lf_path)
 		{
-			if (ft_bfs(env, 0) == -1)
+			if ((ret = ft_bfs(env, 0)) == -1)
+			{
+				print_path(env);
 				return (free_all(env, 0, -1));
+			}
+			if (ret == 1)
+			{
+				env->nb_path = env->max_path;
+				break ;
+			}
 			if (get_path(env) == -1)
 				return (free_all(env, 0, -1));
 			if (env->tu_cut == 1)
@@ -176,7 +186,6 @@ int			main(int argc, char **argv)
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
 	}
-	print_path(env);
 	reset_buffer(env);
 	result(env);
 	if (env->round && env->opt_rounds)

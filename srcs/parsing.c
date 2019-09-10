@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/12 11:38:56 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/10 15:50:33 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 ** start tho
 */
 
-static int exit_parsing(char **line, int ret, t_env *env)
+static int	exit_parsing(char **line, int ret, t_env *env)
 {
-	//ft_printf("CODERROR : %d\n", ret);
 	env = check_buffer(env, &(env)->map);
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0);
@@ -33,7 +32,7 @@ static int exit_parsing(char **line, int ret, t_env *env)
 	return (ret);
 }
 
-int		parsing_core(t_env *env, char *line)
+int			parsing_core(t_env *env, char *line)
 {
 	if (line[0] == '#' && line[1] != '#')
 	{
@@ -42,38 +41,38 @@ int		parsing_core(t_env *env, char *line)
 	}
 	else if ((line[0] == '#' && line[1] == '#'))
 	{
-		if ((if_start_end(env,line)) == -1)
+		if ((if_start_end(env, line)) == -1)
 			return (-1);
 	}
 	else if (env->parse->index == 0 && is_ant_nb(line) != -1)
 	{
-		if ((if_ant(env,line)) == -1)
+		if ((if_ant(env, line)) == -1)
 			return (-1);
 	}
 	else if (env->parse->index == 1)
 	{
-		if ((if_room(env,line)) == -1)
+		if ((if_room(env, line)) == -1)
 			return (-1);
 	}
 	else if (env->parse->index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
 	{
-		if ((if_tunnel(env,line)) == -1)
+		if ((if_tunnel(env, line)) == -1)
 			return (-1);
 	}
 	return (1);
 }
-/*
-**
-**
-*/
 
-int parsing(t_env *env)
+int			parsing(t_env *env)
 {
 	char	*line;
 
 	line = NULL;
-	env->parse->fd = env->opt_file_path ? open(env->opt_file_path, O_RDONLY) : 0;
-	while ((env->parse->ret = get_next_line(env->parse->fd, &line, 1)) && env->parse->ret != -1 && env->parse->ret != 0)
+	if (env->opt_file_path)
+		env->parse->fd = open(env->opt_file_path, O_RDONLY);
+	else
+		env->parse->fd = 0;
+	while ((env->parse->ret = get_next_line(env->parse->fd, &line, 1))
+			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (parsing_core(env, line) == -1)
 			return (exit_parsing(&line, -6, env));

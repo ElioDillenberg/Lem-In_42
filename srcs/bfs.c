@@ -253,8 +253,8 @@ int		ft_bfs(t_env *env, int start)
 			ft_printf("ON EST LA\n");
 			if (!(*env->rm_lst_path))
 			{
-				return (1);
 				env->finish = 1;
+				return (1);	
 			}
 
 		}

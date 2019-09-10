@@ -24,6 +24,10 @@ int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
     to_send = 0;
     total_ants = env->nt_rm[0];
     cr = env->path_lst[env->cr_path];
+    if (env->nb_path == 0)
+    {
+      cr->strt_ants = env->nt_rm[0];
+    }
     while (cr != NULL)
     {
         if ((to_send = rounds_cr - cr->len + 1) <= 0)

@@ -156,10 +156,7 @@ int			main(int argc, char **argv)
 				return (free_all(env, 0, -1));
 			}
 			if (ret == 1)
-			{
-				env->nb_path = env->max_path;
 				break ;
-			}
 			if (get_path(env) == -1)
 				return (free_all(env, 0, -1));
 			if (env->tu_cut == 1)
@@ -181,11 +178,15 @@ int			main(int argc, char **argv)
 				env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
 			}
 		}
+		if (env->finish == 1)
+			break ;
 		cut_and_reset(env, 0, 1);
 		reset_path_room(env);
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
 	}
+	if (env->path_lst[env->cr_path]->strt_ants == 0)
+		env->path_lst[env->cr_path]->strt_ants =  env->nt_rm[0];
 	reset_buffer(env);
 	result(env);
 	if (env->round && env->opt_rounds)

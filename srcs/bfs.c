@@ -15,13 +15,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	reset_path_room(t_env *env)
+void	reset_path_room(t_env *env, int opt)
 {
 	int i;
 
 	i = 0;
 	while (i < env->nt_rm[1])
 	{
+		if (opt == 1)
+			env->rm_tab[i]->dfs = 0;
 		env->rm_tab[i]->path = 0;
 		env->rm_tab[i]->parent = -1;
 		i++;
@@ -192,6 +194,7 @@ int		ft_bfs(t_env *env, int start)
 				{
 					if (env->tu_tab[i][index] == -1)
 					{
+						env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
 						env->rm_tab[i]->path = 1;
 						env->rm_tab[i]->parent = index;
 						if (add_room_path(env, env->rm_tab[i]) == -1)
@@ -209,6 +212,7 @@ int		ft_bfs(t_env *env, int start)
 					{
 						if (ft_better_way(env, index) == 0)
 						{
+							env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
 							env->rm_tab[i]->path = 1;
 							env->rm_tab[i]->parent = index;
 							if (add_room_path(env, env->rm_tab[i]) == -1)
@@ -222,6 +226,7 @@ int		ft_bfs(t_env *env, int start)
 					}
 					else
 					{
+						env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
 						env->rm_tab[i]->path = 1;
 						env->rm_tab[i]->parent = index;
 						if (add_room_path(env, env->rm_tab[i]) == -1)
@@ -235,6 +240,7 @@ int		ft_bfs(t_env *env, int start)
 				}
 				else
 				{
+					env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
 					env->rm_tab[i]->path = 1;
 					env->rm_tab[i]->parent = index;
 					if (add_room_path(env, env->rm_tab[i]) == -1)

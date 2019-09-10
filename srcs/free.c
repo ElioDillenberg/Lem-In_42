@@ -79,24 +79,6 @@ void	free_int_tab(t_env *env, int size, int choose)
 		ft_memdel((void **)&(env)->path_tab);
 }
 
-void ft_roomdel(t_room **room)
-{
-	if (!(*room))
-		return ;
-	while ((*room)->next)
-		ft_roomdel(&((*room)->next));
-	ft_roomdelone(room);
-}
-
-void	ft_roomdelone(t_room **room)
-{
-	if (!room)
-		return ;
-	ft_memdel((void **)&((*room)->name));
-	ft_memdel((void **)room);
-	(*room) = NULL;
-}
-
 void	ft_pathdel(t_path **path)
 {
 	t_path	*cr;

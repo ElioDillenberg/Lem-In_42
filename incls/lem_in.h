@@ -116,8 +116,6 @@ int					init_tu_tab(int ***tub_tab, int *nt_rm);
 ******************************** Free.c ****************************************
 */
 int					free_all(t_env *env, int opt, int ret);
-void				ft_roomdel(t_room **alst);
-void				ft_roomdelone(t_room **alst);
 void				free_int_tab(t_env *env, int size, int choose);
 int					free_room_lst(t_room **head, int opt);
 void				ft_pathdel(t_path **path);
@@ -134,39 +132,14 @@ int					get_path(t_env *env);
 void 				reset_path_room(t_env *env);
 int					ft_better_way(t_env *env, int index);
 /*
-******************************** util_BFS.c *************************************
+******************************** Room.c ****************************************
 */
-void 				set_max_path(t_env *env);
-int					check_path(t_env *env);
-int					create_path_tab(t_env *env, char *str, int index);
-void				free_tab(char **tab);
+int		set_room_data(char *line, t_room *room, int *start_end);
+int			add_room(char *line, t_room **head, int *command);
+void ft_roomdel(t_room **room);
+void	ft_roomdelone(t_room **room);
 /*
-******************************** Path.c ****************************************
-*/
-int					find_path(t_env *env, int index, int path_nbr);
-int 				get_connection(t_env *env, int i, int index, int path_nbr);
-int					get_connection_free(t_env *env, int i, int index, int path_nbr);
-int					choose_room(t_env *env, int path_nbr, int index);
-/*
-******************************** Util_path.c ***********************************
-*/
-void				make_valid_path(t_env *env);
-void				path_finder(t_env *env);
-void				delete_path(t_env *env);
-void				free_tab(char **tab);
-/*
-******************************** Util.c ****************************************
-*/
-// void				view_tunnel_by_name(t_env *env);
-// char				*ft_joinfree(char *s1, char *s2);
-// char				*ft_strrev(char *str);
-// char				*ft_strndup(const char *s1, size_t n);
-// void				print_lst(t_env *env);
-int					strcat_big(char *src, char **dest, t_env *env);
-void				reset_buffer(t_env *env);
-t_env				*check_buffer(t_env *env, char **dest);
-/*
-******************************** cut.c ****************************************
+******************************** Cut.c ****************************************
 */
 
 void				cut_and_reset(t_env *env, int opt, int visited);
@@ -174,15 +147,26 @@ int   				get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
 
 /*
-******************************** result.c *************************************
+******************************** Result.c *************************************
 */
 int					get_strt_ants(t_env *env, int rounds, int mod);
 int					result(t_env *env);
 
 /*
-******************************** result.c *************************************
+******************************** Option.c *************************************
 */
 int					print_path(t_env *env);
 int					get_option(t_env *env, char **argv, int argc);
+/*
+******************************** buffer.c *************************************
+*/
+int					strcat_big(char *src, char **dest, t_env *env);
+void				reset_buffer(t_env *env);
+t_env				*check_buffer(t_env *env, char **dest);
+/*
+******************************** Path.c *************************************
+*/
+void set_max_path(t_env *env);
+int   get_opti_path(t_env *env);
 
 #endif

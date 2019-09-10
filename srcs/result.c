@@ -45,7 +45,6 @@ int    get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
             cr->strt_ants++;
             mod_cr--;
         }
-
         cr = cr->next_path;
     }
     cr = env->path_lst[env->cr_path];

@@ -65,6 +65,7 @@ typedef struct		s_env
 	t_path			**path_lst;
 	t_room			**rm_lst;
 	t_room			**rm_lst_path;
+	t_room			**rm_lst_path_tt;
 	t_room			**rm_tab;
 	t_parse			*parse;
 	int				**tu_tab;
@@ -146,10 +147,10 @@ int					ft_better_way(t_env *env, int index);
 /*
 ******************************** Room.c ****************************************
 */
-int		set_room_data(char *line, t_room *room, int *start_end);
-int			add_room(char *line, t_room **head, int *command);
-void ft_roomdel(t_room **room);
-void	ft_roomdelone(t_room **room);
+int					set_room_data(char *line, t_room *room, int *start_end);
+int					add_room(char *line, t_room **head, int *command);
+void 				ft_roomdel(t_room **room);
+void				ft_roomdelone(t_room **room);
 /*
 ******************************** Cut.c ****************************************
 */
@@ -178,7 +179,14 @@ t_env				*check_buffer(t_env *env, char **dest);
 /*
 ******************************** Path.c *************************************
 */
-void set_max_path(t_env *env);
-int   get_opti_path(t_env *env);
-
+void 				set_max_path(t_env *env);
+int   				get_opti_path(t_env *env);
+/*
+******************************** If_parsing.c **********************************
+*/
+int if_comment(t_env *env, char *line);
+int		if_start_end(t_env *env, char *line);
+int		if_ant(t_env *env, char *line);
+int	if_room(t_env *env, char *line);
+int		if_tunnel(t_env *env, char *line);
 #endif

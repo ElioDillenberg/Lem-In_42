@@ -58,12 +58,32 @@ int		get_room(char *line, t_room *room)
 	return (0);
 }
 
+t_room **make_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
+{
+	t_room *cr;
+	t_room *prev;
+
+	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
+		return (NULL);
+	len = 0;
+	cr = *rm_lst;
+	while (cr != NULL)
+	{
+		cr->index = len;
+		(*rm_tab)[len] = cr;
+		prev = cr;
+		cr = cr->next;
+		len++;
+	}
+	return (*rm_tab);
+}
+
 int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 {
 	t_room	*cr;
-	t_room	*prev = NULL;
-	t_room	*first = NULL;
-	t_room	*last = NULL;
+	t_room	*prev;
+	t_room	*first;
+	t_room	*last;
 	int		len;
 
 	cr = *rm_lst;
@@ -101,17 +121,7 @@ int		build_room_tab(t_room **rm_lst, t_room ***rm_tab)
 			len++;
 		}
 	}
-	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
+	if (!(*rm_tab = make_room_tab(rm_tab, rm_lst, len)))
 		return (-1);
-	len = 0;
-	cr = *rm_lst;
-	while (cr != NULL)
-	{
-		cr->index = len;
-		(*rm_tab)[len] = cr;
-		prev = cr;
-		cr = cr->next;
-		len++;
-	}
 	return (len);
 }

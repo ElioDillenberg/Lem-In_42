@@ -168,6 +168,7 @@ int					result(t_env *env);
 /*
 ******************************** Option.c *************************************
 */
+int					usage();
 int					print_path(t_env *env);
 int					get_option(t_env *env, char **argv, int argc);
 /*
@@ -182,10 +183,13 @@ t_env				*check_buffer(t_env *env, char **dest);
 void 				set_max_path(t_env *env);
 int   				get_opti_path(t_env *env);
 /*
-******************************** Path.c *************************************
+******************************** If_parsing.c **********************************
 */
-int					bfs_time_travel(t_env *env, int index, int dfs_tt);
+int if_comment(t_env *env, char *line);
+int		if_start_end(t_env *env, char *line);
+int		if_ant(t_env *env, char *line);
+int	if_room(t_env *env, char *line);
+int		if_tunnel(t_env *env, char *line);
 
-
-
+int         bfs_time_travel(t_env *env, int index, int dfs_tt);
 #endif

@@ -254,9 +254,8 @@ int		ft_bfs(t_env *env, int start)
 			if (!(*env->rm_lst_path))
 			{
 				env->finish = 1;
-				return (1);	
+				return (1);
 			}
-
 		}
 	}
 	return (0);

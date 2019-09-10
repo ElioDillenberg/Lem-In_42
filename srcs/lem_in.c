@@ -40,8 +40,23 @@ t_env *init_env(t_env *env)
 		ft_memdel((void**)&env);
 		return (NULL);
 	}
-	if (!(env->map = ft_strnew(0)))
+	if (!(env->rm_lst_path_tt) = (t_room**)ft_memalos(sizeof(t_room*)))
+	{
+		ft_memdel((void**)env->path_lst);
+		ft_memdel((void**)env->rm_lst_path);
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
 		return (NULL);
+	}
+	if (!(env->map = ft_strnew(0)))
+	{
+		ft_memdel((void**)env->rm_lst_path_tt);
+		ft_memdel((void**)env->path_lst);
+		ft_memdel((void**)env->rm_lst_path);
+		ft_memdel((void**)env->rm_lst);
+		ft_memdel((void**)&env);
+		return (NULL);
+	}
 	env->path_tab = NULL;
 	env->path_lst[0] = NULL;
 	env->path_lst[1] = NULL;

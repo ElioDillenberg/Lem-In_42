@@ -21,7 +21,7 @@ SRCDIR = srcs
 
 SC = $(addsuffix .c, lem_in get_parsing_tools parsing  buffer \
 	   is_parsing_tools is_tunnel free path bfs cut room \
-		result options)
+		result options time_travel)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

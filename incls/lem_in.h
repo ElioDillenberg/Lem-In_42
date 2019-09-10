@@ -54,6 +54,7 @@ typedef struct		s_env
 	t_path			**path_lst;
 	t_room			**rm_lst;
 	t_room			**rm_lst_path;
+	t_room			**rm_lst_path_tt;
 	t_room			**rm_tab;
 	int				**tu_tab;
 	int 			**path_tab;

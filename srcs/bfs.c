@@ -178,6 +178,7 @@ int		ft_bfs(t_env *env, int start)
 {
 	int i;
 	int index;
+	int	ret_tt;
 
 	if (add_room_path(env, env->rm_tab[start]) == -1)
 		return (-1);
@@ -192,19 +193,32 @@ int		ft_bfs(t_env *env, int start)
 			{
 				if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == false && env->rm_tab[index]->visited == true)
 				{
-					if (env->tu_tab[i][index] == -1)
+					ret_tt = bfs_time_travel(env, index, env->rm_tab[index]->dfs + 1);
+					if (ret_tt == -1)
+						return(-1);
+					env->rm_tab[ret_tt]->dfs = env->rm_tab[index]->dfs + 1;
+					env->rm_tab[ret_tt]->path = 1;
+					env->rm_tab[ret_tt]->parent = index;
+					if (add_room_path(env, env->rm_tab[ret_tt]) == -1)
+						return (-1);
+					if (env->rm_tab[ret_tt]->end)
 					{
-						env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
-						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = index;
-						if (add_room_path(env, env->rm_tab[i]) == -1)
-							return (-1);
-						if (env->rm_tab[i]->end)
-						{
-							env->nb_path++;
-							return (0);
-						}
+						env->nb_path++;
+						return (0);
 					}
+					// if (env->tu_tab[i][index] == -1)
+					// {
+					// 	env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
+					// 	env->rm_tab[i]->path = 1;
+					// 	env->rm_tab[i]->parent = index;
+					// 	if (add_room_path(env, env->rm_tab[i]) == -1)
+					// 		return (-1);
+					// 	if (env->rm_tab[i]->end)
+					// 	{
+					// 		env->nb_path++;
+					// 		return (0);
+					// 	}
+					// }
 				}
 				else if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == true && env->rm_tab[index]->visited == true)
 				{

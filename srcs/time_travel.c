@@ -15,7 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
 static int	add_room_path_tt(t_env *env, t_room *room)
 {
 	t_room	*new_room;

@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:06:30 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/11 12:21:31 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/11 18:39:54 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ int		add_room(char *line, t_room **head, int *command)
 	return (0);
 }
 
-void	ft_roomdel(t_room **room)
+int		ft_roomdel(t_room **room, int ret)
 {
 	if (!(*room))
-		return ;
+		return (0);
 	while ((*room)->next)
-		ft_roomdel(&((*room)->next));
+		ft_roomdel(&((*room)->next), 0);
 	ft_roomdelone(room);
+	return (ret);
 }
 
 void	ft_roomdelone(t_room **room)

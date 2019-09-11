@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/12 17:12:54 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/11 18:33:56 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int					add_room_path(t_env *env, t_room *room);
 int					delete_room_path(t_env *env);
 int 				ft_bfs(t_env *env, int index);
 int					add_path_index(t_path **path, int index, t_env *env);
-void				add_path_lst(t_env *env, t_path *path);
+int					add_path_lst(t_env *env, t_path *path);
 int					get_path(t_env *env);
 void 				reset_path_room(t_env *env, int opt);
 int					ft_better_way(t_env *env, int index);
@@ -158,7 +158,7 @@ int					ft_better_way(t_env *env, int index);
 */
 int					set_room_data(char *line, t_room *room, int *start_end);
 int					add_room(char *line, t_room **head, int *command);
-void 				ft_roomdel(t_room **room);
+int 				ft_roomdel(t_room **room, int ret);
 void				ft_roomdelone(t_room **room);
 /*
 ******************************** Cut.c ****************************************

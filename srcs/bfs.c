@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 12:35:39 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/04 12:56:03 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/11 18:18:11 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	reset_path_room(t_env *env, int opt)
+void		reset_path_room(t_env *env, int opt)
 {
 	int i;
 
@@ -30,7 +30,7 @@ void	reset_path_room(t_env *env, int opt)
 	}
 }
 
-int		add_room_path(t_env *env, t_room *room)
+int			add_room_path(t_env *env, t_room *room)
 {
 	t_room	*new_room;
 	t_room	*last;
@@ -58,7 +58,7 @@ int		add_room_path(t_env *env, t_room *room)
 	return (0);
 }
 
-int		delete_room_path(t_env *env)
+int			delete_room_path(t_env *env)
 {
 	t_room	*room;
 
@@ -68,24 +68,17 @@ int		delete_room_path(t_env *env)
 	return (0);
 }
 
-int		add_path_index(t_path **path, int index, t_env *env)
+int			add_path_index(t_path **path, int index, t_env *env)
 {
 	t_path	*new;
 
-	if (!(new = (t_path*)malloc(sizeof(t_path))))
+	if (!(new = (t_path*)ft_memalloc(sizeof(t_path))))
 		return (-1);
 	new->index = index;
-	new->ant = 0;
-	new->strt_ants = 0;
-	new->next_path = NULL;
-	new->prev_room = NULL;
-	new->tail_path = NULL;
 	if (*path == NULL)
 	{
 		*path = new;
-		new->len = 0;
 		new->nb = env->nb_path;
-		new->next_room = NULL;
 		new->tail_path = new;
 	}
 	else
@@ -103,7 +96,7 @@ int		add_path_index(t_path **path, int index, t_env *env)
 	return (0);
 }
 
-void	add_path_lst(t_env *env, t_path *path)
+int			add_path_lst(t_env *env, t_path *path)
 {
 	t_path	*cr;
 	int		i;
@@ -126,9 +119,10 @@ void	add_path_lst(t_env *env, t_path *path)
 		cr->next_path = path;
 		path->nb = i;
 	}
+	return (0);
 }
 
-int		ft_better_way(t_env *env, int index)
+int			ft_better_way(t_env *env, int index)
 {
 	int	i;
 
@@ -142,89 +136,109 @@ int		ft_better_way(t_env *env, int index)
 	return (0);
 }
 
-int		ft_bfs(t_env *env, int start)
+static int	add_room_bfs(t_env *env, int ret)
+{
+	if (add_room_path(env, env->rm_tab[ret]) == -1)
+		return (-1);
+	if (env->rm_tab[ret]->end)
+	{
+		env->nb_path++;
+		return (0);
+	}
+	return (-2);
+}
+
+static int	found_path_bfs(t_env *env, int i, int idx)
+{
+	int	ret;
+
+	if (env->rm_tab[idx]->parent != -1 && env->rm_tab[idx]->visited == true)
+	{
+		if ((ret = bfs_time_travel(env, idx, env->rm_tab[idx]->dfs + 1)) == -1)
+			return (-1);
+		if (ret)
+		{
+			env->rm_tab[ret]->dfs = env->rm_tab[idx]->dfs + 1;
+			if ((ret = add_room_bfs(env, ret)) > -2)
+				return (ret);
+		}
+	}
+	else
+	{
+		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
+		env->rm_tab[i]->path = 1;
+		env->rm_tab[i]->parent = idx;
+		if ((ret = add_room_bfs(env, i)) > -2)
+			return (ret);
+	}
+	return (-2);
+}
+
+int			bfs_loop(t_env *env)
 {
 	int i;
-	int index;
-	int	ret_tt;
+	int	index;
+	int	ret;
+
+	i = -1;
+	index = (*env->rm_lst_path)->index;
+	delete_room_path(env);
+	while (++i < env->nt_rm[1])
+	{
+		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
+		{
+			if ((ret = found_path_bfs(env, i, index)) > -2)
+				return (ret);
+		}
+	}
+	if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
+	{
+		env->nb_path += env->lf_path;
+		if (!(*env->rm_lst_path))
+		{
+			env->finish = 1;
+			return (1);
+		}
+	}
+	return (-2);
+}
+
+int			ft_bfs(t_env *env, int start)
+{
+	int	ret;
 
 	if (add_room_path(env, env->rm_tab[start]) == -1)
 		return (-1);
 	while (*env->rm_lst_path && !(*env->rm_lst_path)->end)
-	{
-		i = -1;
-		index = (*env->rm_lst_path)->index;
-		delete_room_path(env);
-		while (++i < env->nt_rm[1])
-		{
-			if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
-			{
-				if (env->rm_tab[index]->parent != -1 && env->rm_tab[env->rm_tab[index]->parent]->visited == false && env->rm_tab[index]->visited == true)
-				{
-					ret_tt = bfs_time_travel(env, index, env->rm_tab[index]->dfs + 1);
-					if (ret_tt == -1)
-						return(-1);
-					if (ret_tt)
-					{ 
-						env->rm_tab[ret_tt]->dfs = env->rm_tab[index]->dfs + 1;
-						if (add_room_path(env, env->rm_tab[ret_tt]) == -1)
-							return (-1);
-						if (env->rm_tab[ret_tt]->end)
-						{
-							env->nb_path++;
-							return (0);
-						}
-					}
-				}
-				else
-				{
-					env->rm_tab[i]->dfs = env->rm_tab[index]->dfs + 1;
-					env->rm_tab[i]->path = 1;
-					env->rm_tab[i]->parent = index;
-					if (add_room_path(env, env->rm_tab[i]) == -1)
-						return (-1);
-					if (env->rm_tab[i]->end)
-					{
-						env->nb_path++;
-						return (0);
-					}
-				}
-			}
-		}
-		if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)
-		{
-			env->nb_path += env->lf_path;
-			if (!(*env->rm_lst_path))
-			{
-				env->finish = 1;
-				return (1);
-			}
-		}
-	}
+		if ((ret = bfs_loop(env)) > -2)
+			return (ret);
 	return (0);
 }
 
-int		get_path(t_env *env)
+static void	set_data_get_path(t_env *env, int *parent, int *index, int *save)
+{
+	*save = *index;
+	env->rm_tab[*index]->visited = true;
+	*parent = env->rm_tab[*index]->parent;
+	*index = env->rm_tab[*parent]->index;
+	env->tu_tab[*index][*save] = env->tu_tab[*save][*index] == -1 ? -2 : -1;
+}
+
+int			get_path(t_env *env)
 {
 	int		parent;
 	int		index;
 	int		save;
 	t_path	*path;
-	t_path	*cr;
 
 	path = NULL;
-	cr = NULL;
 	index = env->nt_rm[1] - 1;
 	parent = env->rm_tab[index]->parent;
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
 	while (env->rm_tab[index]->parent != -1)
 	{
-		save = index;
-		env->rm_tab[index]->visited = true;
-		parent = env->rm_tab[index]->parent;
-		index = env->rm_tab[parent]->index;
-		env->tu_tab[index][save] = env->tu_tab[save][index] == -1 ? -2 : -1;
+		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][index] == -1)
 		{
 			env->tu_tab[index][save] = -2;
@@ -236,6 +250,5 @@ int		get_path(t_env *env)
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}
-	add_path_lst(env, path);
-	return (0);
+	return (add_path_lst(env, path));
 }

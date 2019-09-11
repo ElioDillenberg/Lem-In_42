@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 11:24:48 by thallot           #+#    #+#             */
-/*   Updated: 2019/08/12 17:10:54 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/11 19:00:07 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ int		free_all(t_env *env, int opt, int ret)
 	if (env->opt_file_path)
 		ft_memdel((void**)&(env)->opt_file_path);
 	if (env->max_path)
-		ft_roomdel(env->rm_lst_path);
+		ft_roomdel(env->rm_lst_path, 0);
 	ft_memdel((void**)&(env)->map);
 	free_int_tab(env, env->nt_rm[1], 0);
 	ft_path_lst_del(&(env->path_lst[0]));
 	ft_path_lst_del(&(env->path_lst[1]));
 	ft_memdel((void**)&(env)->path_lst);
-	ft_roomdel(env->rm_lst);
+	ft_roomdel(env->rm_lst, 0);
 	ft_memdel((void **)&(env)->rm_lst_path);
+	ft_memdel((void **)&(env)->rm_lst_path_tt);
 	ft_memdel((void **)&(env)->parse);
 	ft_memdel((void **)&(env)->rm_lst);
 	ft_memdel((void **)&(env)->rm_tab);

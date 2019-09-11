@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:48:46 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/10 13:48:48 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/11 15:16:34 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../libft/libft.h"
 #include <unistd.h>
 #include <stdlib.h>
+#define I intz[0]
+#define J intz[1]
 
 static int	add_room_path_tt(t_env *env, t_room *room)
 {
@@ -53,81 +55,90 @@ static int	delete_room_path_tt(t_env *env)
 	return (0);
 }
 
-int         bfs_time_travel(t_env *env, int index, int dfs_tt)
+static int	add_room_tt(t_env *env, int *intz, int opt)
 {
-    int     i;
-    int     indextt;
+	if (opt == 1)
+		env->rm_tab[I]->dfs = env->rm_tab[J]->dfs + 1;
+	else
+		env->rm_tab[I]->dfs = env->rm_tab[J]->dfs - 1;
+	env->rm_tab[I]->path = 1;
+	env->rm_tab[I]->parent = J;
+	if (add_room_path_tt(env, env->rm_tab[I]) == -1)
+		return (-1);
+	return (0);
+}
 
-    if (add_room_path_tt(env, env->rm_tab[index]) == -1)
-        return (-1);
-    while (*env->rm_lst_path_tt && !(*env->rm_lst_path_tt)->end)
-    {
-        i = -1;
-        indextt = (*env->rm_lst_path_tt)->index;
-        delete_room_path_tt(env);
-        while (++i < env->nt_rm[1])
-        {
-            if (env->tu_tab[indextt][i] == 1 && !env->rm_tab[i]->path && i)
+static int	add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt)
+{
+	if (add_room_tt(env, intz, opt) == -1)
+		return (-1);
+	if (env->rm_tab[I]->dfs == dfs_tt)
+		return (ft_roomdel(env->rm_lst_path_tt, I));
+	return (-2);
+}
+
+static int	path_visited(t_env *env, int *intz, int dfs_tt)
+{
+	int ret;
+
+	if (env->rm_tab[env->rm_tab[J]->parent]->visited == false)
+	{
+		if (env->tu_tab[I][J] == -1)
+		{
+			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
+				return (ret);
+		}
+	}
+	else
+	{
+		if (env->tu_tab[I][J] == -1)
+		{
+			if (ft_better_way(env, J) == 0)
 			{
-				if (env->rm_tab[indextt]->parent != -1 && env->rm_tab[env->rm_tab[indextt]->parent]->visited == false && env->rm_tab[indextt]->visited == true)
-				{
-					if (env->tu_tab[i][indextt] == -1)
-					{
-                        env->rm_tab[i]->dfs = env->rm_tab[indextt]->dfs - 1;
-						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = indextt;
-						if (add_room_path_tt(env, env->rm_tab[i]) == -1)
-							return (-1);
-                        if (env->rm_tab[i]->dfs == dfs_tt)
-                        {
-                            ft_roomdel(env->rm_lst_path_tt);
-                            return (i);
-                        }
-					}
-				}
-				else if (env->rm_tab[indextt]->parent != -1 && env->rm_tab[env->rm_tab[indextt]->parent]->visited == true && env->rm_tab[indextt]->visited == true)
-				{
-					if (env->tu_tab[i][indextt] == -1)
-					{
-						if (ft_better_way(env, indextt) == 0)
-						{
-							env->rm_tab[i]->path = 1;
-							env->rm_tab[i]->parent = indextt;
-                            env->rm_tab[i]->dfs = env->rm_tab[indextt]->dfs - 1;
-							if (add_room_path_tt(env, env->rm_tab[i]) == -1)
-								return (-1);
-						}
-					}
-					else
-					{
-						env->rm_tab[i]->path = 1;
-						env->rm_tab[i]->parent = indextt;
-                        env->rm_tab[i]->dfs = env->rm_tab[indextt]->dfs + 1;
-						if (add_room_path_tt(env, env->rm_tab[i]) == -1)
-							return (-1);
-						if (env->rm_tab[i]->dfs == dfs_tt)
-                        {
-                            ft_roomdel(env->rm_lst_path_tt);
-                            return (i);
-                        }
-					}
-				}
-				else
-				{
-					env->rm_tab[i]->path = 1;
-					env->rm_tab[i]->parent = indextt;
-                    env->rm_tab[i]->dfs = env->rm_tab[indextt]->dfs + 1;
-					if (add_room_path_tt(env, env->rm_tab[i]) == -1)
-						return (-1);
-					if (env->rm_tab[i]->dfs == dfs_tt)
-                    {
-                        ft_roomdel(env->rm_lst_path_tt);
-                        return (i);
-                    }
-				}
+				if (add_room_tt(env, intz, -1) == -1)
+					return (-1);
 			}
-        }
-    }
-    ft_roomdel(env->rm_lst_path_tt);
-    return (0);
+		}
+		else if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
+			return (ret);
+	}
+	return (-2);
+}
+
+static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
+{
+	int	ret;
+
+	if (env->rm_tab[J]->parent != -1 && env->rm_tab[J]->visited)
+	{
+		if ((ret = path_visited(env, intz, dfs_tt)) > -2)
+			return (ret);
+	}
+	else if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
+		return (ret);
+	return (-2);
+}
+
+int			bfs_time_travel(t_env *env, int index, int dfs_tt)
+{
+	int		ret;
+	int		intz[2];
+
+	if (add_room_path_tt(env, env->rm_tab[index]) == -1)
+		return (-1);
+	while (*env->rm_lst_path_tt && !(*env->rm_lst_path_tt)->end)
+	{
+		I = -1;
+		J = (*env->rm_lst_path_tt)->index;
+		delete_room_path_tt(env);
+		while (++I < env->nt_rm[1])
+		{
+			if (env->tu_tab[J][I] == 1 && !env->rm_tab[I]->path && I)
+			{
+				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
+					return (ret);
+			}
+		}
+	}
+	return (ft_roomdel(env->rm_lst_path_tt, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:06:30 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/10 13:06:31 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/11 12:21:31 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <stdlib.h>
 
 /*
- ** This function parses the input found in line
- ** It then activates flags within the node depending on found type ->
- */
+** This function parses the input found in line
+** It then activates flags within the node depending on found type ->
+*/
 
 int		set_room_data(char *line, t_room *room, int *start_end)
 {
@@ -48,14 +48,14 @@ int		set_room_data(char *line, t_room *room, int *start_end)
 }
 
 /*
- ** One way to optimize parsing here would be to add room at the beginning of
- ** the list and not at the end.
- */
+** One way to optimize parsing here would be to add room at the beginning of
+** the list and not at the end.
+*/
 
-int			add_room(char *line, t_room **head, int *command)
+int		add_room(char *line, t_room **head, int *command)
 {
-	t_room 	*new_room;
-	t_room 	*last;
+	t_room	*new_room;
+	t_room	*last;
 
 	last = *head;
 	if (!(new_room = (t_room*)ft_memalloc(sizeof(t_room))))
@@ -73,7 +73,7 @@ int			add_room(char *line, t_room **head, int *command)
 	return (0);
 }
 
-void ft_roomdel(t_room **room)
+void	ft_roomdel(t_room **room)
 {
 	if (!(*room))
 		return ;

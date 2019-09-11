@@ -165,7 +165,6 @@ void				ft_roomdelone(t_room **room);
 */
 
 void				cut_and_reset(t_env *env, int opt, int visited);
-int   				get_opti_path(t_env *env);
 char				**ft_split(char const *s, char c);
 
 /*
@@ -190,7 +189,7 @@ t_env				*check_buffer(t_env *env, char **dest);
 ******************************** Path.c *************************************
 */
 void 				set_max_path(t_env *env);
-int   				get_opti_path(t_env *env);
+int   				get_opti_path(t_env *env, t_path *path);
 /*
 ******************************** If_parsing.c **********************************
 */

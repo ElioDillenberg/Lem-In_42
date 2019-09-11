@@ -92,10 +92,8 @@ t_env *init_env(t_env *env)
 int			main(int argc, char **argv)
 {
 	t_env *env;
-	int to_find;
 	int ret;
 
-	to_find = 1;
 	(void)argv;
 	env = NULL;
 	if (!(env = init_env(env)))
@@ -134,7 +132,7 @@ int			main(int argc, char **argv)
 		}
 		if (env->lf_path > 1)
 		{
-			if (get_opti_path(env) != env->cr_path)
+			if (get_opti_path(env, env->path_lst[env->cr_path]) != env->cr_path)
 			{
 				env->cr_path = env->cr_path == 0 ? 1 : 0;
 				break ;

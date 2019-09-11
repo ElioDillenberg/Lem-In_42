@@ -38,18 +38,17 @@ void	set_max_path(t_env *env)
 		j++;
 	}
 	env->max_path = start > end ? end : start;
-	env->max_path = env->nt_rm[0] < env->max_path ? env->nt_rm[0] : env->max_path;
+	if (env->nt_rm[0] < env->max_path)
+		env->max_path = env->nt_rm[0];
 }
 
-int		get_opti_path(t_env *env)
+int		get_opti_path(t_env *env, t_path *path)
 {
-	t_path	*path;
 	int		nb_path;
 	int		size;
 	int		rounds;
 	int		mod;
 
-	path = env->path_lst[env->cr_path];
 	size = 0;
 	nb_path = 0;
 	while (path)
@@ -65,8 +64,6 @@ int		get_opti_path(t_env *env)
 		env->total_rounds = rounds;
 	if (env->total_rounds >= rounds && get_strt_ants(env, rounds, mod))
 	{
-		env->nb_path = nb_path;
-		env->mod_ants = mod;
 		env->total_rounds = rounds;
 		return (env->cr_path);
 	}

@@ -41,6 +41,47 @@ static int	set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env)
 	return (1);
 }
 
+static int	print_round(t_env *env, t_path *cr, int *no_space)
+{
+	*no_space == 0 ? *no_space = 1 : write(1, " ", 1);
+	if (ft_printf("L%d-%s", cr->ant, env->rm_tab[cr->index]->name) == -1)
+		return (-1);
+	if (cr->next_room == NULL)
+		env->ants_end++;
+	else
+		cr->next_room->ant = cr->ant;
+	cr->ant = 0;
+	return (1);
+}
+
+static int	print_result(t_path *cr, t_env *env, int no_space, char *buffer)
+{
+	t_path	*head;
+
+	while (cr != NULL && ((env->opt_turn && buffer[0]) || !env->opt_turn))
+	{
+		head = cr;
+		cr = cr->tail_path;
+		while (cr->prev_room != NULL)
+		{
+			if (cr->ant)
+				if (!(print_round(env, cr, &no_space)))
+					return (-1);
+			if ((cr->prev_room->len && env->ants_end < env->nt_rm[0]
+			&& env->next_ant <= env->nt_rm[0] && head->strt_ants > 0)
+			|| head->len == 1 || (env->lf_path == 1 && cr->prev_room->len
+			&& env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0]))
+			{
+				cr->ant = env->next_ant++;
+				head->strt_ants--;
+			}
+			cr = cr->prev_room;
+		}
+		cr = cr->next_path;
+	}
+	return (1);
+}
+
 int			get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
 {
 	t_path	*cr;
@@ -64,42 +105,6 @@ int			get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
 		cr = cr->next_path;
 	}
 	cr = env->path_lst[env->cr_path];
-	return (1);
-}
-
-static int	print_result(t_path *cr, t_env *env, int no_space, char *buffer)
-{
-	t_path	*head;
-
-	while (cr != NULL && ((env->opt_turn && buffer[0]) || !env->opt_turn))
-	{
-		head = cr;
-		cr = cr->tail_path;
-		while (cr->prev_room != NULL)
-		{
-			if (cr->ant)
-			{
-				no_space == 0 ? no_space = 1 : write(1, " ", 1);
-				if (ft_printf("L%d-%s", cr->ant, env->rm_tab[cr->index]->name) == -1)
-					return (-1);
-				if (cr->next_room == NULL)
-					env->ants_end++;
-				else
-					cr->next_room->ant = cr->ant;
-				cr->ant = 0;
-			}
-			if ((cr->prev_room->len && env->ants_end < env->nt_rm[0]
-			&& env->next_ant <= env->nt_rm[0] && head->strt_ants > 0)
-			|| head->len == 1 || (env->lf_path == 1 && cr->prev_room->len
-			&& env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0]))
-			{
-				cr->ant = env->next_ant++;
-				head->strt_ants--;
-			}
-			cr = cr->prev_room;
-		}
-		cr = cr->next_path;
-	}
 	return (1);
 }
 

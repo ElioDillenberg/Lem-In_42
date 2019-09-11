@@ -112,6 +112,7 @@ int					add_room(char *line, t_room **head, int *command);
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
 t_room			**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len);
+void				get_tunnel(t_env *env, char *line);
 /*
 ******************************* Build.c ****************************************
 */
@@ -132,7 +133,6 @@ int			check_name(t_room *cr, char *test);
 ******************************** Is_tunnel.c ***********************************
 */
 int					is_tunnel(char *line, t_room **room_lst, int opt);
-void				get_tunnel(t_env *env, char *line);
 int					init_tu_tab(int ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************

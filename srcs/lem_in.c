@@ -150,6 +150,8 @@ int			main(int argc, char **argv)
 		if (env->lf_path < env->max_path )
 			env->cr_path = env->cr_path == 0 ? 1 : 0;
 	}
+	if (!env->path_lst[env->cr_path])
+		return (free_all(env, 0, 0));
 	if (env->path_lst[env->cr_path]->strt_ants == 0)
 		get_strt_ants(env, env->total_rounds, env->mod_ants);
 	reset_buffer(env);

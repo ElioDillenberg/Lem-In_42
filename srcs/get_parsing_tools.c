@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 12:18:26 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/11 15:15:30 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,28 @@ t_room	**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
 		len++;
 	}
 	return (*rm_tab);
+}
+
+void	get_tunnel(t_env *env, char *line)
+{
+	size_t	i;
+	int		one;
+	int		two;
+
+	i = 0;
+	one = 0;
+	two = 0;
+	while (line[i] != '-' && line[i] != '\0')
+		i++;
+	line[i] = '\0';
+	while (one < env->nt_rm[1] && strcmp(line, (env->rm_tab[one])->name) != 0)
+		one++;
+	line[i] = '-';
+	while (*line != '-' && *line != '\0')
+		line++;
+	line++;
+	while (two < env->nt_rm[1] && strcmp(line, env->rm_tab[two]->name) != 0)
+		two++;
+	env->tu_tab[one][two] = 1;
+	env->tu_tab[two][one] = 1;
 }

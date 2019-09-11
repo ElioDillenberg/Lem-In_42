@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:02:44 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/29 18:43:12 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/11 12:15:47 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** ants to place within ##start
 */
 
-int		is_ant_nb(char *line)
+int			is_ant_nb(char *line)
 {
 	int		i;
 	int		x;
@@ -54,13 +54,12 @@ static int	max_min_integer(char *line)
 		if (ft_strncmp(line, "+2147483647", 11) == -1)
 			return (-1);
 	}
-	else
-		if (ft_strncmp(line, "2147483647", 10) == -1)
-			return (-1);
+	else if (ft_strncmp(line, "2147483647", 10) == -1)
+		return (-1);
 	return (0);
 }
 
-static int	is_coordinate(char *line)
+int			is_coordinate(char *line)
 {
 	int		i;
 	int		x;
@@ -84,53 +83,12 @@ static int	is_coordinate(char *line)
 	return (0);
 }
 
-int			check_coordinates_lst(int x, int y, t_room **room_lst)
-{
-	t_room *cr;
-
-	cr = *room_lst;
-	while (cr != NULL)
-	{
-		if (cr->x == x)
-			if (cr->y == y)
-				return (-1);
-		cr = cr->next;
-	}
-	return (0);
-}
-
-static int	check_coordinates(char *line, t_room **room_lst)
-{
-	int	x;
-	int y;
-
-	while (*line == ' ')
-		line++;
-	if (is_coordinate(line) == -1)
-		return (-1);
-	x = ft_atoi(line);
-	if (*line == '+' || *line == '-')
-		line++;
-	while (ft_isdigit(*line) != 0)
-		line++;
-	while (*line == ' ')
-		line++;
-	if (is_coordinate(line) == -1)
-		return (-1);
-	if (*line == '+' || *line == '-')
-		line++;
-	y = ft_atoi(line);
-	if (check_coordinates_lst(x, y, room_lst) == -1)
-		return (-1);
-	return (0);
-}
-
 /*
 ** Below function and the three above statics have the purpose to check wether
 ** given line is receivable data to build a new room
 */
 
-int		is_room(char *line, t_room **room_lst)
+int			is_room(char *line, t_room **room_lst)
 {
 	size_t	i;
 	char	*test;
@@ -145,22 +103,12 @@ int		is_room(char *line, t_room **room_lst)
 	if (!(test = ft_strnew(i)))
 		return (-1);
 	test = ft_strncpy(test, line, i);
-	while (cr != NULL)
-	{
-		if (ft_strcmp(test, cr->name) == 0)
-		{
-			free(test);
-			return (-2);
-		}
-		cr = cr->next;
-	}
+	if (check_name(cr, test) == -1)
+		return (-2);
 	free(test);
-	while (*line != ' ' && *line)
-	{
+	while (*line != ' ' && *line && *line++)
 		if (*line == '-')
 			return (-1);
-		line++;
-	}
 	if (check_coordinates(line, room_lst) == -1)
 		return (-2);
 	return (0);

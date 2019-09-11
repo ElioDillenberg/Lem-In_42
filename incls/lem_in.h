@@ -121,6 +121,13 @@ int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
 */
 int					is_ant_nb(char *line);
 int					is_room(char *line, t_room **room_lst);
+int	is_coordinate(char *line);
+/*
+***************************** Check_parsing.c **********************************
+*/
+int			check_coordinates_lst(int x, int y, t_room **room_lst);
+int	check_coordinates(char *line, t_room **room_lst);
+int			check_name(t_room *cr, char *test);
 /*
 ******************************** Is_tunnel.c ***********************************
 */

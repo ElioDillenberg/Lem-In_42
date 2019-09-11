@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/08/06 19:41:12 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/11 12:18:26 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		get_room(char *line, t_room *room)
 	return (0);
 }
 
-t_room **get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
+t_room	**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
 {
 	t_room *cr;
 	t_room *prev;

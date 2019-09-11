@@ -111,8 +111,10 @@ int					add_room(char *line, t_room **head, int *command);
 */
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
-int					get_hash(char *name, int len_hash_tab);
-int					util_build_room(t_room **rm_lst, t_room *cr, int len);
+t_room			**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len);
+/*
+******************************* Build.c ****************************************
+*/
 int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
 /*
 *************************** is_parsing_tool.c **********************************

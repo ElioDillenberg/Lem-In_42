@@ -34,7 +34,7 @@ static int	set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env)
 			cr->strt_ants = total_ants;
 			total_ants = 0;
 		}
-		if (env->mod_ants > 0 && (*mod_cr)--)
+		if (*mod_cr > 0 && (*mod_cr)--)
 			cr->strt_ants++;
 		cr = cr->next_path;
 	}

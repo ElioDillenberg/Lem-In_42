@@ -111,6 +111,22 @@ static int	loop_main(t_env *env)
 	return (0);
 }
 
+static int	after_bfs(t_env * env)
+{
+	if (!env->path_lst[env->cr_path])
+		return (0);
+	if (env->path_lst[env->cr_path]->strt_ants == 0)
+		get_strt_ants(env, env->total_rounds, env->mod_ants);
+	reset_buffer(env);
+	result(env);
+	if (env->round && env->opt_rounds)
+		if (ft_printf("\n[ROUNDS : %d]\n", env->round) == -1)
+			return (-1);
+	if (env->opt_paths)
+		print_path(env);
+	return (0);
+}
+
 int			main(int argc, char **argv)
 {
 	t_env	*env;
@@ -135,16 +151,7 @@ int			main(int argc, char **argv)
 		if (ret == 1)
 			break ;
 	}
-	if (!env->path_lst[env->cr_path])
-		return (free_all(env, 0, 0));
-	if (env->path_lst[env->cr_path]->strt_ants == 0)
-		get_strt_ants(env, env->total_rounds, env->mod_ants);
-	reset_buffer(env);
-	result(env);
-	if (env->round && env->opt_rounds)
-		if (ft_printf("\n[ROUNDS : %d]\n", env->round) == -1)
-			return (free_all(env, 0, -1));
-	if (env->opt_paths)
-		print_path(env);
+	if ((ret = after_bfs(env)) == -1)
+		return (free_all(env, 0, -1));
 	return (free_all(env, 0, 0));
 }

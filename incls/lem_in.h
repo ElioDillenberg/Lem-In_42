@@ -43,6 +43,8 @@ typedef struct		s_room
 	int				y;
 	int				path;
 	int				parent;
+	int				path_tt;
+	int				parent_tt;
 	int				dfs;
 	struct s_room	*next;
 }					t_room;

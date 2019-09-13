@@ -25,7 +25,9 @@ void		reset_path_room(t_env *env, int opt)
 		if (opt == 1)
 			env->rm_tab[i]->dfs = 0;
 		env->rm_tab[i]->path = 0;
+		env->rm_tab[i]->path_tt = 0;
 		env->rm_tab[i]->parent = -1;
+		env->rm_tab[i]->parent_tt = -1;
 		i++;
 	}
 }

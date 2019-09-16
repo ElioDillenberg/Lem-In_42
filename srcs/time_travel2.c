@@ -113,7 +113,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 				ft_printf("On est rentré ici\n");
 				ft_printf("indextt = %s and i = %s\n", env->rm_tab[indextt]->name, env->rm_tab[i]->name);
 				if ((env->rm_tab[indextt]->parent_tt != -1 && env->rm_tab[env->rm_tab[indextt]->parent_tt]->visited == false && env->rm_tab[indextt]->visited == true)
-				|| (env->tu_tab[indextt][env->rm_tab[indextt]->parent_tt] != -1 && env->rm_tab[env->rm_tab[indextt]->parent_tt]->visited == true && env->rm_tab[indextt]->visited == true))
+				|| (env->rm_tab[indextt]->parent_tt != -1 && env->tu_tab[indextt][env->rm_tab[indextt]->parent_tt] != -1 && env->rm_tab[env->rm_tab[indextt]->parent_tt]->visited == true && env->rm_tab[indextt]->visited == true))
 				{
 
 					ft_printf("SEG1.0\n");
@@ -141,7 +141,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 				}
 
 
-				else if (env->rm_tab[env->rm_tab[indextt]->parent_tt]->visited == true && env->rm_tab[indextt]->visited == true)
+				else if (env->rm_tab[indextt]->parent_tt != -1 && env->rm_tab[env->rm_tab[indextt]->parent_tt]->visited == true && env->rm_tab[indextt]->visited == true)
 				{
 					ft_printf("SEG2\n");
 					if (env->tu_tab[i][indextt] == -1)

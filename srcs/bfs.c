@@ -155,25 +155,23 @@ static int	found_path_bfs(t_env *env, int i, int idx)
 {
 	int	ret;
 
+
 	if (env->rm_tab[i]->visited == true)
 	{
-		if (env->rm_tab[idx]->parent != -1)
+		//ft_printf("Room : %s ->path = %d et ->path_tt = %d ->visite %d -> parent %d ",env->rm_tab[i]->name, env->rm_tab[i]->path, env->rm_tab[i]->path_tt, env->rm_tab[i]->visited, env->rm_tab[i]->parent);
+		ft_printf("ENTER TO THE MATRIX WITH %d and I : %d\n", idx, i);
+		if ((ret = bfs_time_travel(env, i, env->rm_tab[idx]->dfs + 1)) == -1)
 		{
-			//ft_printf("Room : %s ->path = %d et ->path_tt = %d ->visite %d -> parent %d ",env->rm_tab[i]->name, env->rm_tab[i]->path, env->rm_tab[i]->path_tt, env->rm_tab[i]->visited, env->rm_tab[i]->parent);
-			ft_printf("ENTER TO THE MATRIX WITH %d and I : %d\n", idx, i);
-			if ((ret = bfs_time_travel(env, i, env->rm_tab[idx]->dfs + 1)) == -1)
-			{
-				ft_printf("BAD RET : %d\n", ret);
-				return (-1);
-			}
-			ft_printf("RET : %d\n", ret);
-			if (ret)
-			{
-				ft_printf("GOOD RET : %d\n", ret);
-				env->rm_tab[ret]->dfs = env->rm_tab[idx]->dfs + 1;
-				if ((ret = add_room_bfs(env, ret)) > -2)
-					return (ret);
-			}
+			ft_printf("BAD RET : %d\n", ret);
+			return (-1);
+		}
+		ft_printf("RET : %d\n", ret);
+		if (ret)
+		{
+			ft_printf("GOOD RET : %d\n", ret);
+			env->rm_tab[ret]->dfs = env->rm_tab[idx]->dfs + 1;
+			if ((ret = add_room_bfs(env, ret)) > -2)
+				return (ret);
 		}
 	}
 	else

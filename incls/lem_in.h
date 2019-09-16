@@ -42,6 +42,7 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				is_tt;
 	int				parent;
 	int				path_tt;
 	int				parent_tt;

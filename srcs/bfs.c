@@ -156,7 +156,7 @@ static int	found_path_bfs(t_env *env, int i, int idx)
 	int	ret;
 
 
-	if (env->rm_tab[i]->visited == true)
+	if (env->rm_tab[i]->visited == true && !env->rm_tab[i]->end)
 	{
 		//ft_printf("Room : %s ->path = %d et ->path_tt = %d ->visite %d -> parent %d ",env->rm_tab[i]->name, env->rm_tab[i]->path, env->rm_tab[i]->path_tt, env->rm_tab[i]->visited, env->rm_tab[i]->parent);
 		ft_printf("ENTER TO THE MATRIX WITH %d and I : %d\n", idx, i);

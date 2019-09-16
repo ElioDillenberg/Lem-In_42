@@ -58,7 +58,7 @@ void		clean_tt(t_env *env, int apply)
 	int i;
 
 	i = 0;
-	while (i < env->nt_rm[1])
+	while (++i < env->nt_rm[1])
 	{	
 		if (env->rm_tab[i]->path_tt && apply)
 			env->rm_tab[i]->path = 1;
@@ -89,14 +89,16 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 	ft_printf("Time travel starting with room [%s]\n", env->rm_tab[index]->name);
     if (add_room_path_tt(env, env->rm_tab[index]) == -1)
         return (-1);
+	// env->rm_tab[index]->path_tt = 1;
     while (*env->rm_lst_path_tt && !(*env->rm_lst_path_tt)->end)
     {
-        i = -1;
+        i = 0;
         indextt = (*env->rm_lst_path_tt)->index;
         delete_room_path_tt(env);
         while (++i < env->nt_rm[1])
         {
-            if (env->tu_tab[indextt][i] == 1 && ((!env->rm_tab[i]->path || env->rm_tab[i]->dfs < env->rm_tab[indextt]->dfs + 1) && i != env->rm_tab[indextt]->parent)  && !env->rm_tab[i]->path_tt && i)
+			ft_printf("Room : %s ->path = %d et ->path_tt = %d\n", env->rm_tab[i]->name, env->rm_tab[i]->path, env->rm_tab[i]->path_tt);
+            if (env->tu_tab[indextt][i] == 1 && !env->rm_tab[i]->path && !env->rm_tab[i]->path_tt)
 			{
 				ft_printf("On est rentré ici\n");
 				ft_printf("indextt = %s and i = %s\n", env->rm_tab[indextt]->name, env->rm_tab[i]->name);
@@ -145,7 +147,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 						if (env->rm_tab[i]->dfs == dfs_tt)
 						{
 							ft_printf("SORTIE_2\n");
-							clean_tt(env, 1);
+							// clean_tt(env, 1);
                             return (ft_roomdel(env->rm_lst_path_tt, i));
 						}
 					}
@@ -161,7 +163,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
 					if (env->rm_tab[i]->dfs == dfs_tt)
 					{
 						ft_printf("SORTIE_3\n");
-						clean_tt(env, 1);
+						// clean_tt(env, 1);
                 		return (ft_roomdel(env->rm_lst_path_tt, i));
 					}
 				}
@@ -169,5 +171,7 @@ int         bfs_time_travel(t_env *env, int index, int dfs_tt)
         }
     }
 	clean_tt(env, 0);
+	env->rm_tab[indextt]->path = 0;
+	ft_printf("END OF TT\n");
     return (ft_roomdel(env->rm_lst_path_tt, 0));
 }

@@ -46,9 +46,9 @@ int		if_ant(t_env *env, char *line)
 
 int		if_room(t_env *env, char *line)
 {
-	if (is_room(line, env->rm_lst) == -2 && env->parse->index == 1)
+	if (is_room(line, env->rm_lst, env) == -2 && env->parse->index == 1)
 		return (-1);
-	if (is_room(line, env->rm_lst) != -1)
+	if (is_room(line, env->rm_lst, env) != -1)
 	{
 		if (add_room(line, env->rm_lst, env->parse->start_end) == -1)
 			return (-1);

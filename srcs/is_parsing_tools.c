@@ -88,7 +88,7 @@ int			is_coordinate(char *line)
 ** given line is receivable data to build a new room
 */
 
-int			is_room(char *line, t_room **room_lst)
+int			is_room(char *line, t_room **room_lst, t_env *env)
 {
 	size_t	i;
 	char	*test;
@@ -109,7 +109,7 @@ int			is_room(char *line, t_room **room_lst)
 	while (*line != ' ' && *line && *line++)
 		if (*line == '-')
 			return (-1);
-	if (check_coordinates(line, room_lst) == -1)
+	if (env->opt_double && (check_coordinates(line, room_lst) == -1))
 		return (-2);
 	return (0);
 }

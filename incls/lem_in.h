@@ -101,6 +101,7 @@ typedef struct		s_env
 	char			*opt_file_path;
 	int				opt_paths;
 	int				opt_turn;
+	int				opt_double;
 	int finish;
 }					t_env;
 
@@ -128,7 +129,7 @@ int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
 *************************** is_parsing_tool.c **********************************
 */
 int					is_ant_nb(char *line);
-int					is_room(char *line, t_room **room_lst);
+int					is_room(char *line, t_room **room_lst, t_env *env);
 int	is_coordinate(char *line);
 /*
 ***************************** Check_parsing.c **********************************

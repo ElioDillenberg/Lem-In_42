@@ -92,6 +92,7 @@ typedef struct		s_env
 	int				rm_len;
 	int				ret;
 	int				tu_cut;
+	int				did_cut;
 	int				lf_path;
 	int				cr_path;
 	int				round;

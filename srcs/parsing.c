@@ -67,6 +67,7 @@ int			parsing(t_env *env)
 	char	*line;
 
 	line = NULL;
+	// env->parse->fd = open("/Users/edillenb/Github_Edillenb/lem_in/bigs.txt", O_RDONLY);
 	if (env->opt_file_path)
 		env->parse->fd = open(env->opt_file_path, O_RDONLY);
 	else

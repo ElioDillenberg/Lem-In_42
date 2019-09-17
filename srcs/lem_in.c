@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 20:16:58 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/17 15:32:25 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,77 +64,63 @@ static int	loop_bfs(t_env *env)
 	if (get_path(env) == -1)
 		return (-1);
 	if (env->tu_cut == 1)
+	{
+		env->did_cut = 1;
 		cut_and_reset(env, 1, 1);
+	}
 	reset_path_room(env, 1);
 	if (env->nb_path != env->max_path && (*env->rm_lst_path))
 		ft_roomdel(env->rm_lst_path, 0);
 	return (0);
 }
 
-
-
-// static int	check_opti_path(t_env *env)
-// {
-// 	if (get_opti_path(env, env->path_lst[env->cr_path]) != env->cr_path)
-// 	{
-// 		env->cr_path = env->cr_path == 0 ? 1 : 0;
-// 		return (1);
-// 	}
-// 	else
-// 	{
-// 		ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
-// 		env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
-// 	}
-// 	return (0);
-// }
-
-t_path  *copy_room(t_path *pnocr)
+t_path		*copy_room(t_path *pnocr)
 {
-    t_path  *new;
+	t_path	*new;
 
-    if (!(new = (t_path*)ft_memalloc(sizeof(t_path))))
-        return (NULL);
-    new->nb = pnocr->nb;
-    new->len = pnocr->len;
-    new->index = pnocr->index;
-    new->ant = pnocr->strt_ants;
-    return (new);
+	if (!(new = (t_path*)ft_memalloc(sizeof(t_path))))
+		return (NULL);
+	new->nb = pnocr->nb;
+	new->len = pnocr->len;
+	new->index = pnocr->index;
+	new->ant = pnocr->strt_ants;
+	return (new);
 }
 
-t_path      *copy_path_lst(t_env *env)
+t_path		*copy_path_lst(t_env *env)
 {
-    int     not_cr;
-    t_path  *new_head;
-    t_path  *new_cr;
-    t_path  *pnocr;
+	int		not_cr;
+	t_path	*new_head;
+	t_path	*new_cr;
+	t_path	*pnocr;
 
-    new_head = NULL;
-    new_cr = NULL;
-    not_cr = env->cr_path == 0 ? 1 : 0;
-    pnocr = env->path_lst[not_cr];
-    while (pnocr->next_path)
-        pnocr = pnocr->next_path;
-    pnocr = pnocr->tail_path;
-    while (pnocr)
-    {
-        if (new_head == NULL)
-        {
-            if (!(new_head = copy_room(pnocr)))
-                return (NULL);
-            new_head->tail_path = new_head;
-        }
-        else
-        {
-            if (!(new_cr = copy_room(pnocr)))
-                return (NULL);
-            new_head->prev_room = new_cr;
-            new_cr->next_room = new_head;
-            new_cr->tail_path = new_head->tail_path;
-            new_head = new_cr;
-        }
-        pnocr = pnocr->prev_room;
-    }
-    return (new_head);
+	new_head = NULL;
+	new_cr = NULL;
+	not_cr = env->cr_path == 0 ? 1 : 0;
+	pnocr = env->path_lst[not_cr];
+	while (pnocr->next_path)
+		pnocr = pnocr->next_path;
+	pnocr = pnocr->tail_path;
+	while (pnocr)
+	{
+		if (new_head == NULL)
+		{
+			if (!(new_head = copy_room(pnocr)))
+				return (NULL);
+			new_head->tail_path = new_head;
+		}
+		else
+		{
+			if (!(new_cr = copy_room(pnocr)))
+				return (NULL);
+			new_head->prev_room = new_cr;
+			new_cr->next_room = new_head;
+			new_cr->tail_path = new_head->tail_path;
+			new_head = new_cr;
+		}
+		pnocr = pnocr->prev_room;
+	}
+	return (new_head);
 }
 
 static int	check_opti_path(t_env *env)
@@ -144,51 +130,46 @@ static int	check_opti_path(t_env *env)
 		env->cr_path = env->cr_path == 0 ? 1 : 0;
 		return (1);
 	}
-	// else
-	// {
-		// ft_path_lst_del(&(env->path_lst[env->cr_path == 0 ? 1 : 0]));
-		// env->path_lst[env->cr_path == 0 ? 1 : 0] = NULL;
-	// }
 	return (0);
 }
 
-int         get_last_path_lst(t_env *env)
+int			get_last_path_lst(t_env *env)
 {
-    t_path  *cr;
+	t_path	*cr;
 
-    cr = env->path_lst[env->cr_path];
-    if (!cr)
-    {
-        if (!(env->path_lst[env->cr_path] = copy_path_lst(env)))
-            return (-1);
-    }
-    else
-    {
-        while (cr->next_path)
-            cr = cr->next_path;
-        if (!(cr->next_path = copy_path_lst(env)))
-            return (-1);
-    }
-    return (0);
+	cr = env->path_lst[env->cr_path];
+	if (!cr)
+	{
+		if (!(env->path_lst[env->cr_path] = copy_path_lst(env)))
+			return (-1);
+	}
+	else
+	{
+		while (cr->next_path)
+			cr = cr->next_path;
+		if (!(cr->next_path = copy_path_lst(env)))
+			return (-1);
+	}
+	return (0);
 }
 
 static int	loop_main(t_env *env)
 {
 	int	ret;
 
-    env->lf_path++;
-    if (env->did_cut == 1)
-    {
-        ft_path_lst_del(&(env->path_lst[env->cr_path]));
-        env->path_lst[env->cr_path] = NULL;
-        env->did_cut = 0;
-        cut_and_reset(env, 1, 1);
-    }
-    else if (env->lf_path > 1)
-    {
-        if (get_last_path_lst(env) == -1)
-            return (-1);
-    }
+	env->lf_path++;
+	if (env->did_cut == 1)
+	{
+		ft_path_lst_del(&(env->path_lst[env->cr_path]));
+		env->path_lst[env->cr_path] = NULL;
+		env->did_cut = 0;
+		cut_and_reset(env, 1, 1);
+	}
+	else if (env->lf_path > 1)
+	{
+		if (get_last_path_lst(env) == -1)
+			return (-1);
+	}
 	reset_path_room(env, 1);
 	while (env->nb_path < env->lf_path)
 	{
@@ -207,7 +188,7 @@ static int	loop_main(t_env *env)
 	return (0);
 }
 
-static int	after_bfs(t_env * env)
+static int	after_bfs(t_env *env)
 {
 	if (!env->path_lst[env->cr_path])
 		return (0);

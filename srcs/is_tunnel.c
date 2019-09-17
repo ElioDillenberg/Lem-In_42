@@ -19,10 +19,10 @@ int			init_tu_tab(t_tunnel ***tu_tab, int *nt_rm)
 	int	i;
 
 	i = 0;
-	if (!(*tu_tab = (t_tunnel **)ft_memalloc(sizeof(t_tunnel*) * nt_rm[1])))
+	if (!(*tu_tab = (t_tunnel **)malloc(sizeof(t_tunnel*) * nt_rm[1])))
 		return (-1);
 	while (i < nt_rm[1])
-		if (!((*tu_tab)[i++] = (t_tunnel*)ft_memalloc(sizeof(t_tunnel) * nt_rm[1])))
+		if (!((*tu_tab)[i++] = (t_tunnel*)malloc(sizeof(t_tunnel) * nt_rm[1])))
 			return (-1);
 	return (0);
 }

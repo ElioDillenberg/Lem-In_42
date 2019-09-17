@@ -14,15 +14,15 @@
 #include "../libft/libft.h"
 #include <stdlib.h>
 
-int			init_tu_tab(int ***tu_tab, int *nt_rm)
+int			init_tu_tab(t_tunnel ***tu_tab, int *nt_rm)
 {
 	int	i;
 
 	i = 0;
-	if (!(*tu_tab = (int**)ft_memalloc(sizeof(int*) * nt_rm[1])))
+	if (!(*tu_tab = (t_tunnel **)ft_memalloc(sizeof(t_tunnel*) * nt_rm[1])))
 		return (-1);
 	while (i < nt_rm[1])
-		if (!((*tu_tab)[i++] = (int*)ft_memalloc(sizeof(int) * nt_rm[1])))
+		if (!((*tu_tab)[i++] = (t_tunnel*)ft_memalloc(sizeof(t_tunnel) * nt_rm[1])))
 			return (-1);
 	return (0);
 }
@@ -64,6 +64,7 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 	}
 	return (*cmp != 2 ? -2 : 1);
 }
+
 
 int			is_tunnel(char *line, t_room **room_lst, int opt)
 {

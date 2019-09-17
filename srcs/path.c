@@ -26,14 +26,14 @@ void	set_max_path(t_env *env)
 	j = 0;
 	while (j < env->nt_rm[1])
 	{
-		if (env->tu_tab[0][j])
+		if (env->tu_tab[0][j].exist == true)
 			start++;
 		j++;
 	}
 	j = 0;
 	while (j < env->nt_rm[1])
 	{
-		if (env->tu_tab[env->nt_rm[1] - 1][j])
+		if (env->tu_tab[env->nt_rm[1] - 1][j].exist == true)
 			end++;
 		j++;
 	}

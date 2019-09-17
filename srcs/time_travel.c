@@ -83,7 +83,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[env->rm_tab[J]->parent]->visited == false)
 	{
-		if (env->tu_tab[I][J] == -1)
+		if (env->tu_tab[I][J].status == -1)
 		{
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
 				return (ret);
@@ -91,7 +91,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	}
 	else
 	{
-		if (env->tu_tab[I][J] == -1)
+		if (env->tu_tab[I][J].status == -1)
 		{
 			if (ft_better_way(env, J) == 0)
 			{
@@ -133,7 +133,7 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 		delete_room_path_tt(env);
 		while (++I < env->nt_rm[1])
 		{
-			if (env->tu_tab[J][I] == 1 && !env->rm_tab[I]->path && I)
+			if (env->tu_tab[J][I].status == 1 && !env->rm_tab[I]->path && I)
 			{
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 					return (ret);

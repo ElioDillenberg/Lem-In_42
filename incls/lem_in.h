@@ -20,6 +20,13 @@
 ******************************** Structures ************************************
 */
 
+typedef struct		s_tunnel
+{
+	int		index;
+	int		status;
+	bool	exist;
+}					t_tunnel;
+
 typedef struct		s_parse
 {
 	int		start_end[2];
@@ -68,7 +75,7 @@ typedef struct		s_env
 	t_room			**rm_lst_path_tt;
 	t_room			**rm_tab;
 	t_parse			*parse;
-	int				**tu_tab;
+	t_tunnel				**tu_tab;
 	int 			**path_tab;
 	char			*to_print;
 	char 			*map;
@@ -133,7 +140,7 @@ int			check_name(t_room *cr, char *test);
 ******************************** Is_tunnel.c ***********************************
 */
 int					is_tunnel(char *line, t_room **room_lst, int opt);
-int					init_tu_tab(int ***tub_tab, int *nt_rm);
+int					init_tu_tab(t_tunnel ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************
 */
@@ -200,4 +207,5 @@ int	if_room(t_env *env, char *line);
 int		if_tunnel(t_env *env, char *line);
 
 int         bfs_time_travel(t_env *env, int index, int dfs_tt);
+int	get_index(t_env *env, int index, int to_find);
 #endif

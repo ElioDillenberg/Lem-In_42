@@ -32,10 +32,10 @@ void	cut_and_reset(t_env *env, int opt, int visited)
 			env->rm_tab[i]->visited = false;
 		while (++j < env->nt_rm[1])
 		{
-			if (env->tu_tab[i][j] == -2)
-				env->tu_tab[i][j] = 0;
-			else if (env->tu_tab[i][j] == -1)
-				env->tu_tab[i][j] = 1;
+			if (env->tu_tab[i][j].status == -2)
+				env->tu_tab[i][j].status = 0;
+			else if (env->tu_tab[i][j].status == -1)
+				env->tu_tab[i][j].status = 1;
 		}
 	}
 	env->tu_cut = 0;

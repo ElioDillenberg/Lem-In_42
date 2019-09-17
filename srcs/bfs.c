@@ -15,6 +15,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+int	get_index(t_env *env, int index, int to_find)
+{
+	int idx;
+
+	idx = 0;
+	while (env->tu_tab[index][idx].index != to_find)
+		idx++;
+	return (idx);
+}
+
 void		reset_path_room(t_env *env, int opt)
 {
 	int i;
@@ -129,8 +139,8 @@ int			ft_better_way(t_env *env, int index)
 	i = -1;
 	while (++i < env->nt_rm[1])
 	{
-		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
-			if (env->tu_tab[i][index] != -1)
+		if (env->tu_tab[index][i].status == 1 && !env->rm_tab[i]->path && i)
+			if (env->tu_tab[i][index].status != -1)
 				return (1);
 	}
 	return (0);
@@ -183,11 +193,11 @@ int			bfs_loop(t_env *env)
 	i = -1;
 	index = (*env->rm_lst_path)->index;
 	delete_room_path(env);
-	while (++i < env->nt_rm[1])
+	while (env->tu_tab[index][++i].exist)
 	{
-		if (env->tu_tab[index][i] == 1 && !env->rm_tab[i]->path && i)
+		if (env->tu_tab[index][i].status == 1 && !env->rm_tab[env->tu_tab[index][i].index]->path && env->tu_tab[index][i].index != 0)
 		{
-			if ((ret = found_path_bfs(env, i, index)) > -2)
+			if ((ret = found_path_bfs(env, env->tu_tab[index][i].index, index)) > -2)
 				return (ret);
 		}
 	}
@@ -221,7 +231,7 @@ static void	set_data_get_path(t_env *env, int *parent, int *index, int *save)
 	env->rm_tab[*index]->visited = true;
 	*parent = env->rm_tab[*index]->parent;
 	*index = env->rm_tab[*parent]->index;
-	env->tu_tab[*index][*save] = env->tu_tab[*save][*index] == -1 ? -2 : -1;
+	env->tu_tab[*index][get_index(env, *index, *save)].status = env->tu_tab[*save][get_index(env, *save, *index)].status == -1 ? -2 : -1;
 }
 
 int			get_path(t_env *env)
@@ -239,14 +249,14 @@ int			get_path(t_env *env)
 	while (env->rm_tab[index]->parent != -1)
 	{
 		set_data_get_path(env, &parent, &index, &save);
-		if (env->tu_tab[save][index] == -1)
+		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{
-			env->tu_tab[index][save] = -2;
-			env->tu_tab[save][index] = -2;
+			env->tu_tab[index][get_index(env, index, save)].status = -2;
+			env->tu_tab[save][get_index(env, save, index)].status = -2;
 			env->tu_cut = 1;
 		}
 		else
-			env->tu_tab[index][save] = -1;
+			env->tu_tab[index][get_index(env, index, save)].status = -1;
 		if (add_path_index(&path, index, env) == -1)
 			return (-1);
 	}

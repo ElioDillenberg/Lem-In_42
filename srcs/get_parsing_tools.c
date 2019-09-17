@@ -86,7 +86,6 @@ void add_tunnel(t_env *env, int index, int to_add)
 	while (env->tu_tab[index][i].exist != false)
 		i++;
 	env->tu_tab[index][i].exist = true;
-	env->tu_tab[index][i + 1].exist = true;
 	env->tu_tab[index][i].index = to_add;
 	env->tu_tab[index][i].status = 1;
 }

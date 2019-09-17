@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #define I intz[0]
 #define J intz[1]
+#define K intz[2]
 
 static int	add_room_path_tt(t_env *env, t_room *room)
 {
@@ -58,12 +59,12 @@ static int	delete_room_path_tt(t_env *env)
 static int	add_room_tt(t_env *env, int *intz, int opt)
 {
 	if (opt == 1)
-		env->rm_tab[I]->dfs = env->rm_tab[J]->dfs + 1;
+		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs + 1;
 	else
-		env->rm_tab[I]->dfs = env->rm_tab[J]->dfs - 1;
-	env->rm_tab[I]->path = 1;
-	env->rm_tab[I]->parent = J;
-	if (add_room_path_tt(env, env->rm_tab[I]) == -1)
+		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs - 1;
+	env->rm_tab[K]->path = 1;
+	env->rm_tab[K]->parent = J;
+	if (add_room_path_tt(env, env->rm_tab[K]) == -1)
 		return (-1);
 	return (0);
 }
@@ -72,8 +73,8 @@ static int	add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt)
 {
 	if (add_room_tt(env, intz, opt) == -1)
 		return (-1);
-	if (env->rm_tab[I]->dfs == dfs_tt)
-		return (ft_roomdel(env->rm_lst_path_tt, I));
+	if (env->rm_tab[K]->dfs == dfs_tt)
+		return (ft_roomdel(env->rm_lst_path_tt, K));
 	return (-2);
 }
 
@@ -83,7 +84,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[env->rm_tab[J]->parent]->visited == false)
 	{
-		if (env->tu_tab[I][J].status == -1)
+		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
 				return (ret);
@@ -91,7 +92,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	}
 	else
 	{
-		if (env->tu_tab[I][J].status == -1)
+		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
 			if (ft_better_way(env, J) == 0)
 			{
@@ -122,7 +123,7 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 {
 	int		ret;
-	int		intz[2];
+	int		intz[3];
 
 	if (add_room_path_tt(env, env->rm_tab[index]) == -1)
 		return (-1);
@@ -133,8 +134,9 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 		delete_room_path_tt(env);
 		while (++I < env->nt_rm[1])
 		{
-			if (env->tu_tab[J][I].status == 1 && !env->rm_tab[I]->path && I)
+			if (env->tu_tab[J][I].status == 1 && !env->rm_tab[env->tu_tab[J][I].index]->path && env->tu_tab[J][I].index != 0)
 			{
+				K = env->tu_tab[J][I].index;
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 					return (ret);
 			}

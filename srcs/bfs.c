@@ -162,12 +162,25 @@ static int	found_path_bfs(t_env *env, int i, int idx)
 {
 	int	ret;
 
-
+	if (env->rm_tab[idx]->parent != -1 && env->rm_tab[idx]->visited == true)
+	{
+		if ((ret = bfs_time_travel(env, idx, env->rm_tab[idx]->dfs + 1)) == -1)
+			return (-1);
+		if (ret)
+		{
+			env->rm_tab[ret]->dfs = env->rm_tab[idx]->dfs + 1;
+			if ((ret = add_room_bfs(env, ret)) > -2)
+				return (ret);
+		}
+	}
+	else
+	{
 		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
 		env->rm_tab[i]->path = 1;
 		env->rm_tab[i]->parent = idx;
 		if ((ret = add_room_bfs(env, i)) > -2)
 			return (ret);
+	}
 	return (-2);
 }
 

@@ -69,7 +69,7 @@ static int	print_result(t_path *cr, t_env *env, int no_space, char *buffer)
 					return (-1);
 			if ((cr->prev_room->len && env->ants_end < env->nt_rm[0]
 			&& env->next_ant <= env->nt_rm[0] && head->strt_ants > 0)
-			|| head->len == 1 || (env->lf_path == 1 && cr->prev_room->len
+			|| (env->lf_path == 1 && cr->prev_room->len
 			&& env->ants_end < env->nt_rm[0] && env->next_ant <= env->nt_rm[0]))
 			{
 				cr->ant = env->next_ant++;

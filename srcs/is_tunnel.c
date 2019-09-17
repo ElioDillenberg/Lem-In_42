@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:59:34 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 15:14:49 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/17 18:28:48 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 	}
 	return (*cmp != 2 ? -2 : 1);
 }
-
 
 int			is_tunnel(char *line, t_room **room_lst, int opt)
 {

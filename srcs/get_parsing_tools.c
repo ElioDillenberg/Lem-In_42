@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 15:15:30 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/17 18:27:14 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_room	**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
 	return (*rm_tab);
 }
 
-void add_tunnel(t_env *env, int index, int to_add)
+void	add_tunnel(t_env *env, int index, int to_add)
 {
 	int i;
 

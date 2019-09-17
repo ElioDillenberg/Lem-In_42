@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/10 15:50:33 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/17 18:59:19 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int			parsing(t_env *env)
 	char	*line;
 
 	line = NULL;
-	// env->parse->fd = open("/Users/edillenb/Github_Edillenb/lem_in/bigs.txt", O_RDONLY);
 	if (env->opt_file_path)
 		env->parse->fd = open(env->opt_file_path, O_RDONLY);
 	else

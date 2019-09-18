@@ -14,6 +14,10 @@
 #include "../libft/libft.h"
 #include <stdlib.h>
 
+/*
+** Toutes les fonctions sont stables si elles return -1 / -2
+*/
+
 int			init_tu_tab(t_tunnel ***tu_tab, int *nt_rm)
 {
 	int	i;

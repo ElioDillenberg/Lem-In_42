@@ -18,6 +18,11 @@
 #define J intz[1]
 #define K intz[2]
 
+/*
+** Toutes les fonctions sont stables si elles return -1 / -2
+*/
+
+
 int		add_room_path_tt(t_env *env, t_room *room)
 {
 	t_room	*new_room;

@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 12:35:39 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/18 10:05:13 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/18 09:56:47 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			ft_better_way(t_env *env, int index)
 	return (0);
 }
 
-static int	path_bfs(t_env *env, int i, int idx)
+static int	found_path_bfs(t_env *env, int i, int idx)
 {
 	int	ret;
 
@@ -79,7 +79,7 @@ int			bfs_loop(t_env *env)
 		if (env->tu_tab[index][i].status == 1
 			&& !env->rm_tab[env->tu_tab[index][i].index]->path
 			&& env->tu_tab[index][i].index != 0)
-			if ((ret = path_bfs(env, env->tu_tab[index][i].index, index)) > -2)
+			if ((ret = found_path_bfs(env, env->tu_tab[index][i].index, index)) > -2)
 				return (ret);
 	}
 	if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)

@@ -39,20 +39,20 @@ int		get_room(char *line, t_room *room)
 	size_t i;
 
 	i = 0;
-	while (*line == ' ')
+	while (*line && *line == ' ')
 		line++;
-	while (line[i] != ' ')
+	while (line[i] && line[i] != ' ')
 		i++;
 	if (!(room->name = ft_strsub((const char **)&line, 0, i, 0)))
 		return (-1);
-	while (*line != ' ')
+	while (*line && *line != ' ')
 		line++;
-	while (*line == ' ')
+	while (*line && *line == ' ')
 		line++;
 	room->x = ft_atoi(line);
-	while (*line != ' ')
+	while (*line && *line != ' ')
 		line++;
-	while (*line == ' ')
+	while (*line && *line == ' ')
 		line++;
 	room->y = ft_atoi(line);
 	return (0);

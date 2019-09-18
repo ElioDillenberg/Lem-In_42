@@ -200,7 +200,7 @@ int   				get_opti_path(t_env *env, t_path *path);
 /*
 ******************************** If_parsing.c **********************************
 */
-int if_comment(t_env *env, char *line);
+int if_comment(t_env *env, char *line, int opt);
 int		if_start_end(t_env *env, char *line);
 int		if_ant(t_env *env, char *line);
 int	if_room(t_env *env, char *line);

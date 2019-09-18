@@ -36,7 +36,7 @@ int			parsing_core(t_env *env, char *line)
 {
 	if (line[0] == '#')
 	{
-		if (line[1] != '#' && (if_comment(env, line)) == -1)
+		if (line[1] != '#' && (if_comment(env, line, 1)) == -1)
 			return (-1);
 		else if (line[1] == '#' && (if_start_end(env, line)) == -1)
 			return (-1);
@@ -59,6 +59,21 @@ int			parsing_core(t_env *env, char *line)
 	return (1);
 }
 
+int			check_file(t_env *env, char *line)
+{
+	int i;
+
+	i = 0;
+	if (line[0] == '#' && line[1] != '#')
+	{
+		if ((if_comment(env, line, 0)) == -1)
+			return (-1);
+	}
+	else if (!ft_isdigit(line[i]))
+		return (-1);
+	return (1);
+}
+
 int			parsing(t_env *env)
 {
 	char	*line;
@@ -71,8 +86,10 @@ int			parsing(t_env *env)
 	while ((env->parse->ret = get_next_line(env->parse->fd, &line, 1))
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
+		if (env->parse->index == 0 && (check_file(env, line)) == -1)
+			return (exit_parsing(&line, -1, env));
 		if (parsing_core(env, line) == -1)
-			return (exit_parsing(&line, -6, env));
+			return (exit_parsing(&line, -2, env));
 		ft_memdel((void**)&line);
 	}
 	return (exit_parsing(&line, 0, env));

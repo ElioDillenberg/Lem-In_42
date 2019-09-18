@@ -54,11 +54,11 @@ static int	print_round(t_env *env, t_path *cr, int *no_space)
 	return (1);
 }
 
-static int	print_result(t_path *cr, t_env *env, int no_space, char *buffer)
+static int	print_result(t_path *cr, t_env *env, int no_space)
 {
 	t_path	*head;
 
-	while (cr != NULL && ((env->opt_turn && buffer[0]) || !env->opt_turn))
+	while (cr != NULL)
 	{
 		head = cr;
 		cr = cr->tail_path;
@@ -111,7 +111,6 @@ int			get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
 int			result(t_env *env)
 {
 	t_path	*cr;
-	char	buffer[1];
 	int		no_space;
 
 	cr = NULL;
@@ -121,14 +120,7 @@ int			result(t_env *env)
 		cr = env->path_lst[env->cr_path];
 		env->round++;
 		no_space = 0;
-		if (env->opt_turn)
-		{
-			buffer[0] = '\0';
-			read(1, buffer, 1);
-			if (env->opt_turn && buffer[0] == '\0')
-				return (-1);
-		}
-		if (!(print_result(cr, env, no_space, buffer)))
+		if (!(print_result(cr, env, no_space)))
 			return (-1);
 		write(1, "\n", 1);
 	}

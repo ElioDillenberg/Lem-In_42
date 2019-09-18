@@ -22,7 +22,6 @@ int		usage(void)
 	ft_putstr("    -rounds : displays the number of rounds\n");
 	ft_putstr("    -paths : displays used paths\n");
 	ft_putstr("    -duplicate : stop parsing if duplicate coordinates found\n");
-	ft_putstr("    -turn : prompts user to display each round\n");
 	ft_putstr("    -file -[path]: reads input from file at [path]\n\n");
 	return (-1);
 }
@@ -45,8 +44,6 @@ int		get_option(t_env *env, char **argv, int argc)
 		}
 		else if (ft_strcmp(argv[i], "-paths") == 0)
 			env->opt_paths = 1;
-		else if (ft_strcmp(argv[i], "-turn") == 0)
-			env->opt_turn = 1;
 		else if (ft_strcmp(argv[i], "-duplicate") == 0)
 			env->opt_double = 1;
 		else

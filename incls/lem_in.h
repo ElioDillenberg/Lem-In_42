@@ -101,7 +101,6 @@ typedef struct		s_env
 	int				opt_rounds;
 	char			*opt_file_path;
 	int				opt_paths;
-	int				opt_turn;
 	int				opt_double;
 	int finish;
 }					t_env;

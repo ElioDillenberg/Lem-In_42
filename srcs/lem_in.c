@@ -20,10 +20,7 @@ static int	loop_bfs(t_env *env)
 	int ret;
 
 	if ((ret = ft_bfs(env, 0)) == -1)
-	{
-		print_path(env);
 		return (-1);
-	}
 	if (ret == 1)
 		return (1);
 	if (get_path(env) == -1)

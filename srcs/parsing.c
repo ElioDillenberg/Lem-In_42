@@ -77,6 +77,7 @@ int			check_file(t_env *env, char *line)
 int			parsing(t_env *env)
 {
 	char	*line;
+	int		ret;
 
 	line = NULL;
 	if (env->opt_file_path)
@@ -88,8 +89,10 @@ int			parsing(t_env *env)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
 			return (exit_parsing(&line, -1, env));
-		if (parsing_core(env, line) == -1)
+		if ((ret = parsing_core(env, line)) == -1)
 			return (exit_parsing(&line, -2, env));
+		// if (ret = -2)
+		// 	return (exit_parsing(&line, -2, env));
 		ft_memdel((void**)&line);
 	}
 	return (exit_parsing(&line, 0, env));

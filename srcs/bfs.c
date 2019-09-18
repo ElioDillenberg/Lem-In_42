@@ -15,14 +15,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int			delete_room_path(t_env *env)
+void		delete_room_path(t_env *env)
 {
 	t_room	*room;
 
 	room = *env->rm_lst_path;
 	*env->rm_lst_path = (*env->rm_lst_path)->next;
 	ft_roomdelone(&room);
-	return (0);
 }
 
 int			ft_better_way(t_env *env, int index)

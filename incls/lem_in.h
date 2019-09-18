@@ -146,7 +146,6 @@ int					init_tu_tab(t_tunnel ***tub_tab, int *nt_rm);
 ******************************** Free.c ****************************************
 */
 int					free_all(t_env *env, int opt, int ret);
-void				free_int_tab(t_env *env, int size, int choose);
 int					free_room_lst(t_room **head, int opt);
 void				ft_pathdel(t_path **path);
 void				ft_path_lst_del(t_path **path);
@@ -154,7 +153,7 @@ void				ft_path_lst_del(t_path **path);
 ******************************** BFS.c *****************************************
 */
 int					add_room_path(t_env *env, t_room *room);
-int					delete_room_path(t_env *env);
+void				delete_room_path(t_env *env);
 int 				ft_bfs(t_env *env, int index);
 // int					add_path_index(t_path **path, int index, t_env *env);
 // int					add_path_lst(t_env *env, t_path *path);

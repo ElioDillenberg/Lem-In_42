@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:01:20 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/10 16:01:52 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/18 10:01:03 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,20 @@ void	cut_and_reset(t_env *env, int opt, int visited)
 	{
 		ft_path_lst_del(&(env->path_lst[env->cr_path]));
 		env->path_lst[env->cr_path] = NULL;
+	}
+}
+
+void	reset_path_room(t_env *env, int opt)
+{
+	int i;
+
+	i = 0;
+	while (i < env->nt_rm[1])
+	{
+		if (opt == 1)
+			env->rm_tab[i]->dfs = 0;
+		env->rm_tab[i]->path = 0;
+		env->rm_tab[i]->parent = -1;
+		i++;
 	}
 }

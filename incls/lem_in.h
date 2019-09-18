@@ -160,7 +160,6 @@ int 				ft_bfs(t_env *env, int index);
 // int					add_path_index(t_path **path, int index, t_env *env);
 // int					add_path_lst(t_env *env, t_path *path);
 // int					get_path(t_env *env);
-void 				reset_path_room(t_env *env, int opt);
 int					ft_better_way(t_env *env, int index);
 /*
 ******************************** Room.c ****************************************
@@ -175,7 +174,7 @@ void				ft_roomdelone(t_room **room);
 
 void				cut_and_reset(t_env *env, int opt, int visited);
 char				**ft_split(char const *s, char c);
-
+void 				reset_path_room(t_env *env, int opt);
 /*
 ******************************** Result.c *************************************
 */
@@ -211,16 +210,24 @@ int		if_tunnel(t_env *env, char *line);
 int         bfs_time_travel(t_env *env, int index, int dfs_tt);
 // int	get_index(t_env *env, int index, int to_find);
 /*
-******************************** reset_or_cpy.c *********************************
+******************************** reset_or_cpy.c ********************************
 */
 int					reset_or_cpy(t_env *env);
 /*
-************************************ env.c ***************************************
+************************************ env.c *************************************
 */
 t_env				*init_env(t_env *env);
 /*
-********************************** get_path.c ************************************
+********************************** get_path.c **********************************
 */
 int					get_path(t_env *env);
 int					get_index(t_env *, int index, int dfs_tt);
+/*
+********************************** Add-room.c **********************************
+*/
+int	add_room_path_tt(t_env *env, t_room *room);
+int			add_room_path(t_env *env, t_room *room);
+int	add_room_tt(t_env *env, int *intz, int opt);
+int	add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt);
+int	add_room_bfs(t_env *env, int ret);
 #endif

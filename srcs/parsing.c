@@ -34,14 +34,11 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 
 int			parsing_core(t_env *env, char *line)
 {
-	if (line[0] == '#' && line[1] != '#')
+	if (line[0] == '#')
 	{
-		if ((if_comment(env, line)) == -1)
+		if (line[1] != '#' && (if_comment(env, line)) == -1)
 			return (-1);
-	}
-	else if ((line[0] == '#' && line[1] == '#'))
-	{
-		if ((if_start_end(env, line)) == -1)
+		else if (line[1] == '#' && (if_start_end(env, line)) == -1)
 			return (-1);
 	}
 	else if (env->parse->index == 0 && is_ant_nb(line) != -1)

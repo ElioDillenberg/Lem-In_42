@@ -83,7 +83,8 @@ static void	set_data_get_path(t_env *env, int *parent, int *index, int *save)
 	env->rm_tab[*index]->visited = true;
 	*parent = env->rm_tab[*index]->parent;
 	*index = env->rm_tab[*parent]->index;
-	env->tu_tab[*index][get_index(env, *index, *save)].status = env->tu_tab[*save][get_index(env, *save, *index)].status == -1 ? -2 : -1;
+	env->tu_tab[*index][get_index(env, *index, *save)].status =
+	env->tu_tab[*save][get_index(env, *save, *index)].status == -1 ? -2 : -1;
 }
 
 int			get_path(t_env *env)

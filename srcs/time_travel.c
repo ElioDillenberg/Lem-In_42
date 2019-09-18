@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:48:46 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 15:16:34 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/18 10:03:37 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,6 @@
 #define J intz[1]
 #define K intz[2]
 
-static int	add_room_path_tt(t_env *env, t_room *room)
-{
-	t_room	*new_room;
-	t_room	*last;
-
-	last = *(env->rm_lst_path_tt);
-	if (!(new_room = (t_room*)ft_memalloc(sizeof(t_room))))
-		return (-1);
-	if (!(new_room->name = ft_strdup(room->name)))
-	{
-		ft_memdel((void**)&new_room);
-		return (-1);
-	}
-	new_room->index = room->index;
-	new_room->parent = room->parent;
-	new_room->end = room->end;
-	new_room->visited = 0;
-	if (*(env->rm_lst_path_tt) == NULL)
-	{
-		*(env->rm_lst_path_tt) = new_room;
-		return (0);
-	}
-	while (last->next != NULL)
-		last = last->next;
-	last->next = new_room;
-	return (0);
-}
-
 static int	delete_room_path_tt(t_env *env)
 {
 	t_room	*room;
@@ -54,28 +26,6 @@ static int	delete_room_path_tt(t_env *env)
 	*env->rm_lst_path_tt = (*env->rm_lst_path_tt)->next;
 	ft_roomdelone(&room);
 	return (0);
-}
-
-static int	add_room_tt(t_env *env, int *intz, int opt)
-{
-	if (opt == 1)
-		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs + 1;
-	else
-		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs - 1;
-	env->rm_tab[K]->path = 1;
-	env->rm_tab[K]->parent = J;
-	if (add_room_path_tt(env, env->rm_tab[K]) == -1)
-		return (-1);
-	return (0);
-}
-
-static int	add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt)
-{
-	if (add_room_tt(env, intz, opt) == -1)
-		return (-1);
-	if (env->rm_tab[K]->dfs == dfs_tt)
-		return (ft_roomdel(env->rm_lst_path_tt, K));
-	return (-2);
 }
 
 static int	path_visited(t_env *env, int *intz, int dfs_tt)
@@ -134,7 +84,9 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 		delete_room_path_tt(env);
 		while (++I < env->nt_rm[1])
 		{
-			if (env->tu_tab[J][I].status == 1 && !env->rm_tab[env->tu_tab[J][I].index]->path && env->tu_tab[J][I].index != 0)
+			if (env->tu_tab[J][I].status == 1
+			&& !env->rm_tab[env->tu_tab[J][I].index]->path
+			&& env->tu_tab[J][I].index != 0)
 			{
 				K = env->tu_tab[J][I].index;
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)

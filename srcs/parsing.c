@@ -34,27 +34,29 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 
 int			parsing_core(t_env *env, char *line)
 {
+	int ret;
+
 	if (line[0] == '#')
 	{
-		if (line[1] != '#' && (if_comment(env, line, 1)) == -1)
-			return (-1);
-		else if (line[1] == '#' && (if_start_end(env, line)) == -1)
-			return (-1);
+		if (line[1] != '#' && (ret = if_comment(env, line, 1)) < 0)
+			return (ret);
+		else if (line[1] == '#' && (ret = if_start_end(env, line)) < 0)
+			return (ret);
 	}
 	else if (env->parse->index == 0 && is_ant_nb(line) != -1)
 	{
-		if ((if_ant(env, line)) == -1)
-			return (-1);
+		if ((ret = if_ant(env, line)) < 0)
+			return (ret);
 	}
 	else if (env->parse->index == 1)
 	{
-		if ((if_room(env, line)) == -1)
-			return (-1);
+		if ((ret = if_room(env, line)) < 0)
+			return (ret);
 	}
 	else if (env->parse->index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
 	{
-		if ((if_tunnel(env, line)) == -1)
-			return (-1);
+		if ((ret = if_tunnel(env, line)) < 0)
+			return (ret);
 	}
 	return (1);
 }
@@ -89,10 +91,8 @@ int			parsing(t_env *env)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
 			return (exit_parsing(&line, -1, env));
-		if ((ret = parsing_core(env, line)) == -1)
-			return (exit_parsing(&line, -2, env));
-		// if (ret = -2)
-		// 	return (exit_parsing(&line, -2, env));
+		if ((ret = parsing_core(env, line)) < 0)
+			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);
 	}
 	return (exit_parsing(&line, 0, env));

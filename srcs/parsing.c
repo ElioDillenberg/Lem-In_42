@@ -26,11 +26,14 @@
 static int	exit_parsing(char **line, int ret, t_env *env)
 {
 	env = check_buffer(env, &(env)->map);
-	if ((!ft_printf("[ERROR : %s]\n", *line)))
+	if (*line)
 	{
-		ft_memdel((void**)line);
-		get_next_line(0, line, 0, 0);
-		return (-1);
+		if ((!ft_printf("[ERROR : %s]\n", *line)))
+		{
+			ft_memdel((void**)line);
+			get_next_line(0, line, 0, 0);
+			return (-1);
+		}
 	}
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0, 0);

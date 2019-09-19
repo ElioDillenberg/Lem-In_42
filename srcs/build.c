@@ -15,74 +15,62 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static t_room	*set_first(t_room *cr, t_room *prev,
-		t_room *first, t_room **rm_lst)
+void			swap_room(t_env *env, int i, int j)
 {
-	first = cr;
-	prev->next = cr->next;
-	cr = cr->next;
-	first->next = *rm_lst;
-	*rm_lst = first;
-	return (cr);
+	t_room	*tmp;
+
+	tmp = env->rm_tab[i];
+	env->rm_tab[i] = env->rm_tab[j];
+	env->rm_tab[j] = tmp;
 }
 
-static t_room	*set_last(t_room *cr, t_room *last)
+void			set_room_tab(t_env *env)
 {
-	cr->next = last;
-	last->next = NULL;
-	return (cr);
+	int 	i;
+
+	i = 0;
+	while (i < env->nt_rm[1])
+	{
+		if (env->rm_tab[i]->start && i != 0)
+			swap_room(env, 0, i);
+		if (env->rm_tab[i]->end && i != env->nt_rm[1] - 1)
+		{
+			swap_room(env, env->nt_rm[1] - 1, i);
+			if (env->rm_tab[i]->start)
+				swap_room(env, 0, i);
+		}
+		env->rm_tab[i]->index = i;
+		i++;
+	}
 }
 
-static	t_room	*find_last(t_room *cr, t_room *prev, t_room **rm_lst)
-{
-	if (cr != *rm_lst)
-		prev->next = cr->next;
-	else
-		*rm_lst = cr->next;
-	return (prev);
-}
-
-static int		set_lst(t_room *prev, t_room *last,
-		t_room *first, t_room **rm_lst)
+int				set_nb_room(t_env *env)
 {
 	t_room	*cr;
-	int		len;
+	int		i;
 
-	len = 0;
-	cr = *rm_lst;
-	while (cr != NULL)
+	i = 0;
+	cr = *env->rm_lst;
+	while (cr)
 	{
-		if (cr->start && cr != *rm_lst && ++len)
-			cr = set_first(cr, prev, first, rm_lst);
-		else if (++len)
-		{
-			if (cr->end && cr->next != NULL && --len)
-			{
-				last = cr;
-				prev = find_last(cr, prev, rm_lst);
-			}
-			else if (cr->next == NULL && !cr->end)
-				cr = set_last(cr, last);
-			else
-				prev = cr;
-			cr = cr->next;
-		}
+		i++;
+		cr = cr->next;
 	}
-	return (len);
+	return (i);
 }
 
-int				build_room_tab(t_room **rm_lst, t_room ***rm_tab)
+int				build_room_tab(t_env *env)
 {
 	t_room	*prev;
 	t_room	*first;
 	t_room	*last;
-	int		len;
 
 	first = NULL;
 	prev = NULL;
 	last = NULL;
-	len = set_lst(prev, last, first, rm_lst);
-	if (!(*rm_tab = get_room_tab(rm_tab, rm_lst, len)))
+	env->nt_rm[1] = set_nb_room(env);
+	if (get_room_tab(env, env->nt_rm[1]) == -1)
 		return (-1);
-	return (len);
+	set_room_tab(env);
+	return (0);
 }

@@ -36,7 +36,6 @@ int		set_room_data(char *line, t_room *room, int *start_end)
 	}
 	else
 		room->end = false;
-	room->ant_here = false;
 	room->ant = 0;
 	room->parent = -1;
 	room->visited = false;

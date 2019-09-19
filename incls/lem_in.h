@@ -44,7 +44,6 @@ typedef struct		s_room
 	char			*name;
 	bool			start;
 	bool			end;
-	bool			ant_here;
 	bool			visited;
 	size_t			ant;
 	int				index;
@@ -121,12 +120,12 @@ int					add_room(char *line, t_room **head, int *command);
 */
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
-t_room				**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len);
+int					get_room_tab(t_env *env, int len);
 void				get_tunnel(t_env *env, char *line);
 /*
 ******************************* Build.c ****************************************
 */
-int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
+int					build_room_tab(t_env *env);
 /*
 *************************** is_parsing_tool.c **********************************
 */

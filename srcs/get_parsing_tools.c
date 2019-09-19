@@ -58,24 +58,21 @@ int		get_room(char *line, t_room *room)
 	return (0);
 }
 
-t_room	**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len)
+int		get_room_tab(t_env *env, int len)
 {
 	t_room *cr;
-	t_room *prev;
 
-	if (!(*rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
-		return (NULL);
+	if (!(env->rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
+		return (-1);
 	len = 0;
-	cr = *rm_lst;
+	cr = *env->rm_lst;
 	while (cr != NULL)
 	{
-		cr->index = len;
-		(*rm_tab)[len] = cr;
-		prev = cr;
+		env->rm_tab[len] = cr;
 		cr = cr->next;
 		len++;
 	}
-	return (*rm_tab);
+	return (0);
 }
 
 void	add_tunnel(t_env *env, int index, int to_add)

@@ -61,7 +61,6 @@ int		get_room(char *line, t_room *room)
 int		get_room_tab(t_env *env, int len)
 {
 	t_room *cr;
-	t_room *prev;
 
 	if (!(env->rm_tab = (t_room**)malloc(sizeof(t_room*) * len)))
 		return (-1);
@@ -69,9 +68,7 @@ int		get_room_tab(t_env *env, int len)
 	cr = *env->rm_lst;
 	while (cr != NULL)
 	{
-		cr->index = len;
 		env->rm_tab[len] = cr;
-		prev = cr;
 		cr = cr->next;
 		len++;
 	}

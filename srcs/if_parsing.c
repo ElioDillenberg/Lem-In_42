@@ -38,6 +38,8 @@ int		if_ant(t_env *env, char *line)
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
 		return (-2);
 	env->nt_rm[0] = ft_atoui(line);
+	if (env->nt_rm[0] > 100000)
+		return (-1);
 	if (!(strcat_big(line, &(env)->map, env)))
 		return (-1);
 	env->parse->index++;

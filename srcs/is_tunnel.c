@@ -46,7 +46,7 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 	{
 		while (cr != NULL)
 		{
-			if (strcmp(line, cr->name) == 0)
+			if (ft_strcmp(line, cr->name) == 0)
 			{
 				*cmp = (*cmp) + 1;
 				break ;
@@ -57,7 +57,7 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 	}
 	while (cr != NULL)
 	{
-		if (strcmp(line, cr->name) == 0)
+		if (ft_strcmp(line, cr->name) == 0)
 		{
 			*cmp = (*cmp) + 1;
 			break ;

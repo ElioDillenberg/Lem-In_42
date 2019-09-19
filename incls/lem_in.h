@@ -31,6 +31,8 @@ typedef struct		s_parse
 {
 	int		start_end[2];
 	int		index;
+	int		start;
+	int		end;
 	int		command;
 	int		ret;
 	int		fd;

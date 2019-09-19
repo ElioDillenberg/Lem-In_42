@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 
 CFLAGS = -Wall -Werror -Wextra -g
 CC = gcc

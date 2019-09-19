@@ -23,19 +23,19 @@
 ** start tho
 */
 
-static int	exit_parsing(char **line, int ret, t_env *env)
+static int	exit_parsing(char **line, int ret, t_env *env, int nb)
 {
 	env = check_buffer(env, &(env)->map);
 	if (*line)
 	{
-		if ((!ft_printf("\033[31m[ERROR : %s]\033[0m\n", *line)))
+		if ((!ft_printf("\033[31mERROR : (line %d) [%s] -> \033[0m", nb, *line)))
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);
 			return (-1);
 		}
 		if (ret == -1)
-			ft_putendl("\033[31mMalloc error\033[0m");
+			ft_putendl("\033[31mMalloc error]\033[0m");
 		else if (ret == -5 || ret == -9 || ret == -2)
 			ft_putendl("\033[31mStart / End not well formated\033[0m");
 		else if (ret == -3)
@@ -113,7 +113,9 @@ int			parsing(t_env *env)
 {
 	char	*line;
 	int		ret;
+	int nb;
 
+	nb = 0;
 	line = NULL;
 	if (env->opt_file_path)
 		env->parse->fd = open(env->opt_file_path, O_RDONLY);
@@ -123,12 +125,13 @@ int			parsing(t_env *env)
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
-			return (exit_parsing(&line, -3, env));
+			return (exit_parsing(&line, -3, env, nb));
 		if ((ret = parsing_core(env, line)) < 0)
-			return (exit_parsing(&line, ret, env));
+			return (exit_parsing(&line, ret, env, nb));
 		ft_memdel((void**)&line);
+		nb++;
 	}
 	if (env->parse->index == 0)
 		ft_putendl("\033[31m[ERROR : Empty file]\033[0m");
-	return (exit_parsing(&line, 0, env));
+	return (exit_parsing(&line, 0, env, nb));
 }

@@ -28,7 +28,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 	env = check_buffer(env, &(env)->map);
 	if (*line)
 	{
-		if ((!ft_printf("[ERROR : %s]\n", *line)))
+		if ((!ft_printf("\033[31m[ERROR : %s]\033[0m\n", *line)))
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);
@@ -117,6 +117,6 @@ int			parsing(t_env *env)
 		ft_memdel((void**)&line);
 	}
 	if (env->parse->index == 0)
-		ft_putendl("[ERROR : Empty file]");
+		ft_putendl("\033[31m[ERROR : Empty file]\033[0m");
 	return (exit_parsing(&line, 0, env));
 }

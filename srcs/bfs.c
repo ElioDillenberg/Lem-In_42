@@ -75,6 +75,7 @@ int			bfs_loop(t_env *env)
 	delete_room_path(env);
 	while (env->tu_tab[index][++i].exist)
 	{
+		ft_printf("coucou\n");
 		if (env->tu_tab[index][i].status == 1
 			&& !env->rm_tab[env->tu_tab[index][i].index]->path
 			&& env->tu_tab[index][i].index != 0)

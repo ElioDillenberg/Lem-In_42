@@ -19,6 +19,7 @@ int			init_tu_tab(t_tunnel ***tu_tab, int *nt_rm)
 	int	i;
 	int nb;
 
+	ft_printf("nt_rm[1] = %d\n", nt_rm[1]);
 	nb = nt_rm[1];
 	i = 0;
 	if (!(*tu_tab = (t_tunnel **)ft_memalloc(sizeof(t_tunnel*) * nb)))

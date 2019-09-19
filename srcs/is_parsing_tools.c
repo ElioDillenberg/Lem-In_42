@@ -106,9 +106,11 @@ int			is_room(char *line, t_room **room_lst, t_env *env)
 	if (check_name(cr, test) == -1)
 		return (-2);
 	free(test);
-	while (*line != ' ' && *line && *line++)
+	while (*line != ' ' && *line++)
 		if (*line == '-')
 			return (-1);
+	if (line[0] == '\0' || i == 0 || check_room(line) == -1)
+		return (-2);
 	if (env->opt_double && (check_coordinates(line, room_lst) == -1))
 		return (-2);
 	return (0);

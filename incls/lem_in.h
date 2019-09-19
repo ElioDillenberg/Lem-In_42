@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 18:33:56 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:13:06 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ typedef struct		s_env
 	t_room			**rm_lst_path_tt;
 	t_room			**rm_tab;
 	t_parse			*parse;
-	t_tunnel				**tu_tab;
-	int 			**path_tab;
+	t_tunnel		**tu_tab;
+	int				**path_tab;
 	char			*to_print;
-	char 			*map;
+	char			*map;
 	char			*path;
 	char			buffer[BUF_SIZE];
 	char			*tmp;
-	int       		buffer_len;
-	int       		map_len;
+	int				buffer_len;
+	int				map_len;
 	int				ants_end;
 	int				next_ant;
 	int				nb_path;
@@ -102,7 +102,7 @@ typedef struct		s_env
 	char			*opt_file_path;
 	int				opt_paths;
 	int				opt_double;
-	int finish;
+	int				finish;
 }					t_env;
 
 /*
@@ -119,7 +119,7 @@ int					add_room(char *line, t_room **head, int *command);
 */
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
-t_room			**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len);
+t_room				**get_room_tab(t_room ***rm_tab, t_room **rm_lst, int len);
 void				get_tunnel(t_env *env, char *line);
 /*
 ******************************* Build.c ****************************************
@@ -130,13 +130,14 @@ int					build_room_tab(t_room **rm_lst, t_room ***rm_tab);
 */
 int					is_ant_nb(char *line);
 int					is_room(char *line, t_room **room_lst, t_env *env);
-int	is_coordinate(char *line);
+int					is_coordinate(char *line);
 /*
 ***************************** Check_parsing.c **********************************
 */
-int			check_coordinates_lst(int x, int y, t_room **room_lst);
-int	check_coordinates(char *line, t_room **room_lst);
-int			check_name(t_room *cr, char *test);
+int					check_coordinates_lst(int x, int y, t_room **room_lst);
+int					check_coordinates(char *line, t_room **room_lst);
+int					check_name(t_room *cr, char *test);
+int					check_room(char *line);
 /*
 ******************************** Is_tunnel.c ***********************************
 */
@@ -154,17 +155,14 @@ void				ft_path_lst_del(t_path **path);
 */
 int					add_room_path(t_env *env, t_room *room);
 void				delete_room_path(t_env *env);
-int 				ft_bfs(t_env *env, int index);
-// int					add_path_index(t_path **path, int index, t_env *env);
-// int					add_path_lst(t_env *env, t_path *path);
-// int					get_path(t_env *env);
+int					ft_bfs(t_env *env, int index);
 int					ft_better_way(t_env *env, int index);
 /*
 ******************************** Room.c ****************************************
 */
 int					set_room_data(char *line, t_room *room, int *start_end);
 int					add_room(char *line, t_room **head, int *command);
-int 				ft_roomdel(t_room **room, int ret);
+int					ft_roomdel(t_room **room, int ret);
 void				ft_roomdelone(t_room **room);
 /*
 ******************************** Cut.c ****************************************
@@ -172,7 +170,7 @@ void				ft_roomdelone(t_room **room);
 
 void				cut_and_reset(t_env *env, int opt, int visited);
 char				**ft_split(char const *s, char c);
-void 				reset_path_room(t_env *env, int opt);
+void				reset_path_room(t_env *env, int opt);
 /*
 ******************************** Result.c *************************************
 */
@@ -194,19 +192,17 @@ t_env				*check_buffer(t_env *env, char **dest);
 /*
 ********************************** Path.c **************************************
 */
-void 				set_max_path(t_env *env);
-int   				get_opti_path(t_env *env, t_path *path);
+void				set_max_path(t_env *env);
+int					get_opti_path(t_env *env, t_path *path);
 /*
 ******************************** If_parsing.c **********************************
 */
-int if_comment(t_env *env, char *line, int opt);
-int		if_start_end(t_env *env, char *line);
-int		if_ant(t_env *env, char *line);
-int	if_room(t_env *env, char *line);
-int		if_tunnel(t_env *env, char *line);
-
-int         bfs_time_travel(t_env *env, int index, int dfs_tt);
-// int	get_index(t_env *env, int index, int to_find);
+int					if_comment(t_env *env, char *line, int opt);
+int					if_start_end(t_env *env, char *line);
+int					if_ant(t_env *env, char *line);
+int					if_room(t_env *env, char *line);
+int					if_tunnel(t_env *env, char *line);
+int					bfs_time_travel(t_env *env, int index, int dfs_tt);
 /*
 ******************************** reset_or_cpy.c ********************************
 */
@@ -219,13 +215,13 @@ t_env				*init_env(t_env *env);
 ********************************** get_path.c **********************************
 */
 int					get_path(t_env *env);
-int					get_index(t_env *, int index, int dfs_tt);
+int					get_index(t_env *env, int index, int dfs_tt);
 /*
 ********************************** Add-room.c **********************************
 */
-int	add_room_path_tt(t_env *env, t_room *room);
-int			add_room_path(t_env *env, t_room *room);
-int	add_room_tt(t_env *env, int *intz, int opt);
-int	add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt);
-int	add_room_bfs(t_env *env, int ret);
+int					add_room_path_tt(t_env *env, t_room *room);
+int					add_room_path(t_env *env, t_room *room);
+int					add_room_tt(t_env *env, int *intz, int opt);
+int					add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt);
+int					add_room_bfs(t_env *env, int ret);
 #endif

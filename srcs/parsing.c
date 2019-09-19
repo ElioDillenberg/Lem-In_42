@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/17 18:59:19 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/18 14:07:26 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 {
 	env = check_buffer(env, &(env)->map);
 	ft_memdel((void**)line);
-	get_next_line(0, line, 0);
+	get_next_line(0, line, 0, 0);
 	env->parse->ret = ret;
 	return (ret);
 }
@@ -61,7 +61,19 @@ int			parsing_core(t_env *env, char *line)
 	return (1);
 }
 
-int			check_file(t_env *env, char *line)
+static int	is_number(char *line)
+{
+	int i;
+
+	i = 0;
+	while (ft_isdigit(line[i]))
+		i++;
+	if (line[i] != '\0' || i == 0)
+		return (0);
+	return (1);
+}
+
+static int	check_file(t_env *env, char *line)
 {
 	int i;
 
@@ -71,7 +83,7 @@ int			check_file(t_env *env, char *line)
 		if ((if_comment(env, line, 0)) == -1)
 			return (-1);
 	}
-	else if (!ft_isdigit(line[i]))
+	else if (!is_number(line))
 		return (-1);
 	return (1);
 }
@@ -86,7 +98,7 @@ int			parsing(t_env *env)
 		env->parse->fd = open(env->opt_file_path, O_RDONLY);
 	else
 		env->parse->fd = 0;
-	while ((env->parse->ret = get_next_line(env->parse->fd, &line, 1))
+	while ((env->parse->ret = get_next_line(env->parse->fd, &line, 1, 0))
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)

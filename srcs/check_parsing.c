@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 12:10:50 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/11 12:16:32 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/18 15:33:14 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,27 @@ int		check_name(t_room *cr, char *test)
 		}
 		cr = cr->next;
 	}
+	return (1);
+}
+
+int		check_room(char *line)
+{
+	int i;
+	int j;
+
+	i = 1;
+	j = 0;
+	while (line[i] && ft_isdigit(line[i]))
+		i++;
+	if (i == 0)
+		return (-1);
+	if (line[i] == ' ')
+		i++;
+	else
+		return (-1);
+	while (ft_isdigit(line[i + j]))
+		j++;
+	if (line[i + j] != '\0' || j == 0)
+		return (-1);
 	return (1);
 }

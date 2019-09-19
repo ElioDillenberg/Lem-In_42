@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/17 15:32:25 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:17:20 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	after_bfs(t_env *env)
 	reset_buffer(env);
 	result(env);
 	if (env->round && env->opt_rounds)
-		if (ft_printf("\n[ROUNDS : %d]\n", env->round) == -1)
+		if (ft_printf("\n[Rounds : %d]\n", env->round) == -1)
 			return (-1);
 	if (env->opt_paths)
 		print_path(env);

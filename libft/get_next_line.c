@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/11 18:12:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/07/18 12:18:36 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/18 14:06:27 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,13 @@ char	*trim_to_eol(char **str)
 	return (result);
 }
 
-int		get_next_line(const int fd, char **line, int opt)
+int		get_next_line(const int fd, char **line, int opt, int ret)
 {
-	int				ret;
 	char			buf[BUFF_SIZE + 1];
 	static char		*stor = NULL;
 	char			*temp;
 
 	temp = NULL;
-	ret = 0;
 	if (opt == 0)
 		return (del_str_int(&stor));
 	if (!line || fd < 0 || fd > OM || BUFF_SIZE < 1 || m_stor(&stor) == -1)

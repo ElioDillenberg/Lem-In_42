@@ -64,7 +64,7 @@ static int	loop_main(t_env *env)
 	if (env->lf_path > 1)
 		if (check_opti_path(env) == 1)
 			return (1);
-	if (env->finish == 1)
+	if (env->finish == 1 || env->path_lst[env->cr_path]->len == 1)
 		return (1);
 	if (env->lf_path < env->max_path)
 		env->cr_path = env->cr_path == 0 ? 1 : 0;

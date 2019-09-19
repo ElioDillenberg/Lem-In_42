@@ -29,8 +29,7 @@ int		free_room_lst(t_room **head, int opt)
 		ft_memdel((void**)&cr);
 		cr = next;
 	}
-	if (opt == 1)
-		write(2, "ERROR\n", 6);
+	(void)opt;
 	return (-1);
 }
 
@@ -67,8 +66,7 @@ int		free_all(t_env *env, int opt, int ret)
 	ft_memdel((void **)&(env)->rm_lst);
 	ft_memdel((void **)&(env)->rm_tab);
 	ft_memdel((void **)&env);
-	if (opt == 1)
-		write(2, "ERROR\n", 6);
+	(void)opt;
 	return (ret);
 }
 

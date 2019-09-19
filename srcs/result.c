@@ -77,8 +77,12 @@ static int	print_result(t_path *cr, t_env *env, int no_space)
 			}
 			cr = cr->prev_room;
 		}
-		cr = cr->next_path;
+		if (head->len != 1 && head->strt_ants > 1)
+			cr = cr->next_path;
+		if (env->next_ant > env->nt_rm[0])
+			return (1);
 	}
+	ft_printf("RETURN\n");
 	return (1);
 }
 

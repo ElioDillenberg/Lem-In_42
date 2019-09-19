@@ -34,6 +34,18 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 			get_next_line(0, line, 0, 0);
 			return (-1);
 		}
+		if (ret == -1)
+			ft_putendl("\033[31mMalloc error\033[0m");
+		else if (ret == -5 || ret == -9 || ret == -2)
+			ft_putendl("\033[31mStart / End not well formated\033[0m");
+		else if (ret == -3)
+			ft_putendl("\033[31mAnt not well formated\033[0m");
+		else if (ret == -4)
+			ft_putendl("\033[31mRoom not well formated\033[0m");
+		else if (ret == -8)
+			ft_putendl("\033[31mTunnel not well formated\033[0m");
+		else
+			ft_putendl("\033[31mUndefined error\033[0m");
 	}
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0, 0);
@@ -111,7 +123,7 @@ int			parsing(t_env *env)
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
-			return (exit_parsing(&line, -1, env));
+			return (exit_parsing(&line, -3, env));
 		if ((ret = parsing_core(env, line)) < 0)
 			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);

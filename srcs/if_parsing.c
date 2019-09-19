@@ -34,7 +34,7 @@ int		if_start_end(t_env *env, char *line)
 int		if_ant(t_env *env, char *line)
 {
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
-		return (-2);
+		return (-3);
 	env->nt_rm[0] = ft_atoui(line);
 	if (env->nt_rm[0] > 100000)
 		return (-1);
@@ -49,7 +49,7 @@ int		if_room(t_env *env, char *line)
 	int ret;
 
 	if ((ret = is_room(line, env->rm_lst, env)) == -2 && env->parse->index == 1)
-		return (-2);
+		return (-4);
 	else if (ret >= 0)
 	{
 		if ((add_room(line, env->rm_lst, env->parse->start_end) == -1)
@@ -59,7 +59,7 @@ int		if_room(t_env *env, char *line)
 	else if (is_tunnel(line, env->rm_lst, 0) != -1)
 	{
 		if (env->parse->start_end[0] != 2 || env->parse->start_end[1] != 2)
-			return (-2);
+			return (-5);
 		if ((env->nt_rm[1] = build_room_tab(env->rm_lst, &(env)->rm_tab)) == -1
 			|| init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
 			return (-1);
@@ -69,16 +69,16 @@ int		if_room(t_env *env, char *line)
 			return (-1);
 	}
 	else
-		return (-2);
+		return (-7);
 	return (1);
 }
 
 int		if_tunnel(t_env *env, char *line)
 {
 	if (is_tunnel(line, env->rm_lst, 1) == -2)
-		return (-2);
+		return (-8);
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
-		return (-2);
+		return (-9);
 	if (!(strcat_big(line, &(env)->map, env)))
 		return (-1);
 	get_tunnel(env, line);

@@ -58,7 +58,7 @@ int		if_room(t_env *env, char *line)
 				|| (!(strcat_big(line, &(env)->map, env))))
 			return (-1);
 	}
-	else if (is_tunnel(line, env->rm_lst, 0) != -1)
+	else if (is_tunnel(line, env->rm_lst, 0) == 0)
 	{
 		if (env->parse->start_end[0] != 2 || env->parse->start_end[1] != 2)
 			return (-2);

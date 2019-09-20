@@ -89,10 +89,13 @@ int		add_room_tt(t_env *env, int *intz, int opt)
 
 int		add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt)
 {
+	// ft_printf("Petit passage par add_room_tt_ret\n");
 	if (add_room_tt(env, intz, opt) == -1)
 		return (-1);
+	// ft_printf("On a regle son compte a ce btrd de add_room_tt\n");
 	if (env->rm_tab[K]->dfs == dfs_tt)
 		return (ft_roomdel(env->rm_lst_path_tt, K));
+	// ft_printf("on est sur le point de se barrer de add_room_tt_ret\n");
 	return (-2);
 }
 

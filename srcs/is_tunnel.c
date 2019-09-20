@@ -53,7 +53,7 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 			}
 			cr = cr->next;
 		}
-		return (1);
+		return (*cmp != 1 ? -2 : 1);
 	}
 	while (cr != NULL)
 	{
@@ -80,7 +80,8 @@ int			is_tunnel(char *line, t_room **room_lst, int opt)
 		i++;
 	if (check_tunnel(line, opt, i) != 1)
 		return (check_tunnel(line, opt, i));
-	check_tunnel_name(line, cr, &cmp, 1);
+	if (check_tunnel_name(line, cr, &cmp, 1) == -2)
+		return (-2);
 	line[i] = '-';
 	while (*line != '-' && *line != '\0')
 		line++;

@@ -1,0 +1,45 @@
+9
+##start
+a 0 0
+b 1 1
+c 2 2
+d 3 3
+e 4 4
+f 5 5
+g 6 6
+h 7 7
+i 8 8
+j 9 9
+k 10 10
+l 11 11
+m 12 12
+##end
+n 13 13
+dd 23 3
+de 24 4
+df 15 5
+dg 36 6
+dh 67 7
+di 58 8
+dj 69 9
+dk 100 10
+dl 111 11
+dm 122 12
+a-b
+a-c
+b-d
+d-f
+c-f
+c-e
+f-h
+f-i
+e-g
+g-i
+h-l
+l-k
+i-k
+i-j
+j-m
+m-n
+k-n
+caca

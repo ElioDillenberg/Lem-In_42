@@ -97,10 +97,14 @@ int			get_path(t_env *env)
 	path = NULL;
 	index = env->nt_rm[1] - 1;
 	parent = env->rm_tab[index]->parent;
+	ft_printf("Le papa de end c'est  : %s\n", env->rm_tab[env->rm_tab[index]->parent]->name);
+	ft_printf("Le papa de start c'est : %s\n", env->rm_tab[env->rm_tab[index]->parent]->name);
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
 	while (env->rm_tab[index]->parent != -1)
 	{
+		ft_printf("I'm %s (index = %d), my daddy is: %s\n", env->rm_tab[index]->name, index, env->rm_tab[env->rm_tab[index]->parent]->name);
+		// ft_printf("LA BOOOOOUCLE DU GET PATH\n");
 		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{

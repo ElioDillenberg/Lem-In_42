@@ -34,7 +34,6 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[env->rm_tab[J]->parent]->visited == false)
 	{
-		// ft_printf("FAUT REMONTER LE CHEMIN WALAAAAAH\n");
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
@@ -43,16 +42,11 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	}
 	else
 	{
-		// ft_printf("ON KIFFERAIT SE TIRER DICI FISA FISA\n");
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
-			// ft_printf("YA PAS MIEUX EN VRAI?\n");
 			if (ft_better_way(env, J) == 0)
-			{
-				// ft_printf("ON A PAS TROUVE MIEUX...\n");
 				if (add_room_tt(env, intz, -1) == -1)
 					return (-1);
-			}
 		}
 		else if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
 			return (ret);
@@ -66,7 +60,6 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[J]->parent != -1 && env->rm_tab[J]->visited)
 	{
-		// ft_printf("PATH_VISITED\n");
 		if ((ret = path_visited(env, intz, dfs_tt)) > -2)
 			return (ret);
 	}
@@ -100,13 +93,14 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 				{
 					// ft_printf("ret = %d\n", ret);
+					ft_roomdel(env->rm_lst_path_tt, 0);
 					return (ret);
 				}
 			}
 		}
 		// ft_printf("END OF WHILE\n");
 	}
-	env->rm_tab[index]->path = 0;
-	env->rm_tab[index]->parent = -1;
+	// env->rm_tab[index]->path = 0;
+	// env->rm_tab[index]->parent = -1;
 	return (ft_roomdel(env->rm_lst_path_tt, 0));
 }

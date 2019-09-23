@@ -48,6 +48,43 @@ static int	check_opti_path(t_env *env)
 	return (0);
 }
 
+// static void debug_path(t_env *env)
+// {
+// 	t_path *cr;
+// 	t_path *prev;
+// 	t_path *head;
+// 	int i;
+// 	int len;
+// 	int total;
+// 	int mod;
+// 	int rounds;
+//
+// 	i = 0;
+// 	total = 0;
+// 	len = 0;
+// 	cr = env->path_lst[env->cr_path];
+// 	head = env->path_lst[env->cr_path];
+// 	while (cr)
+// 	{
+// 		if (i >= 1 && len > cr->len)
+// 		{
+// 			prev->next_path = cr->next_path;
+// 		}
+// 		else
+// 			total += cr->len;
+// 		len = cr->len;
+// 		prev = cr;
+// 		cr = cr->next_path;
+// 		i++;
+// 	}
+// 	env->nb_path = i;
+// 	env->path_lst[env->cr_path] = head;
+// 	mod = (total + env->nt_rm[0]) % env->nb_path;
+// 	rounds = ((total + env->nt_rm[0]) / env->nb_path) - 1;
+// 	rounds += mod > 0 ? 1 : 0;
+// 	get_strt_ants(env, rounds, mod);
+// }
+
 static int	loop_main(t_env *env)
 {
 	int	ret;
@@ -60,7 +97,7 @@ static int	loop_main(t_env *env)
 	{
 		if ((ret = loop_bfs(env)) == -1)
 			return (-1);
-		ft_printf("JSUIS SORTI DE LA LOOP DE BFS\n");
+		// ft_printf("JSUIS SORTI DE LA LOOP DE BFS\n");
 		if (ret == 1)
 			break ;
 	}
@@ -82,6 +119,7 @@ static int	after_bfs(t_env *env)
 	if (env->path_lst[env->cr_path]->strt_ants == 0)
 		get_strt_ants(env, env->total_rounds, env->mod_ants);
 	reset_buffer(env);
+	//debug_path(env);
 	result(env);
 	if (env->round && env->opt_rounds)
 		if (ft_printf("\n[Rounds : %d]\n", env->round) == -1)

@@ -48,14 +48,19 @@ int		get_opti_path(t_env *env, t_path *path)
 	int		size;
 	int		rounds;
 	int		mod;
+	int		len;
+	int i;
 
 	size = 0;
 	nb_path = 0;
+	i = 0;
 	while (path)
 	{
 		size += path->len;
+		len = path->len;
 		nb_path++;
 		path = path->next_path;
+		i++;
 	}
 	mod = (size + env->nt_rm[0]) % nb_path;
 	rounds = ((size + env->nt_rm[0]) / nb_path) - 1;

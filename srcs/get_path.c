@@ -119,8 +119,8 @@ int			get_path(t_env *env)
 		if (!env->rm_tab[env->rm_tab[index]->dad[j]]->end)
 			env->rm_tab[index]->dad[j] = -1;
 		// ft_printf("LA BOOOOOUCLE DU GET PATH\n");
-		ft_printf("PARENT : %d | INDEX : %d | SAVE : %d | J : %d\n", parent, index, save, j);
-		ft_printf("PARENT : %s | INDEX : %s \n", env->rm_tab[parent]->name, env->rm_tab[index]->name);
+		// ft_printf("PARENT : %d | INDEX : %d | SAVE : %d | J : %d\n", parent, index, save, j);
+		// ft_printf("PARENT : %s | INDEX : %s \n", env->rm_tab[parent]->name, env->rm_tab[index]->name);
 		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{

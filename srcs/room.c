@@ -20,11 +20,11 @@ void set_dad(t_env *env, int i, int idx)
 	int j;
 
 	j = 0;
-	ft_printf("OLD DAD of ROOM [%s] : [%s]\n", env->rm_tab[i]->name, env->rm_tab[env->rm_tab[i]->dad[0]]->name);
+	// ft_printf("OLD DAD of ROOM [%s] : [%s]\n", env->rm_tab[i]->name, env->rm_tab[env->rm_tab[i]->dad[0]]->name);
 	while (env->rm_tab[i]->dad[j] != -1 && j < env->rm_tab[i]->nb_dad && env->rm_tab[i]->dad[j] != idx)
 		j++;
 	env->rm_tab[i]->dad[j] = idx;
-	ft_printf("NEW DAD of ROOM [%s] : [%s] (j : %d)\n", env->rm_tab[i]->name, env->rm_tab[env->rm_tab[i]->dad[j]]->name, j);
+	// ft_printf("NEW DAD of ROOM [%s] : [%s] (j : %d)\n", env->rm_tab[i]->name, env->rm_tab[env->rm_tab[i]->dad[j]]->name, j);
 }
 
 /*

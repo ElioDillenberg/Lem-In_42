@@ -50,9 +50,12 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				path_tt;
 	// t_dad			*parent;
+	int				parent_tt;
 	int				parent;
 	int				dfs;
+	int				dfs_tt;
 	struct s_room	*next;
 }					t_room;
 

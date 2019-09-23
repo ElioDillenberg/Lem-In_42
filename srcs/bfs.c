@@ -42,22 +42,24 @@ static int	path_bfs(t_env *env, int i, int idx)
 {
 	int	ret;
 
-	if (env->rm_tab[idx]->parent != -1 && env->rm_tab[idx]->visited == true)
+	if (env->rm_tab[i]->visited == true && i != env->nt_rm[1] -1)
 	{
-		ft_printf("Starting TIME_travel here : %s\n", env->rm_tab[idx]->name);
-		if ((ret = bfs_time_travel(env, idx, env->rm_tab[idx]->dfs + 1)) == -1)
+		ft_printf("Starting TIME_travel here : %s, looking for a dfs of %d\n", env->rm_tab[i]->name, env->rm_tab[idx]->dfs + 1);
+		env->rm_tab[i]->parent_tt = idx;
+		env->rm_tab[i]->path_tt = 1;
+		env->rm_tab[i]->dfs_tt = env->rm_tab[idx]->dfs;
+		if ((ret = bfs_time_travel(env, i, env->rm_tab[idx]->dfs)) == -1)
 			return (-1);
 		ft_printf("time_travel_ret = %d, which is room : %s\n", ret, env->rm_tab[ret]->name);
 		// ft_printf("rm_tab[idx]->path = %d\n", env->rm_tab[idx]->path);
 		if (ret)
 		{
-			env->rm_tab[ret]->dfs = env->rm_tab[idx]->dfs + 1;
+			env->rm_tab[ret]->dfs = env->rm_tab[i]->dfs + 1;
+			env->rm_tab[ret]->path = 1;
+			env->rm_tab[ret]->parent = idx;
 			// ft_printf("on va add la room au BFS sa mere la teps\n");
 			if ((ret = add_room_bfs(env, ret)) > -2)
-			{
-				// ft_printf("ret de add_room_bfs dans path_bfs = %d\n", ret);
 				return (ret);
-			}
 			// ft_printf("add_room s'est bien passe visiblement, faut break\n");
 		}
 	}

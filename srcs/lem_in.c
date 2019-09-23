@@ -60,7 +60,7 @@ static int	loop_main(t_env *env)
 	{
 		if ((ret = loop_bfs(env)) == -1)
 			return (-1);
-		ft_printf("JSUIS SORTI DE LA LOOP DE BFS\n");
+		ft_printf("JSUIS SORTI DE LA LOOP DE BFS\n\n\n");
 		if (ret == 1)
 			break ;
 	}

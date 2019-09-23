@@ -53,6 +53,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[env->rm_tab[J]->parent_tt]->visited == false)
 	{
+		ft_printf("1\n");
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
 			env->rm_tab[K]->parent_tt = J;
@@ -65,6 +66,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
+			ft_printf("2\n");
 			if (ft_better_way(env, J) == 0)
 			{
 				env->rm_tab[K]->parent_tt = J;
@@ -75,6 +77,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 		}
 		else
 		{
+			ft_printf("3\n");
 			env->rm_tab[K]->parent_tt = J;
 			env->rm_tab[K]->path_tt = 1;
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
@@ -88,9 +91,9 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 {
 	int	ret;
 
-	// ft_printf("Found a possible tunnel towards %s\n", env->rm_tab[K]->name);
 	if (env->rm_tab[J]->visited)
 	{
+		ft_printf("We on a visited room\n");
 		if ((ret = path_visited(env, intz, dfs_tt)) > -2)
 			return (ret);
 	}
@@ -116,9 +119,9 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 	{
 		I = -1;
 		J = (*env->rm_lst_path_tt)->index;
-		// ft_printf("TT from %s\n", env->rm_tab[J]->name);
+		ft_printf("TT from %s\n", env->rm_tab[J]->name);
 		delete_room_path_tt(env);
-		while (++I < env->nt_rm[1])
+		while (env->tu_tab[J][++I].exist)
 		{
 			// ft_printf("J = %s\n", env->rm_tab[J]->name);
 			// ft_printf("I = %s\n", env->rm_tab[I]->name);

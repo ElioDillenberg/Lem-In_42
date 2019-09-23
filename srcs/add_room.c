@@ -74,35 +74,25 @@ int		add_room_path(t_env *env, t_room *room)
 	return (0);
 }
 
-int		add_room_tt(t_env *env, int *intz, int opt)
+int     add_room_tt(t_env *env, int *intz, int opt)
 {
-	if (opt == 1)
-		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs + 1;
-	else
-		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs - 1;
-	env->rm_tab[K]->path_tt = 1;
-	env->rm_tab[K]->parent_tt = J;
-	if (add_room_path_tt(env, env->rm_tab[K]) == -1)
-		return (-1);
-	return (0);
+    if (opt == 1)
+        env->rm_tab[K]->dfs = env->rm_tab[J]->dfs + 1;
+    else
+        env->rm_tab[K]->dfs = env->rm_tab[J]->dfs - 1;
+    env->rm_tab[K]->path_tt = 1;
+    env->rm_tab[K]->parent_tt = J;
+    if (add_room_path_tt(env, env->rm_tab[K]) == -1)
+        return (-1);
+    return (0);
 }
 
 int		add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt)
 {
-	int	ret;
-
-	// ft_printf("Petit passage par add_room_tt_ret\n");
 	if (add_room_tt(env, intz, opt) == -1)
 		return (-1);
-	// ft_printf("On a regle son compte a ce btrd de add_room_tt\n");
-	if (env->rm_tab[K]->dfs == dfs_tt)
-	{
-		if (env->rm_tab[K]->visited)
-			if ((ret = bfs_time_travel(env, K, env->rm_tab[J]->dfs_tt) == -1))
-				return (-1);
+	if (env->rm_tab[K]->dfs == dfs_tt && (env->rm_tab[K]->visited == false || env->rm_tab[K]->end))
 		return (ft_roomdel(env->rm_lst_path_tt, K));
-	}
-	// ft_printf("on est sur le point de se barrer de add_room_tt_ret\n");
 	return (-2);
 }
 

@@ -60,7 +60,6 @@ static int	loop_main(t_env *env)
 	{
 		if ((ret = loop_bfs(env)) == -1)
 			return (-1);
-		ft_printf("JSUIS SORTI DE LA LOOP DE BFS\n\n\n");
 		if (ret == 1)
 			break ;
 	}
@@ -123,7 +122,7 @@ int			main(int argc, char **argv)
 			return (free_all(env, 0, 0));
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
-	print_tu_tab(env);
+	// print_tu_tab(env);
 	ft_putstr(env->map);
 	set_max_path(env);
 	if (env->max_path == 0)

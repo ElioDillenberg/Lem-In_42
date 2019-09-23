@@ -29,9 +29,9 @@ int			ft_better_way(t_env *env, int index)
 	int	i;
 
 	i = -1;
-	while (++i < env->nt_rm[1])
+	while (env->tu_tab[index][++i].exist)
 	{
-		if (env->tu_tab[index][i].status == 1 && !env->rm_tab[i]->path && i)
+		if (env->tu_tab[index][i].status == 1 && !env->rm_tab[i]->path && env->tu_tab[index][i].index != 0)
 			if (env->tu_tab[i][index].status != -1)
 				return (1);
 	}
@@ -44,28 +44,22 @@ static int	path_bfs(t_env *env, int i, int idx)
 
 	if (env->rm_tab[i]->visited == true && i != env->nt_rm[1] -1)
 	{
-		ft_printf("Starting TIME_travel here : %s, looking for a dfs of %d\n", env->rm_tab[i]->name, env->rm_tab[idx]->dfs + 1);
 		env->rm_tab[i]->parent_tt = idx;
 		env->rm_tab[i]->path_tt = 1;
 		env->rm_tab[i]->dfs_tt = env->rm_tab[idx]->dfs;
-		if ((ret = bfs_time_travel(env, i, env->rm_tab[idx]->dfs)) == -1)
+		// ft_printf("Time Travel dfs_tt = %d\n", env->rm_tab[idx]->dfs + 1);
+		if ((ret = bfs_time_travel(env, i, env->rm_tab[i]->dfs)) == -1)
 			return (-1);
-		ft_printf("time_travel_ret = %d, which is room : %s\n", ret, env->rm_tab[ret]->name);
-		// ft_printf("rm_tab[idx]->path = %d\n", env->rm_tab[idx]->path);
 		if (ret)
 		{
+			ft_printf("adding room %s after time travel\n", env->rm_tab[ret]->name);
 			env->rm_tab[ret]->dfs = env->rm_tab[i]->dfs + 1;
-			env->rm_tab[ret]->path = 1;
-			env->rm_tab[ret]->parent = idx;
-			// ft_printf("on va add la room au BFS sa mere la teps\n");
 			if ((ret = add_room_bfs(env, ret)) > -2)
 				return (ret);
-			// ft_printf("add_room s'est bien passe visiblement, faut break\n");
 		}
 	}
 	else
 	{
-		ft_printf("Adding this room to the line : %s (index = %d)\n", env->rm_tab[i]->name, i);
 		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
 		env->rm_tab[i]->path = 1;
 		env->rm_tab[i]->parent = idx;
@@ -84,7 +78,6 @@ int			bfs_loop(t_env *env)
 	i = -1;
 	index = (*env->rm_lst_path)->index;
 	delete_room_path(env);
-	ft_printf("Working from room : %s\n", env->rm_tab[index]->name);
 	while (env->tu_tab[index][++i].exist)
 	{
 		if (env->tu_tab[index][i].status == 1

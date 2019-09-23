@@ -51,9 +51,8 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 {
 	int ret;
 
-	if (env->rm_tab[env->rm_tab[J]->parent_tt]->visited == false)
+	if (env->tu_tab[J][get_index(env, J, env->rm_tab[J]->parent_tt)].status == 1)
 	{
-		ft_printf("1\n");
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
 			env->rm_tab[K]->parent_tt = J;
@@ -66,7 +65,6 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
-			ft_printf("2\n");
 			if (ft_better_way(env, J) == 0)
 			{
 				env->rm_tab[K]->parent_tt = J;
@@ -77,7 +75,6 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 		}
 		else
 		{
-			ft_printf("3\n");
 			env->rm_tab[K]->parent_tt = J;
 			env->rm_tab[K]->path_tt = 1;
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
@@ -93,13 +90,11 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 
 	if (env->rm_tab[J]->visited)
 	{
-		ft_printf("We on a visited room\n");
 		if ((ret = path_visited(env, intz, dfs_tt)) > -2)
 			return (ret);
 	}
 	else
 	{
-		ft_printf("adding this room to TT : %s\n", env->rm_tab[K]->name);
 		env->rm_tab[K]->parent_tt = J;
 		env->rm_tab[K]->path_tt = 1;
 		if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
@@ -115,36 +110,29 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 
 	if (add_room_path_tt(env, env->rm_tab[index]) == -1)
 		return (-1);
+	env->rm_tab[index]->dfs_tt = dfs_tt;
 	while (*env->rm_lst_path_tt && !(*env->rm_lst_path_tt)->end)
 	{
 		I = -1;
 		J = (*env->rm_lst_path_tt)->index;
-		ft_printf("TT from %s\n", env->rm_tab[J]->name);
 		delete_room_path_tt(env);
 		while (env->tu_tab[J][++I].exist)
 		{
-			// ft_printf("J = %s\n", env->rm_tab[J]->name);
-			// ft_printf("I = %s\n", env->rm_tab[I]->name);
 			if (env->tu_tab[J][I].status == 1
 			&& !env->rm_tab[env->tu_tab[J][I].index]->path
 			&& !env->rm_tab[env->tu_tab[J][I].index]->path_tt
 			&& env->tu_tab[J][I].index != 0)
 			{
-				ft_printf("TT found path from : %s , to : %s\n",env->rm_tab[J]->name, env->rm_tab[env->tu_tab[J][I].index]->name);
 				K = env->tu_tab[J][I].index;
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 				{
-					// ft_printf("ret = %d\n", ret);
 					ft_roomdel(env->rm_lst_path_tt, 0);
 					clean_tt(env, 1);
 					return (ret);
 				}
 			}
 		}
-		// ft_printf("END OF WHILE\n");
 	}
-	// env->rm_tab[index]->path = 0;
-	// env->rm_tab[index]->parent = -1;
 	clean_tt(env, 0);
 	return (ft_roomdel(env->rm_lst_path_tt, 0));
 }

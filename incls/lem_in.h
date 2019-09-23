@@ -36,6 +36,7 @@ typedef struct		s_parse
 	int		command;
 	int		ret;
 	int		fd;
+	int		is_build;
 	char	*line;
 }					t_parse;
 
@@ -50,6 +51,8 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				nb_dad;
+	int 			*dad;
 	// t_dad			*parent;
 	int				parent;
 	int				dfs;
@@ -143,7 +146,7 @@ int					check_room(char *line);
 /*
 ******************************** Is_tunnel.c ***********************************
 */
-int					is_tunnel(char *line, t_room **room_lst, int opt);
+int					is_tunnel(char *line, t_env *env, int opt);
 int					init_tu_tab(t_tunnel ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************
@@ -166,6 +169,7 @@ int					set_room_data(char *line, t_room *room, int *start_end);
 int					add_room(char *line, t_room **head, int *command);
 int					ft_roomdel(t_room **room, int ret);
 void				ft_roomdelone(t_room **room);
+void set_dad(t_env *env, int i, int idx);
 /*
 ******************************** Cut.c ****************************************
 */
@@ -173,6 +177,7 @@ void				ft_roomdelone(t_room **room);
 void				cut_and_reset(t_env *env, int opt, int visited);
 char				**ft_split(char const *s, char c);
 void				reset_path_room(t_env *env, int opt);
+void reset_dad(t_env *env);
 /*
 ******************************** Result.c *************************************
 */

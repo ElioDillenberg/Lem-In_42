@@ -67,6 +67,7 @@ static int	loop_main(t_env *env)
 	if (env->lf_path > 1)
 		if (check_opti_path(env) == 1)
 			return (1);
+	reset_dad(env);
 	if (env->finish == 1)
 		return (1);
 	if (env->lf_path < env->max_path)
@@ -94,17 +95,23 @@ void		print_tu_tab(t_env *env)
 {
 	int i;
 	int	j;
+	int nbr_connexion;
 
 	i = 0;
 	while (i < env->nt_rm[1])
 	{
 		j = 0;
+		nbr_connexion = 0;
 		while (j < env->nt_rm[1])
 		{
-			if (env->tu_tab[i][j].exist)
+			if (env->tu_tab[i][j].exist && nbr_connexion++)
 				ft_printf("[%s] = %s\n", env->rm_tab[i]->name, env->rm_tab[env->tu_tab[i][j].index]->name);
 			j++;
 		}
+		env->rm_tab[i]->dad = (int *)malloc(sizeof(int) * nbr_connexion);
+		env->rm_tab[i]->nb_dad = nbr_connexion;
+		while (nbr_connexion--)
+			env->rm_tab[i]->dad[nbr_connexion] = -1;
 		ft_printf("\n");
 		i++;
 	}

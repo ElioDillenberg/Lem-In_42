@@ -82,6 +82,10 @@ int		add_room_tt(t_env *env, int *intz, int opt)
 		env->rm_tab[K]->dfs = env->rm_tab[J]->dfs - 1;
 	env->rm_tab[K]->path = 1;
 	env->rm_tab[K]->parent = J;
+	if (env->rm_tab[K]->dad[0] != -1)
+		set_dad(env, K, J);
+	else
+		env->rm_tab[K]->dad[0] = J;
 	if (add_room_path_tt(env, env->rm_tab[K]) == -1)
 		return (-1);
 	return (0);

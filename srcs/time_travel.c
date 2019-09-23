@@ -100,7 +100,7 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 		}
 		// ft_printf("END OF WHILE\n");
 	}
-	// env->rm_tab[index]->path = 0;
-	// env->rm_tab[index]->parent = -1;
+	env->rm_tab[index]->path = 0;
+	env->rm_tab[index]->parent = -1;
 	return (ft_roomdel(env->rm_lst_path_tt, 0));
 }

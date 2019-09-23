@@ -72,5 +72,6 @@ int				build_room_tab(t_env *env)
 	if (get_room_tab(env, env->nt_rm[1]) == -1)
 		return (-1);
 	set_room_tab(env);
+	env->parse->is_build = 1;
 	return (0);
 }

@@ -66,6 +66,10 @@ static int	path_bfs(t_env *env, int i, int idx)
 		ft_printf("Adding this room to the line : %s (index = %d)\n", env->rm_tab[i]->name, i);
 		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
 		env->rm_tab[i]->path = 1;
+		if (env->rm_tab[i]->dad[0] != -1)
+			set_dad(env, i, idx);
+		else
+			env->rm_tab[i]->dad[0] = idx;
 		env->rm_tab[i]->parent = idx;
 		if ((ret = add_room_bfs(env, i)) > -2)
 			return (ret);

@@ -62,7 +62,7 @@ int			parsing_core(t_env *env, char *line)
 		if ((ret = if_room(env, line)) < 0)
 			return (ret);
 	}
-	else if (env->parse->index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
+	else if (env->parse->index == 2 && is_tunnel(line, env, 1) != -1)
 	{
 		if ((ret = if_tunnel(env, line)) < 0)
 			return (ret);
@@ -111,7 +111,7 @@ int			parsing(t_env *env)
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
-			return (exit_parsing(&line, -1, env));
+			return (exit_parsing(&line, -3, env));
 		if ((ret = parsing_core(env, line)) < 0)
 			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);

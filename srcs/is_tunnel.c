@@ -40,47 +40,51 @@ static int	check_tunnel(char *line, int opt, int i)
 	return (1);
 }
 
-static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
+static int	check_tunnel_name(char *line, t_env *env, size_t *cmp, int step)
 {
+	int i;
+
+	i = 0;
 	if (step == 1)
 	{
-		while (cr != NULL)
+		while (i < env->nt_rm[1])
 		{
-			if (ft_strcmp(line, cr->name) == 0)
+			if (ft_strcmp(line, env->rm_tab[i]->name) == 0)
 			{
 				*cmp = (*cmp) + 1;
+				env->rm_tab[i]->nb_dad++;
 				break ;
 			}
-			cr = cr->next;
+			i++;
 		}
 		return (*cmp != 1 ? -2 : 1);
 	}
-	while (cr != NULL)
+	while (i < env->nt_rm[1])
 	{
-		if (ft_strcmp(line, cr->name) == 0)
+		if (ft_strcmp(line, env->rm_tab[i]->name) == 0)
 		{
 			*cmp = (*cmp) + 1;
 			break ;
 		}
-		cr = cr->next;
+		i++;
 	}
 	return (*cmp != 2 ? -2 : 1);
 }
 
-int			is_tunnel(char *line, t_room **room_lst, int opt)
+int			is_tunnel(char *line, t_env *env, int opt)
 {
 	size_t	i;
-	t_room	*cr;
 	size_t	cmp;
 
 	i = 0;
 	cmp = 0;
-	cr = *room_lst;
+	if (!env->parse->is_build && build_room_tab(env) == -1)
+		return (-1);
 	while (line[i] != '-' && line[i] != '\0')
 		i++;
 	if (check_tunnel(line, opt, i) != 1)
 		return (check_tunnel(line, opt, i));
-	if (check_tunnel_name(line, cr, &cmp, 1) == -2)
+	if (env->parse->index == 2 && check_tunnel_name(line, env, &cmp, 1) == -2)
 		return (-2);
 	line[i] = '-';
 	while (*line != '-' && *line != '\0')
@@ -89,7 +93,7 @@ int			is_tunnel(char *line, t_room **room_lst, int opt)
 		line++;
 	else
 		return (-1);
-	if (check_tunnel_name(line, cr, &cmp, 2) == -2)
+	if (env->parse->index == 2 && check_tunnel_name(line, env, &cmp, 2) == -2)
 		return (-2);
 	return (0);
 }

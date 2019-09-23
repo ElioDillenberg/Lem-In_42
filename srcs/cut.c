@@ -50,14 +50,34 @@ void	cut_and_reset(t_env *env, int opt, int visited)
 void	reset_path_room(t_env *env, int opt)
 {
 	int i;
+	int j;
 
 	i = 0;
 	while (i < env->nt_rm[1])
 	{
+		j = 0;
 		if (opt == 1)
 			env->rm_tab[i]->dfs = 0;
 		env->rm_tab[i]->path = 0;
 		env->rm_tab[i]->parent = -1;
+		i++;
+	}
+}
+
+void reset_dad(t_env *env)
+{
+	int j;
+	int i;
+
+	i = 0;
+	while (i < env->nt_rm[1])
+	{
+		j = 0;
+		while (j < env->rm_tab[i]->nb_dad)
+		{
+			env->rm_tab[i]->dad[j] = -1;
+			j++;
+		}
 		i++;
 	}
 }

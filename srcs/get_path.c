@@ -82,9 +82,18 @@ static void	set_data_get_path(t_env *env, int *parent, int *index, int *save)
 	*save = *index;
 	env->rm_tab[*index]->visited = true;
 	*parent = env->rm_tab[*index]->parent;
-	*index = env->rm_tab[*parent]->index;
-	env->tu_tab[*index][get_index(env, *index, *save)].status =
-	env->tu_tab[*save][get_index(env, *save, *index)].status == -1 ? -2 : -1;
+	if (*parent != -1)
+	{
+		*index = env->rm_tab[*parent]->index;
+		env->tu_tab[*index][get_index(env, *index, *save)].status =
+		env->tu_tab[*save][get_index(env, *save, *index)].status == -1 ? -2 : -1;
+	}
+	else
+	{
+		*index = 0;
+		env->tu_tab[0][*save].status =
+		env->tu_tab[*save][0].status == -1 ? -2 : -1;
+	}
 }
 
 int			get_path(t_env *env)
@@ -93,17 +102,25 @@ int			get_path(t_env *env)
 	int		index;
 	int		save;
 	t_path	*path;
+	int j;
 
 	path = NULL;
 	index = env->nt_rm[1] - 1;
-	parent = env->rm_tab[index]->parent;
-	ft_printf("Le papa de end c'est  : %s\n", env->rm_tab[env->rm_tab[index]->parent]->name);
+	j = 0;
+ 	while (env->rm_tab[index]->dad[j] != -1 && j < env->rm_tab[index]->nb_dad)
+		j++;
+	j--;
+	parent = env->rm_tab[index]->dad[j];
+	//ft_printf("Le papa de end c'est  : %s\n", env->rm_tab[env->rm_tab[index]->parent]->name);
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
-	while (env->rm_tab[index]->parent != -1)
+	while (env->rm_tab[index]->dad[j] != -1)
 	{
-		// ft_printf("I'm %s (index = %d), my daddy is: %s\n", env->rm_tab[index]->name, index, env->rm_tab[env->rm_tab[index]->parent]->name);
+		if (!env->rm_tab[env->rm_tab[index]->dad[j]]->end)
+			env->rm_tab[index]->dad[j] = -1;
 		// ft_printf("LA BOOOOOUCLE DU GET PATH\n");
+		ft_printf("PARENT : %d | INDEX : %d | SAVE : %d | J : %d\n", parent, index, save, j);
+		ft_printf("PARENT : %s | INDEX : %s \n", env->rm_tab[parent]->name, env->rm_tab[index]->name);
 		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{

@@ -58,11 +58,11 @@ int		if_room(t_env *env, char *line)
 				|| (!(strcat_big(line, &(env)->map, env))))
 			return (-1);
 	}
-	else if (is_tunnel(line, env->rm_lst, 0) == 0)
+	else if (is_tunnel(line, env, 0) == 0)
 	{
 		if (env->parse->start_end[0] != 2 || env->parse->start_end[1] != 2)
 			return (-2);
-		if (build_room_tab(env) == -1 || init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
+		if (init_tu_tab(&(env)->tu_tab, env->nt_rm) == -1)
 			return (-1);
 		get_tunnel(env, line);
 		env->parse->index++;
@@ -76,7 +76,7 @@ int		if_room(t_env *env, char *line)
 
 int		if_tunnel(t_env *env, char *line)
 {
-	if (is_tunnel(line, env->rm_lst, 1) == -2)
+	if (is_tunnel(line, env, 1) == -2)
 		return (-2);
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
 		return (-2);

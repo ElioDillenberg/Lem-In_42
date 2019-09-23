@@ -48,42 +48,51 @@ static int	check_opti_path(t_env *env)
 	return (0);
 }
 
-// static void debug_path(t_env *env)
-// {
-// 	t_path *cr;
-// 	t_path *prev;
-// 	t_path *head;
-// 	int i;
-// 	int len;
-// 	int total;
-// 	int mod;
-// 	int rounds;
-//
-// 	i = 0;
-// 	total = 0;
-// 	len = 0;
-// 	cr = env->path_lst[env->cr_path];
-// 	head = env->path_lst[env->cr_path];
-// 	while (cr)
-// 	{
-// 		if (i >= 1 && len > cr->len)
-// 		{
-// 			prev->next_path = cr->next_path;
-// 		}
-// 		else
-// 			total += cr->len;
-// 		len = cr->len;
-// 		prev = cr;
-// 		cr = cr->next_path;
-// 		i++;
-// 	}
-// 	env->nb_path = i;
-// 	env->path_lst[env->cr_path] = head;
-// 	mod = (total + env->nt_rm[0]) % env->nb_path;
-// 	rounds = ((total + env->nt_rm[0]) / env->nb_path) - 1;
-// 	rounds += mod > 0 ? 1 : 0;
-// 	get_strt_ants(env, rounds, mod);
-// }
+static void debug_path(t_env *env)
+{
+	t_path *cr;
+	t_path *prev;
+	t_path *head;
+	int i;
+	int len;
+	int total;
+	int mod;
+	int rounds;
+	int offset;
+
+	offset = 0;
+	i = 0;
+	total = 0;
+	len = 0;
+	cr = env->path_lst[env->cr_path];
+	head = env->path_lst[env->cr_path];
+	while (cr)
+	{
+		if (i >= 1 && len > cr->len)
+		{
+			offset++;
+			prev->next_path = cr->next_path;
+		}
+		else
+			total += cr->len;
+		len = cr->len;
+		prev = cr;
+		cr = cr->next_path;
+		i++;
+	}
+	env->nb_path = i - offset;
+	env->path_lst[env->cr_path] = head;
+	mod = (total + env->nt_rm[0]) % env->nb_path;
+	rounds = ((total + env->nt_rm[0]) / env->nb_path) - 1;
+	rounds += mod > 0 ? 1 : 0;
+	cr = env->path_lst[env->cr_path];
+	while (cr)
+	{
+		ft_printf(" LEN : %d\n", cr->len);
+		cr = cr->next_path;
+	}
+	get_strt_ants(env, rounds, mod);
+}
 
 static int	loop_main(t_env *env)
 {
@@ -119,7 +128,7 @@ static int	after_bfs(t_env *env)
 	if (env->path_lst[env->cr_path]->strt_ants == 0)
 		get_strt_ants(env, env->total_rounds, env->mod_ants);
 	reset_buffer(env);
-	//debug_path(env);
+	debug_path(env);
 	result(env);
 	if (env->round && env->opt_rounds)
 		if (ft_printf("\n[Rounds : %d]\n", env->round) == -1)
@@ -143,14 +152,14 @@ void		print_tu_tab(t_env *env)
 		while (j < env->nt_rm[1])
 		{
 			if (env->tu_tab[i][j].exist && nbr_connexion++)
-				ft_printf("[%s] = %s\n", env->rm_tab[i]->name, env->rm_tab[env->tu_tab[i][j].index]->name);
+				;
 			j++;
 		}
 		env->rm_tab[i]->dad = (int *)malloc(sizeof(int) * nbr_connexion);
 		env->rm_tab[i]->nb_dad = nbr_connexion;
 		while (nbr_connexion--)
 			env->rm_tab[i]->dad[nbr_connexion] = -1;
-		ft_printf("\n");
+		// ft_printf("\n");
 		i++;
 	}
 }

@@ -24,7 +24,7 @@ static void	clean_tt(t_env *env, int apply)
 
 	i = 0;
 	while (++i < env->nt_rm[1])
-	{	
+	{
 		if (env->rm_tab[i]->dfs_tt && apply)
 			env->rm_tab[i]->dfs = env->rm_tab[i]->dfs_tt;
 		env->rm_tab[i]->dfs_tt = 0;
@@ -55,6 +55,11 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
+			// ft_printf("-- %s -> %s\n", env->rm_tab[J]->name, env->rm_tab[K]->name);
+			if (env->rm_tab[K]->dad[0] != -1)
+				set_dad(env, K, J);
+			else
+				env->rm_tab[K]->dad[0] = J;
 			env->rm_tab[K]->parent_tt = J;
 			env->rm_tab[K]->path_tt = 1;
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
@@ -67,6 +72,11 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 		{
 			if (ft_better_way(env, J) == 0)
 			{
+				// ft_printf("--SON : %s | DAD : %s\n", env->rm_tab[K]->name, env->rm_tab[J]->name);
+				if (env->rm_tab[K]->dad[0] != -1)
+					set_dad(env, K, J);
+				else
+					env->rm_tab[K]->dad[0] = J;
 				env->rm_tab[K]->parent_tt = J;
 				env->rm_tab[K]->path_tt = 1;
 				if (add_room_tt(env, intz, -1) == -1)
@@ -115,7 +125,7 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 	{
 		I = -1;
 		J = (*env->rm_lst_path_tt)->index;
-		ft_printf("Working with %s in TT\n", env->rm_tab[J]->name);
+		// ft_printf("Working with %s in TT\n", env->rm_tab[J]->name);
 		delete_room_path_tt(env);
 		while (env->tu_tab[J][++I].exist)
 		{
@@ -125,9 +135,14 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 			&& env->tu_tab[J][I].index != 0)
 			{
 				K = env->tu_tab[J][I].index;
-				ft_printf("Found a path in TT towards %s\n", env->rm_tab[K]->name);
+				// ft_printf("Found a path in TT towards %s\n", env->rm_tab[K]->name);
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 				{
+					// ft_printf("___%s -> %s\n", env->rm_tab[J]->name, env->rm_tab[K]->name);
+					if (env->rm_tab[J]->dad[0] != -1)
+						set_dad(env, J, K);
+					else
+						env->rm_tab[J]->dad[0] = K;
 					ft_roomdel(env->rm_lst_path_tt, 0);
 					clean_tt(env, 1);
 					return (ret);

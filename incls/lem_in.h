@@ -50,6 +50,8 @@ typedef struct		s_room
 	int				x;
 	int				y;
 	int				path;
+	int				*dad;
+	int				nb_dad;
 	int				path_tt;
 	// t_dad			*parent;
 	int				parent_tt;
@@ -229,4 +231,8 @@ int					add_room_path(t_env *env, t_room *room);
 int					add_room_tt(t_env *env, int *intz, int opt);
 int					add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt);
 int					add_room_bfs(t_env *env, int ret);
+
+void		set_daddy(t_env *env);
+void set_dad(t_env *env, int i, int idx);
+void reset_dad(t_env *env);
 #endif

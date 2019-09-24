@@ -47,12 +47,17 @@ static int	path_bfs(t_env *env, int i, int idx)
 		env->rm_tab[i]->parent_tt = idx;
 		env->rm_tab[i]->path_tt = 1;
 		env->rm_tab[i]->dfs_tt = env->rm_tab[idx]->dfs;
-		ft_printf("Time_travelling from %s\n", env->rm_tab[i]->name);
+		// ft_printf("~~~~%s -> %s\n", env->rm_tab[idx]->name, env->rm_tab[i]->name);
+		if (env->rm_tab[i]->dad[0] != -1)
+			set_dad(env, i, idx);
+		else
+			env->rm_tab[i]->dad[0] = idx;
+		// ft_printf("Time_travelling from %s\n", env->rm_tab[i]->name);
 		if ((ret = bfs_time_travel(env, i, env->rm_tab[i]->dfs)) == -1)
 			return (-1);
 		if (ret)
 		{
-			ft_printf("adding room %s after time travel\n", env->rm_tab[ret]->name);
+			// ft_printf("adding room %s after time travel\n", env->rm_tab[ret]->name);
 			env->rm_tab[ret]->dfs = env->rm_tab[i]->dfs + 1;
 			if ((ret = add_room_bfs(env, ret)) > -2)
 				return (ret);
@@ -63,6 +68,11 @@ static int	path_bfs(t_env *env, int i, int idx)
 		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
 		env->rm_tab[i]->path = 1;
 		env->rm_tab[i]->parent = idx;
+		// ft_printf("%s -> %s\n", env->rm_tab[idx]->name, env->rm_tab[i]->name);
+		if (env->rm_tab[i]->dad[0] != -1)
+		  set_dad(env, i, idx);
+		else
+		  env->rm_tab[i]->dad[0] = idx;
 		if ((ret = add_room_bfs(env, i)) > -2)
 			return (ret);
 	}
@@ -78,7 +88,7 @@ int			bfs_loop(t_env *env)
 	i = -1;
 	index = (*env->rm_lst_path)->index;
 	delete_room_path(env);
-	ft_printf("working with %s\n", env->rm_tab[index]->name);
+	// ft_printf("working with %s\n", env->rm_tab[index]->name);
 	while (env->tu_tab[index][++i].exist)
 	{
 		if (env->tu_tab[index][i].status == 1

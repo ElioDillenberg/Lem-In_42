@@ -58,6 +58,7 @@ static int	loop_main(t_env *env)
 	reset_path_room(env, 1);
 	while (env->nb_path < env->lf_path)
 	{
+		// ft_printf("-------------------------------\n");
 		if ((ret = loop_bfs(env)) == -1)
 			return (-1);
 		if (ret == 1)
@@ -89,26 +90,6 @@ static int	after_bfs(t_env *env)
 	return (0);
 }
 
-void		print_tu_tab(t_env *env)
-{
-	int i;
-	int	j;
-
-	i = 0;
-	while (i < env->nt_rm[1])
-	{
-		j = 0;
-		while (j < env->nt_rm[1])
-		{
-			if (env->tu_tab[i][j].exist)
-				ft_printf("[%s] = %s\n", env->rm_tab[i]->name, env->rm_tab[env->tu_tab[i][j].index]->name);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}
-
 int			main(int argc, char **argv)
 {
 	t_env	*env;
@@ -122,7 +103,7 @@ int			main(int argc, char **argv)
 			return (free_all(env, 0, 0));
 	if ((env->ret = parsing(env)) == -1)
 		return (free_all(env, 1, -1));
-	// print_tu_tab(env);
+	set_daddy(env);
 	ft_putstr(env->map);
 	set_max_path(env);
 	if (env->max_path == 0)

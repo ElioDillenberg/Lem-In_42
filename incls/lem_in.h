@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/18 16:13:06 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/24 19:41:59 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,8 +231,10 @@ int					add_room_path(t_env *env, t_room *room);
 int					add_room_tt(t_env *env, int *intz, int opt);
 int					add_room_tt_ret(t_env *env, int *intz, int dfs_tt, int opt);
 int					add_room_bfs(t_env *env, int ret);
-
-void		set_daddy(t_env *env);
-void set_dad(t_env *env, int i, int idx);
-void reset_dad(t_env *env);
+/*
+************************************* dad.c ************************************
+*/
+int					set_daddy(t_env *env);
+void				set_dad(t_env *env, int i, int idx);
+void				reset_dad(t_env *env);
 #endif

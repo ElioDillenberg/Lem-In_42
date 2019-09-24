@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:55:16 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/18 16:17:20 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/24 19:41:57 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ static int	loop_bfs(t_env *env)
 
 	if ((ret = ft_bfs(env, 0)) == -1)
 		return (-1);
-	// ft_printf("sallut jsuis dans l'bfs avec ret = %d\n", ret);
 	if (ret == 1)
 		return (1);
 	if (get_path(env) == -1)
 		return (-1);
-	// ft_printf("get_path? no problem\n");
 	if (env->tu_cut == 1)
 	{
 		env->did_cut = 1;
@@ -58,7 +56,6 @@ static int	loop_main(t_env *env)
 	reset_path_room(env, 1);
 	while (env->nb_path < env->lf_path)
 	{
-		// ft_printf("-------------------------------\n");
 		if ((ret = loop_bfs(env)) == -1)
 			return (-1);
 		if (ret == 1)
@@ -101,9 +98,8 @@ int			main(int argc, char **argv)
 	if (argc > 1)
 		if (get_option(env, argv, argc) == -1)
 			return (free_all(env, 0, 0));
-	if ((env->ret = parsing(env)) == -1)
+	if ((env->ret = parsing(env)) == -1 || set_daddy(env) == -1)
 		return (free_all(env, 1, -1));
-	set_daddy(env);
 	ft_putstr(env->map);
 	set_max_path(env);
 	if (env->max_path == 0)

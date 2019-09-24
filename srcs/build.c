@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:55:53 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/11 12:01:38 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/24 19:36:49 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			swap_room(t_env *env, int i, int j)
 
 void			set_room_tab(t_env *env)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	while (i < env->nt_rm[1])

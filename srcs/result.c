@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 19:30:01 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 12:43:43 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/24 19:54:34 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ static int	print_result(t_path *cr, t_env *env, int no_space)
 	return (1);
 }
 
-static int one_round(t_env *env, t_path *cr)
+static int	one_round(t_env *env, t_path *cr)
 {
 	write(1, "\n", 1);
 	while (env->nt_rm[0] >= env->next_ant)
 	{
-		if (ft_printf("L%d-%s", env->next_ant, env->rm_tab[cr->next_room->index]->name) == -1)
+		if (ft_printf("L%d-%s", env->next_ant,
+			env->rm_tab[cr->next_room->index]->name) == -1)
 			return (-1);
 		if (env->next_ant != 0 && env->next_ant != env->nt_rm[0])
 			write(1, " ", 1);

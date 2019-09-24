@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:48:22 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/17 18:58:12 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/24 19:52:37 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	add_path_lst(t_env *env, t_path *path)
 	}
 	return (0);
 }
+
 static void	set_data_get_path(t_env *env, int *parent, int *index, int *save)
 {
 	*save = *index;
@@ -101,25 +102,21 @@ int			get_path(t_env *env)
 	int		index;
 	int		save;
 	t_path	*path;
-	int j;
+	int		j;
 
 	path = NULL;
 	index = env->nt_rm[1] - 1;
 	j = 0;
- 	while (env->rm_tab[index]->dad[j] != -1 && j < env->rm_tab[index]->nb_dad)
+	while (env->rm_tab[index]->dad[j] != -1 && j < env->rm_tab[index]->nb_dad)
 		j++;
 	j--;
 	parent = env->rm_tab[index]->dad[j];
-	//ft_printf("Le papa de end c'est  : %s\n", env->rm_tab[env->rm_tab[index]->parent]->name);
 	if (add_path_index(&path, index, env) == -1)
 		return (-1);
 	while (env->rm_tab[index]->dad[j] != -1)
 	{
 		if (!env->rm_tab[env->rm_tab[index]->dad[j]]->end)
 			env->rm_tab[index]->dad[j] = -1;
-		// ft_printf("LA BOOOOOUCLE DU GET PATH\n");
-		// ft_printf("PARENT : %d | INDEX : %d | SAVE : %d | J : %d\n", parent, index, save, j);
-		// ft_printf("PARENT : %s | INDEX : %s \n", env->rm_tab[parent]->name, env->rm_tab[index]->name);
 		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{

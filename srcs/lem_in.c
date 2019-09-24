@@ -73,6 +73,11 @@ static void debug_path(t_env *env)
 			offset++;
 			prev->next_path = cr->next_path;
 		}
+		else if (cr->len < len && cr->next_path == NULL)
+		{
+			prev->next_path = cr;
+			cr->next_path = NULL;
+		}
 		else
 			total += cr->len;
 		len = cr->len;
@@ -85,12 +90,6 @@ static void debug_path(t_env *env)
 	mod = (total + env->nt_rm[0]) % env->nb_path;
 	rounds = ((total + env->nt_rm[0]) / env->nb_path) - 1;
 	rounds += mod > 0 ? 1 : 0;
-	cr = env->path_lst[env->cr_path];
-	while (cr)
-	{
-		ft_printf(" LEN : %d\n", cr->len);
-		cr = cr->next_path;
-	}
 	get_strt_ants(env, rounds, mod);
 }
 

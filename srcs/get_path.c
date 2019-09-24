@@ -18,7 +18,7 @@ int			get_index(t_env *env, int index, int to_find)
 	int idx;
 
 	idx = 0;
-	while (env->tu_tab[index][idx].index != to_find)
+	while (env->tu_tab[index][idx].exist && env->tu_tab[index][idx].index != to_find)
 		idx++;
 	return (idx);
 }

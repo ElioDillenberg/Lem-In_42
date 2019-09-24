@@ -87,6 +87,7 @@ void	ft_roomdelone(t_room **room)
 	if (!room)
 		return ;
 	ft_memdel((void **)&((*room)->name));
+		ft_memdel((void **)&((*room)->dad));
 	ft_memdel((void **)room);
 	(*room) = NULL;
 }

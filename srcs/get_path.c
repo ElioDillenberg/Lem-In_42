@@ -101,6 +101,7 @@ int			get_path(t_env *env)
 		return (-1);
 	while (env->rm_tab[index]->parent != -1)
 	{
+		ft_printf("LA BOUCLE GET PATH!!!\n");
 		set_data_get_path(env, &parent, &index, &save);
 		if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 		{

@@ -61,7 +61,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 				return (ret);
 		}
 	}
-	else
+	else if (!env->rm_tab[K]->path)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
@@ -93,7 +93,7 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 		if ((ret = path_visited(env, intz, dfs_tt)) > -2)
 			return (ret);
 	}
-	else
+	else if (!env->rm_tab[env->tu_tab[J][I].index]->path)
 	{
 		env->rm_tab[K]->parent_tt = J;
 		env->rm_tab[K]->path_tt = 1;
@@ -115,15 +115,17 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 	{
 		I = -1;
 		J = (*env->rm_lst_path_tt)->index;
+		ft_printf("Working with %s in TT\n", env->rm_tab[J]->name);
 		delete_room_path_tt(env);
 		while (env->tu_tab[J][++I].exist)
 		{
 			if (env->tu_tab[J][I].status == 1
-			&& !env->rm_tab[env->tu_tab[J][I].index]->path
+			// && !env->rm_tab[env->tu_tab[J][I].index]->path
 			&& !env->rm_tab[env->tu_tab[J][I].index]->path_tt
 			&& env->tu_tab[J][I].index != 0)
 			{
 				K = env->tu_tab[J][I].index;
+				ft_printf("Found a path in TT towards %s\n", env->rm_tab[K]->name);
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 				{
 					ft_roomdel(env->rm_lst_path_tt, 0);

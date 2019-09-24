@@ -47,8 +47,7 @@ static int	path_bfs(t_env *env, int i, int idx)
 		env->rm_tab[i]->parent_tt = idx;
 		env->rm_tab[i]->path_tt = 1;
 		env->rm_tab[i]->dfs_tt = env->rm_tab[idx]->dfs;
-		// ft_printf("Time Travel dfs_tt = %d\n", env->rm_tab[idx]->dfs + 1);
-		ft_printf("Time_travelling towards from %s\n", env->rm_tab[i]->name);
+		ft_printf("Time_travelling from %s\n", env->rm_tab[i]->name);
 		if ((ret = bfs_time_travel(env, i, env->rm_tab[i]->dfs)) == -1)
 			return (-1);
 		if (ret)

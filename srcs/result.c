@@ -82,6 +82,22 @@ static int	print_result(t_path *cr, t_env *env, int no_space)
 	return (1);
 }
 
+static int one_round(t_env *env, t_path *cr)
+{
+	write(1, "\n", 1);
+	while (env->nt_rm[0] >= env->next_ant)
+	{
+		if (ft_printf("L%d-%s", env->next_ant, env->rm_tab[cr->next_room->index]->name) == -1)
+			return (-1);
+		if (env->next_ant != 0 && env->next_ant != env->nt_rm[0])
+			write(1, " ", 1);
+		env->next_ant++;
+	}
+	write(1, "\n", 1);
+	env->round = 1;
+	return (1);
+}
+
 int			get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
 {
 	t_path	*cr;
@@ -115,6 +131,11 @@ int			result(t_env *env)
 
 	cr = NULL;
 	cr = env->path_lst[env->cr_path];
+	if (cr->len == 1)
+	{
+		one_round(env, cr);
+		return (1);
+	}
 	while (env->ants_end < env->nt_rm[0])
 	{
 		cr = env->path_lst[env->cr_path];

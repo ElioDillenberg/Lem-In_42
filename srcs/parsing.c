@@ -26,9 +26,18 @@
 static int	exit_parsing(char **line, int ret, t_env *env)
 {
 	env = check_buffer(env, &(env)->map);
-	if (*line)
+	if (*line && ret == -2)
 	{
 		if ((!ft_printf("[ERROR : %s]\n", *line)))
+		{
+			ft_memdel((void**)line);
+			get_next_line(0, line, 0, 0);
+			return (-1);
+		}
+	}
+	else if (ret == -1)
+	{
+		if ((!ft_printf("[MALLOC ERROR]\n")))
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);

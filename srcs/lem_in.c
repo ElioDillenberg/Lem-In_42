@@ -97,21 +97,21 @@ int			main(int argc, char **argv)
 		return (-1);
 	if (argc > 1)
 		if (get_option(env, argv, argc) == -1)
-			return (free_all(env, 0, 0));
+			return (free_all(env, 0));
 	if ((env->ret = parsing(env)) == -1 || set_daddy(env) == -1)
-		return (free_all(env, 1, -1));
+		return (free_all(env, 1));
 	ft_putstr(env->map);
 	set_max_path(env);
 	if (env->max_path == 0)
-		return (free_all(env, 0, 0));
+		return (free_all(env, 0));
 	while (env->lf_path < env->max_path)
 	{
 		if ((ret = loop_main(env)) == -1)
-			return (free_all(env, 0, -1));
+			return (free_all(env, 0));
 		if (ret == 1)
 			break ;
 	}
 	if ((ret = after_bfs(env)) == -1)
-		return (free_all(env, 0, -1));
-	return (free_all(env, 0, 0));
+		return (free_all(env, 0));
+	return (free_all(env, 0));
 }

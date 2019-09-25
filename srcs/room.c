@@ -58,9 +58,9 @@ int		add_room(char *line, t_room **head, int *command)
 
 	last = *head;
 	if (!(new_room = (t_room*)ft_memalloc(sizeof(t_room))))
-		return (free_room_lst(head, -1));
+		return (free_room_lst(head));
 	if (set_room_data(line, new_room, command) == -1)
-		return (free_room_lst(head, -1));
+		return (free_room_lst(head));
 	if (*head == NULL)
 	{
 		*head = new_room;

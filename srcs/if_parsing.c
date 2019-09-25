@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 15:44:19 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/18 15:50:22 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/25 14:55:40 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		if_room(t_env *env, char *line)
 				|| (!(strcat_big(line, &(env)->map, env))))
 			return (-1);
 	}
-	else if (is_tunnel(line, env->rm_lst, 0) == 0)
+	else if (is_tunnel(line, env->rm_lst, 0, 0) == 0)
 	{
 		if (env->parse->start_end[0] != 2 || env->parse->start_end[1] != 2)
 			return (-2);
@@ -65,8 +65,7 @@ int		if_room(t_env *env, char *line)
 			return (-1);
 		if (get_tunnel(env, line) == -1)
 			return (-2);
-		env->parse->index++;
-		if (!(strcat_big(line, &(env)->map, env)))
+		if (env->parse->index++ && !(strcat_big(line, &(env)->map, env)))
 			return (-1);
 	}
 	else
@@ -76,13 +75,13 @@ int		if_room(t_env *env, char *line)
 
 int		if_tunnel(t_env *env, char *line)
 {
-	if (is_tunnel(line, env->rm_lst, 1) == -2)
+	if (is_tunnel(line, env->rm_lst, 1, 0) == -2)
 		return (-2);
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
 		return (-2);
-	if (!(strcat_big(line, &(env)->map, env)))
-		return (-1);
 	if (get_tunnel(env, line) == -1)
 		return (-2);
+	if (!(strcat_big(line, &(env)->map, env)))
+		return (-1);
 	return (1);
 }

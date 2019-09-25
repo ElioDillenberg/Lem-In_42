@@ -1,10 +1,13 @@
-17
+##fake
+#comment
+12
 ##start
 start 0 0
 E 5 5
 B 2 2
 G 7 7
 D 4 4
+Z 5 5
 C 3 3
 F 6 6
 A 1 1
@@ -18,7 +21,6 @@ A-B
 B-G
 B-C
 C-D
-D-end
 D-end
 G-D
 E-F

@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/25 12:18:49 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:53:43 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int					add_room(char *line, t_room **head, int *command);
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
 int					get_room_tab(t_env *env, int len);
-int				get_tunnel(t_env *env, char *line);
+int					get_tunnel(t_env *env, char *line);
 /*
 ******************************* Build.c ****************************************
 */
@@ -147,7 +147,7 @@ int					check_room(char *line);
 /*
 ******************************** Is_tunnel.c ***********************************
 */
-int					is_tunnel(char *line, t_room **room_lst, int opt);
+int					is_tunnel(char *line, t_room **room_lst, int opt, size_t i);
 int					init_tu_tab(t_tunnel ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************

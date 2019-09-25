@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:59:34 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/17 18:28:48 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:52:41 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,11 @@ static int	check_tunnel_name(char *line, t_room *cr, size_t *cmp, int step)
 	return (*cmp != 2 ? -2 : 1);
 }
 
-int			is_tunnel(char *line, t_room **room_lst, int opt)
+int			is_tunnel(char *line, t_room **room_lst, int opt, size_t i)
 {
-	size_t	i;
 	t_room	*cr;
 	size_t	cmp;
 
-	i = 0;
 	cmp = 0;
 	cr = *room_lst;
 	while (line[i] != '-' && line[i] != '\0')
@@ -91,7 +89,10 @@ int			is_tunnel(char *line, t_room **room_lst, int opt)
 	if (check_tunnel(line, opt, i) != 1)
 		return (check_tunnel(line, opt, i));
 	if (check_tunnel_name(line, cr, &cmp, 1) == -2)
+	{
+		line[i] = '-';
 		return (-2);
+	}
 	line[i] = '-';
 	while (*line != '-' && *line != '\0')
 		line++;

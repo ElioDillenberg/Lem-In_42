@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:03:19 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/17 18:27:14 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:56:20 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	add_tunnel(t_env *env, int index, int to_add)
 			return (-1);
 		i++;
 	}
-
 	env->tu_tab[index][i].exist = true;
 	env->tu_tab[index][i].index = to_add;
 	env->tu_tab[index][i].status = 1;

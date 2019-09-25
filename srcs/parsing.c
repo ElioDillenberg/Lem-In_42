@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/18 14:07:26 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/25 14:55:05 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int			parsing_core(t_env *env, char *line)
 		if ((ret = if_room(env, line)) < 0)
 			return (ret);
 	}
-	else if (env->parse->index == 2 && is_tunnel(line, env->rm_lst, 1) != -1)
+	else if (env->parse->index == 2 && is_tunnel(line, env->rm_lst, 1, 0) != -1)
 	{
 		if ((ret = if_tunnel(env, line)) < 0)
 			return (ret);

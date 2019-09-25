@@ -153,8 +153,8 @@ int					init_tu_tab(t_tunnel ***tub_tab, int *nt_rm);
 /*
 ******************************** Free.c ****************************************
 */
-int					free_all(t_env *env, int opt, int ret);
-int					free_room_lst(t_room **head, int opt);
+int					free_all(t_env *env, int ret);
+int					free_room_lst(t_room **head);
 void				ft_pathdel(t_path **path);
 void				ft_path_lst_del(t_path **path);
 /*

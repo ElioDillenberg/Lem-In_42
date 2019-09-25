@@ -95,6 +95,8 @@ static void	loop_get_path(t_env *env, int index, int save)
 {
 	if (env->tu_tab[save][get_index(env, save, index)].status == -1)
 	{
+		ft_printf("TUNNEL BROKEN : %s\n", env->rm_tab[save]->name);
+		ft_printf("TUNNEL BROKEN : %s\n", env->rm_tab[index]->name);
 		env->tu_tab[index][get_index(env, index, save)].status = -2;
 		env->tu_tab[save][get_index(env, save, index)].status = -2;
 		env->tu_cut = 1;

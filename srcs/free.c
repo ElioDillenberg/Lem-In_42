@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int		free_room_lst(t_room **head, int opt)
+int		free_room_lst(t_room **head)
 {
 	t_room *cr;
 	t_room *next;
@@ -29,8 +29,6 @@ int		free_room_lst(t_room **head, int opt)
 		ft_memdel((void**)&cr);
 		cr = next;
 	}
-	if (opt == 1)
-		write(2, "ERROR\n", 6);
 	return (-1);
 }
 
@@ -44,7 +42,7 @@ void	free_tu_tab(t_env *env)
 	ft_memdel((void**)&env->tu_tab);
 }
 
-int		free_all(t_env *env, int opt, int ret)
+int		free_all(t_env *env, int ret)
 {
 	int i;
 
@@ -67,8 +65,6 @@ int		free_all(t_env *env, int opt, int ret)
 	ft_memdel((void **)&(env)->rm_lst);
 	ft_memdel((void **)&(env)->rm_tab);
 	ft_memdel((void **)&env);
-	if (opt == 1)
-		write(2, "ERROR\n", 6);
 	return (ret);
 }
 

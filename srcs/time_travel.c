@@ -55,10 +55,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
-			if (env->rm_tab[K]->dad[0] != -1)
-				set_dad(env, K, J);
-			else
-				env->rm_tab[K]->dad[0] = J;
+			set_dad(env, K, J);
 			env->rm_tab[K]->parent_tt = J;
 			env->rm_tab[K]->path_tt = 1;
 			if ((ret = add_room_tt_ret(env, intz, dfs_tt, -1)) > -2)
@@ -71,10 +68,7 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 		{
 			if (ft_better_way(env, J) == 0)
 			{
-				if (env->rm_tab[K]->dad[0] != -1)
-					set_dad(env, K, J);
-				else
-					env->rm_tab[K]->dad[0] = J;
+				set_dad(env, K, J);
 				env->rm_tab[K]->parent_tt = J;
 				env->rm_tab[K]->path_tt = 1;
 				if (add_room_tt(env, intz, -1) == -1)

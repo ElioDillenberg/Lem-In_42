@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/24 19:41:59 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 12:08:10 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct		s_room
 	int				*dad;
 	int				nb_dad;
 	int				path_tt;
-	// t_dad			*parent;
 	int				parent_tt;
 	int				parent;
 	int				dfs;
@@ -183,7 +182,8 @@ void				reset_path_room(t_env *env, int opt);
 */
 int					get_strt_ants(t_env *env, int rounds, int mod);
 int					result(t_env *env);
-int	set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env);
+int					set_ant_start(t_path *cr,
+		int *rounds_cr, int *mod_cr, t_env *env);
 /*
 ******************************** Option.c *************************************
 */
@@ -201,7 +201,7 @@ t_env				*check_buffer(t_env *env, char **dest);
 */
 void				set_max_path(t_env *env);
 int					get_opti_path(t_env *env, t_path *path);
-int		get_strt_ants(t_env *env, int rounds_cr, int mod_cr);
+int					get_strt_ants(t_env *env, int rounds_cr, int mod_cr);
 /*
 ******************************** If_parsing.c **********************************
 */
@@ -238,4 +238,9 @@ int					add_room_bfs(t_env *env, int ret);
 int					set_daddy(t_env *env);
 void				set_dad(t_env *env, int i, int idx);
 void				reset_dad(t_env *env);
+/*
+******************************** time_travel_2.c *******************************
+*/
+void				clean_tt(t_env *env, int apply);
+int					delete_room_path_tt(t_env *env);
 #endif

@@ -33,6 +33,8 @@ int		if_start_end(t_env *env, char *line)
 
 int		if_ant(t_env *env, char *line)
 {
+	if (is_ant_nb(line) == -1)
+		return (-2);
 	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
 		return (-2);
 	env->nt_rm[0] = ft_atoui(line);

@@ -1,5 +1,4 @@
-#comm
-10
+1000000000000000
 ##start
 start 0 0
 A 1 1
@@ -31,7 +30,6 @@ start-A
 A-B
 B-C
 C-D
-C-C
 D-H
 #U-V
 #V-W

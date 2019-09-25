@@ -34,9 +34,6 @@ int			is_ant_nb(char *line)
 	{
 		if (ft_isdigit(line[i]) == 0 || ++x > 10)
 			return (-1);
-		if (x == 10)
-			if (ft_strcmp(line, "4294967295") == -1)
-				return (-1);
 		i++;
 	}
 	return (0);

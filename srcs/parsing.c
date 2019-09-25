@@ -61,7 +61,7 @@ int			parsing_core(t_env *env, char *line)
 		else if (line[1] == '#' && (ret = if_start_end(env, line)) < 0)
 			return (ret);
 	}
-	else if (env->parse->index == 0 && is_ant_nb(line) != -1)
+	else if (env->parse->index == 0)
 	{
 		if ((ret = if_ant(env, line)) < 0)
 			return (ret);

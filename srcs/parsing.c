@@ -127,9 +127,7 @@ int			parsing(t_env *env)
 			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);
 	}
-	if (env->parse->index == 0)
-		ft_putendl("[ERROR : Empty file]");
-	if (env->parse->index == 1)
+	if (env->parse->index < 2)
 		ft_putendl("[ERROR : Missing information to process]");
 	return (exit_parsing(&line, 0, env));
 }

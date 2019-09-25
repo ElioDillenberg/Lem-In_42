@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:48:46 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/24 19:50:29 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 12:00:04 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,37 @@
 #define J intz[1]
 #define K intz[2]
 
-static void	clean_tt(t_env *env, int apply)
+static int	get_out(t_env *env, int *intz, int dfs_tt)
 {
-	int i;
+	int		ret;
 
-	i = 0;
-	while (++i < env->nt_rm[1])
+	if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 	{
-		if (env->rm_tab[i]->dfs_tt && apply)
-			env->rm_tab[i]->dfs = env->rm_tab[i]->dfs_tt;
-		env->rm_tab[i]->dfs_tt = 0;
-		if (env->rm_tab[i]->path_tt && apply)
-			env->rm_tab[i]->path = 1;
-		env->rm_tab[i]->path_tt = 0;
-		if (env->rm_tab[i]->parent_tt > 0 && apply)
-			env->rm_tab[i]->parent = env->rm_tab[i]->parent_tt;
-		env->rm_tab[i]->parent_tt = -1;
+		if (ft_better_way(env, J) == 0)
+		{
+			set_dad(env, K, J);
+			env->rm_tab[K]->parent_tt = J;
+			env->rm_tab[K]->path_tt = 1;
+			if (add_room_tt(env, intz, -1) == -1)
+				return (-1);
+		}
 	}
-}
-
-static int	delete_room_path_tt(t_env *env)
-{
-	t_room	*room;
-
-	room = *env->rm_lst_path_tt;
-	*env->rm_lst_path_tt = (*env->rm_lst_path_tt)->next;
-	ft_roomdelone(&room);
-	return (0);
+	else
+	{
+		env->rm_tab[K]->parent_tt = J;
+		env->rm_tab[K]->path_tt = 1;
+		if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
+			return (ret);
+	}
+	return (-2);
 }
 
 static int	path_visited(t_env *env, int *intz, int dfs_tt)
 {
 	int ret;
 
-	if (env->tu_tab[J][get_index(env, J, env->rm_tab[J]->parent_tt)].status == 1)
+	if (env->tu_tab[J][get_index(env, J, env->rm_tab[J]->parent_tt)].status
+			== 1)
 	{
 		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
 		{
@@ -63,26 +60,8 @@ static int	path_visited(t_env *env, int *intz, int dfs_tt)
 		}
 	}
 	else if (!env->rm_tab[K]->path)
-	{
-		if (env->tu_tab[K][get_index(env, K, J)].status == -1)
-		{
-			if (ft_better_way(env, J) == 0)
-			{
-				set_dad(env, K, J);
-				env->rm_tab[K]->parent_tt = J;
-				env->rm_tab[K]->path_tt = 1;
-				if (add_room_tt(env, intz, -1) == -1)
-					return (-1);
-			}
-		}
-		else
-		{
-			env->rm_tab[K]->parent_tt = J;
-			env->rm_tab[K]->path_tt = 1;
-			if ((ret = add_room_tt_ret(env, intz, dfs_tt, 1)) > -2)
-				return (ret);
-		}
-	}
+		if ((ret = get_out(env, intz, dfs_tt)) > -2)
+			return (ret);
 	return (-2);
 }
 
@@ -105,6 +84,26 @@ static int	found_path_tt(t_env *env, int *intz, int dfs_tt)
 	return (-2);
 }
 
+static int	bfs_tt_loop(t_env *env, int dfs_tt, int *intz)
+{
+	int		ret;
+
+	if (env->tu_tab[J][I].status == 1
+			&& !env->rm_tab[env->tu_tab[J][I].index]->path_tt
+			&& env->tu_tab[J][I].index != 0)
+	{
+		K = env->tu_tab[J][I].index;
+		if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
+		{
+			set_dad(env, J, K);
+			ft_roomdel(env->rm_lst_path_tt, 0);
+			clean_tt(env, 1);
+			return (ret);
+		}
+	}
+	return (-2);
+}
+
 int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 {
 	int		ret;
@@ -119,21 +118,8 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 		J = (*env->rm_lst_path_tt)->index;
 		delete_room_path_tt(env);
 		while (env->tu_tab[J][++I].exist)
-		{
-			if (env->tu_tab[J][I].status == 1
-			&& !env->rm_tab[env->tu_tab[J][I].index]->path_tt
-			&& env->tu_tab[J][I].index != 0)
-			{
-				K = env->tu_tab[J][I].index;
-				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
-				{
-					set_dad(env, J, K);
-					ft_roomdel(env->rm_lst_path_tt, 0);
-					clean_tt(env, 1);
-					return (ret);
-				}
-			}
-		}
+			if ((ret = bfs_tt_loop(env, dfs_tt, intz)) > -2)
+				return (ret);
 	}
 	clean_tt(env, 0);
 	return (ft_roomdel(env->rm_lst_path_tt, 0));

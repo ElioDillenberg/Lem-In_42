@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 15:19:27 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/25 11:38:25 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/25 12:18:49 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,4 +238,9 @@ int					add_room_bfs(t_env *env, int ret);
 int					set_daddy(t_env *env);
 void				set_dad(t_env *env, int i, int idx);
 void				reset_dad(t_env *env);
+/*
+****************************** time_travel_2.c *********************************
+*/
+void				clean_tt(t_env *env, int apply);
+int					delete_room_path_tt(t_env *env);
 #endif

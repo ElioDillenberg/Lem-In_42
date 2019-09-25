@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/07/29 16:01:51 by edillenb         ###   ########.fr        #
+#    Updated: 2019/09/25 12:13:21 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCDIR = srcs
 
 SC = $(addsuffix .c, lem_in get_parsing_tools parsing  buffer  build\
 	   is_parsing_tools is_tunnel free path bfs cut room if_parsing check_parsing\
-		result options time_travel reset_or_cpy env get_path add_room dad)
+		result options time_travel reset_or_cpy env get_path add_room dad\
+		time_travel_2)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

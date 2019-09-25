@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/25 14:55:05 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:46:07 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 	env = check_buffer(env, &(env)->map);
 	if (*line && ret == -2)
 	{
-		if ((!ft_printf("[ERROR : %s]\n", *line)))
+		if (*line && ft_printf("[ERROR : %s]\n", *line) == -1)
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);
@@ -37,7 +37,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 	}
 	else if (ret == -1)
 	{
-		if ((!ft_printf("[MALLOC ERROR]\n")))
+		if (ft_printf("[MALLOC ERROR]\n") == -1)
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);
@@ -129,5 +129,7 @@ int			parsing(t_env *env)
 	}
 	if (env->parse->index == 0)
 		ft_putendl("[ERROR : Empty file]");
+	if (env->parse->index == 1)
+		ft_putendl("[ERROR : Missing information to process]");
 	return (exit_parsing(&line, 0, env));
 }

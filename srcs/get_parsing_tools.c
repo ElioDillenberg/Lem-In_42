@@ -19,14 +19,14 @@ int		get_command(char *line, int *start_end)
 {
 	if (ft_strcmp(line, "##start") == 0)
 	{
-		if (start_end[0] == 0)
+		if (start_end[0] == 0 && start_end[1] != 1)
 			start_end[0] = 1;
 		else
 			return (-1);
 	}
 	else if (ft_strcmp(line, "##end") == 0)
 	{
-		if (start_end[1] == 0)
+		if (start_end[1] == 0 && start_end[0] != 1)
 			start_end[1] = 1;
 		else
 			return (-1);

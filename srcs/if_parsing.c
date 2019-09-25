@@ -17,8 +17,6 @@
 
 int		if_comment(t_env *env, char *line, int opt)
 {
-	if (env->parse->start_end[0] == 1 || env->parse->start_end[1] == 1)
-		return (-2);
 	if (opt && !(strcat_big(line, &(env)->map, env)))
 		return (-1);
 	return (1);

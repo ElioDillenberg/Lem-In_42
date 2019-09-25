@@ -75,19 +75,27 @@ int		get_room_tab(t_env *env, int len)
 	return (0);
 }
 
-void	add_tunnel(t_env *env, int index, int to_add)
+int	add_tunnel(t_env *env, int index, int to_add)
 {
 	int i;
 
 	i = 0;
+	if (index == to_add)
+		return (-1);
 	while (env->tu_tab[index][i].exist != false)
+	{
+		if (env->tu_tab[index][i].index == to_add)
+			return (-1);
 		i++;
+	}
+
 	env->tu_tab[index][i].exist = true;
 	env->tu_tab[index][i].index = to_add;
 	env->tu_tab[index][i].status = 1;
+	return (1);
 }
 
-void	get_tunnel(t_env *env, char *line)
+int	get_tunnel(t_env *env, char *line)
 {
 	size_t	i;
 	int		one;
@@ -107,6 +115,9 @@ void	get_tunnel(t_env *env, char *line)
 	line++;
 	while (two < env->nt_rm[1] && ft_strcmp(line, env->rm_tab[two]->name))
 		two++;
-	add_tunnel(env, one, two);
-	add_tunnel(env, two, one);
+	if (add_tunnel(env, one, two) == -1)
+		return (-1);
+	if (add_tunnel(env, two, one) == -1)
+		return (-1);
+	return (1);
 }

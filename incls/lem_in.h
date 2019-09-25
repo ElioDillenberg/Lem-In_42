@@ -126,7 +126,7 @@ int					add_room(char *line, t_room **head, int *command);
 int					get_command(char *line, int *start_end);
 int					get_room(char *line, t_room *room);
 int					get_room_tab(t_env *env, int len);
-void				get_tunnel(t_env *env, char *line);
+int				get_tunnel(t_env *env, char *line);
 /*
 ******************************* Build.c ****************************************
 */

@@ -99,32 +99,6 @@ static int	one_round(t_env *env, t_path *cr)
 	return (1);
 }
 
-int			get_strt_ants(t_env *env, int rounds_cr, int mod_cr)
-{
-	t_path	*cr;
-
-	cr = env->path_lst[env->cr_path];
-	if (env->nb_path == 0)
-		cr->strt_ants = env->nt_rm[0];
-	if (!(set_ant_start(cr, &rounds_cr, &mod_cr, env)))
-		return (0);
-	cr = env->path_lst[env->cr_path];
-	if (!cr)
-	{
-		env->cr_path = env->cr_path == 1 ? 0 : 1;
-		cr = env->path_lst[env->cr_path];
-	}
-	cr = env->path_lst[env->cr_path];
-	while (cr != NULL)
-	{
-		if (cr->strt_ants <= 0)
-			return (0);
-		cr = cr->next_path;
-	}
-	cr = env->path_lst[env->cr_path];
-	return (1);
-}
-
 int			result(t_env *env)
 {
 	t_path	*cr;

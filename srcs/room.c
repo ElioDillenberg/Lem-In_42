@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 13:06:30 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/11 18:39:54 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 10:24:25 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_roomdelone(t_room **room)
 	if (!room)
 		return ;
 	ft_memdel((void **)&((*room)->name));
-		ft_memdel((void **)&((*room)->dad));
+	ft_memdel((void **)&((*room)->dad));
 	ft_memdel((void **)room);
 	(*room) = NULL;
 }

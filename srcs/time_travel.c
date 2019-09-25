@@ -133,10 +133,7 @@ int			bfs_time_travel(t_env *env, int index, int dfs_tt)
 				K = env->tu_tab[J][I].index;
 				if ((ret = found_path_tt(env, intz, dfs_tt)) > -2)
 				{
-					if (env->rm_tab[J]->dad[0] != -1)
-						set_dad(env, J, K);
-					else
-						env->rm_tab[J]->dad[0] = K;
+					set_dad(env, J, K);
 					ft_roomdel(env->rm_lst_path_tt, 0);
 					clean_tt(env, 1);
 					return (ret);

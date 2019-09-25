@@ -39,19 +39,14 @@ int			ft_better_way(t_env *env, int index)
 	return (0);
 }
 
-static int	path_bfs(t_env *env, int i, int idx)
+static int	path(t_env *env, int i, int idx, int ret)
 {
-	int	ret;
-
+	set_dad(env, i, idx);
 	if (env->rm_tab[i]->visited == true && i != env->nt_rm[1] - 1)
 	{
 		env->rm_tab[i]->parent_tt = idx;
 		env->rm_tab[i]->path_tt = 1;
 		env->rm_tab[i]->dfs_tt = env->rm_tab[idx]->dfs;
-		if (env->rm_tab[i]->dad[0] != -1)
-			set_dad(env, i, idx);
-		else
-			env->rm_tab[i]->dad[0] = idx;
 		if ((ret = bfs_time_travel(env, i, env->rm_tab[i]->dfs)) == -1)
 			return (-1);
 		if (ret)
@@ -66,10 +61,6 @@ static int	path_bfs(t_env *env, int i, int idx)
 		env->rm_tab[i]->dfs = env->rm_tab[idx]->dfs + 1;
 		env->rm_tab[i]->path = 1;
 		env->rm_tab[i]->parent = idx;
-		if (env->rm_tab[i]->dad[0] != -1)
-			set_dad(env, i, idx);
-		else
-			env->rm_tab[i]->dad[0] = idx;
 		if ((ret = add_room_bfs(env, i)) > -2)
 			return (ret);
 	}
@@ -90,7 +81,7 @@ int			bfs_loop(t_env *env)
 		if (env->tu_tab[index][i].status == 1
 			&& !env->rm_tab[env->tu_tab[index][i].index]->path
 			&& env->tu_tab[index][i].index != 0)
-			if ((ret = path_bfs(env, env->tu_tab[index][i].index, index)) > -2)
+			if ((ret = path(env, env->tu_tab[index][i].index, index, 0)) > -2)
 				return (ret);
 	}
 	if (!(*env->rm_lst_path) || (*env->rm_lst_path)->end)

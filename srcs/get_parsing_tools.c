@@ -99,13 +99,13 @@ void	get_tunnel(t_env *env, char *line)
 	while (line[i] != '-' && line[i] != '\0')
 		i++;
 	line[i] = '\0';
-	while (one < env->nt_rm[1] && ft_strcmp(line, (env->rm_tab[one])->name) != 0)
+	while (one < env->nt_rm[1] && ft_strcmp(line, (env->rm_tab[one])->name))
 		one++;
 	line[i] = '-';
 	while (*line != '-' && *line != '\0')
 		line++;
 	line++;
-	while (two < env->nt_rm[1] && ft_strcmp(line, env->rm_tab[two]->name) != 0)
+	while (two < env->nt_rm[1] && ft_strcmp(line, env->rm_tab[two]->name))
 		two++;
 	add_tunnel(env, one, two);
 	add_tunnel(env, two, one);

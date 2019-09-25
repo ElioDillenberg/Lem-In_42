@@ -20,10 +20,15 @@ void		set_dad(t_env *env, int i, int idx)
 	int j;
 
 	j = 0;
-	while (env->rm_tab[i]->dad[j] != -1
-		&& j < env->rm_tab[i]->nb_dad && env->rm_tab[i]->dad[j] != idx)
-		j++;
-	env->rm_tab[i]->dad[j] = idx;
+	if (env->rm_tab[i]->dad[0] == -1)
+		env->rm_tab[i]->dad[0] = idx;
+	else
+	{
+		while (env->rm_tab[i]->dad[j] != -1
+			&& j < env->rm_tab[i]->nb_dad && env->rm_tab[i]->dad[j] != idx)
+			j++;
+		env->rm_tab[i]->dad[j] = idx;
+	}
 }
 
 void		reset_dad(t_env *env)

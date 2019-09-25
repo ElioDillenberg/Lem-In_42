@@ -120,7 +120,7 @@ int			parsing(t_env *env)
 			&& env->parse->ret != -1 && env->parse->ret != 0)
 	{
 		if (env->parse->index == 0 && (check_file(env, line)) == -1)
-			return (exit_parsing(&line, -1, env));
+			return (exit_parsing(&line, -2, env));
 		if ((ret = parsing_core(env, line)) < 0)
 			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);

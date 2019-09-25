@@ -26,7 +26,7 @@ int			is_ant_nb(char *line)
 
 	i = 0;
 	x = 0;
-	while (*line == 32 || (9 <= *line && *line <= 13))
+	while (*line == 32 || (9 <= *line && *line <= 13) || *line == '0')
 		line++;
 	if (line[i] == '+')
 		i++;

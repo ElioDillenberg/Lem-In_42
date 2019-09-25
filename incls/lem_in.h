@@ -183,7 +183,7 @@ void				reset_path_room(t_env *env, int opt);
 */
 int					get_strt_ants(t_env *env, int rounds, int mod);
 int					result(t_env *env);
-
+int	set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env);
 /*
 ******************************** Option.c *************************************
 */
@@ -201,6 +201,7 @@ t_env				*check_buffer(t_env *env, char **dest);
 */
 void				set_max_path(t_env *env);
 int					get_opti_path(t_env *env, t_path *path);
+int		get_strt_ants(t_env *env, int rounds_cr, int mod_cr);
 /*
 ******************************** If_parsing.c **********************************
 */

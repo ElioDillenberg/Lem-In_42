@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 19:30:01 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/24 19:54:34 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 10:32:35 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include <unistd.h>
 
-static int	set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env)
+int			set_ant_start(t_path *cr, int *rounds_cr, int *mod_cr, t_env *env)
 {
 	int to_send;
 	int total_ants;

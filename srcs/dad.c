@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:54:33 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/24 19:41:11 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:21:09 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void		set_dad(t_env *env, int i, int idx)
 		env->rm_tab[i]->dad[0] = idx;
 	else
 	{
-		while (env->rm_tab[i]->dad[j] != -1
-			&& j < env->rm_tab[i]->nb_dad && env->rm_tab[i]->dad[j] != idx)
+		while (j < env->rm_tab[i]->nb_dad
+			&& env->rm_tab[i]->dad[j] != -1 && env->rm_tab[i]->dad[j] != idx)
 			j++;
 		env->rm_tab[i]->dad[j] = idx;
 	}
@@ -66,7 +66,7 @@ int			set_daddy(t_env *env)
 				nbr_co++;
 			j++;
 		}
-		if (!(env->rm_tab[i]->dad = (int *)malloc(sizeof(int) * nbr_co)))
+		if (!(env->rm_tab[i]->dad = (int *)ft_memalloc(sizeof(int) * nbr_co)))
 			return (-1);
 		env->rm_tab[i]->nb_dad = nbr_co;
 		while (nbr_co--)

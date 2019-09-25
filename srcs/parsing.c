@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 11:38:10 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/25 16:46:07 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:47:36 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 static int	exit_parsing(char **line, int ret, t_env *env)
 {
 	env = check_buffer(env, &(env)->map);
+	if (env->parse->index < 2 || (env->parse->start_end[0] != 2
+		|| env->parse->start_end[1] != 2))
+		ft_putendl("[ERROR : Missing information to process]");
 	if (*line && ret == -2)
 	{
 		if (*line && ft_printf("[ERROR : %s]\n", *line) == -1)
@@ -36,14 +39,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 		}
 	}
 	else if (ret == -1)
-	{
-		if (ft_printf("[MALLOC ERROR]\n") == -1)
-		{
-			ft_memdel((void**)line);
-			get_next_line(0, line, 0, 0);
-			return (-1);
-		}
-	}
+		ft_putendl("[MALLOC ERROR]\n");
 	ft_memdel((void**)line);
 	get_next_line(0, line, 0, 0);
 	env->parse->ret = ret;
@@ -127,7 +123,5 @@ int			parsing(t_env *env)
 			return (exit_parsing(&line, ret, env));
 		ft_memdel((void**)&line);
 	}
-	if (env->parse->index < 2)
-		ft_putendl("[ERROR : Missing information to process]");
 	return (exit_parsing(&line, 0, env));
 }

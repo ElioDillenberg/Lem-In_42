@@ -1,0 +1,11 @@
+wdd
+12
+##start
+start 1 1
+##end
+end 2 2
+A 3 3
+B 4 4
+start-A
+A-B
+B-end

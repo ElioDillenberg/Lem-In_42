@@ -1,6 +1,0 @@
-[OK] : Max ant 100 000
-[OK] : Executable nomme lem-in
-[OK] : Strcmp -> ft_strcmp
-[] : Toutes les fourmis en un rounds
-[OK] : Afficher un message d erreur
-[] : Gerer Start et end sans SegF

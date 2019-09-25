@@ -1,6 +1,6 @@
-#comm
-10
+100
 ##start
+##end
 start 0 0
 A 1 1
 B 2 2
@@ -25,7 +25,6 @@ T 20 20
 #U 22 22
 #V 23 23
 #W 24 24
-##end
 END 21 21
 start-A
 A-B

@@ -96,9 +96,11 @@ static int	check_file(t_env *env, char *line)
 	int i;
 
 	i = 0;
-	if (line[0] == '#' && line[1] != '#')
+	if (line[0] == '#')
 	{
 		if ((if_comment(env, line, 0)) == -1)
+			return (-1);
+		if ((get_command(line, env->parse->start_end)) != -0)
 			return (-1);
 	}
 	else if (!is_number(line))

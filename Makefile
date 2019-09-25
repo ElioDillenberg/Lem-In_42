@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/09/25 12:13:21 by edillenb         ###   ########.fr        #
+#    Updated: 2019/09/25 12:52:07 by thallot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ $(NAME): $(LIBFT) $(OBJS) $(INCLS) Makefile
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 		@mkdir -p objs
-	  $(CC) -g3 $(CFLAGS) -c -o $@ $<
+	  $(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT): FORCE
 	@echo "$(BLUE)⚡️ CHECKING LIBFT.A. . . . . . . . . . . . . . . . $(YELLOW)"

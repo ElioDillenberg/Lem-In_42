@@ -6,7 +6,7 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/09/25 12:52:07 by thallot          ###   ########.fr        #
+#    Updated: 2019/09/26 12:02:30 by thallot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,4 +81,4 @@ re: fclean all
 	@echo "$(BLUE)⚡️ RELINK . . . . . . . . . . . . . . ."
 	@echo "$(GREEN)TOUT EST ---------------------------> OK$(NOCOLOR)"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: thallot <thallot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 14:54:33 by thallot           #+#    #+#             */
-/*   Updated: 2019/09/25 20:21:09 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/09/26 11:28:45 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		set_dad(t_env *env, int i, int idx)
 		env->rm_tab[i]->dad[0] = idx;
 	else
 	{
-		while (j < env->rm_tab[i]->nb_dad
+		while (j < env->rm_tab[i]->nb_dad - 1
 			&& env->rm_tab[i]->dad[j] != -1 && env->rm_tab[i]->dad[j] != idx)
 			j++;
 		env->rm_tab[i]->dad[j] = idx;

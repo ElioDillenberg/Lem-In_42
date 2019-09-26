@@ -31,7 +31,7 @@ static int	exit_parsing(char **line, int ret, t_env *env)
 		ft_putendl("[ERROR : Missing information to process]");
 	if (*line && ret == -2)
 	{
-		if (*line && ft_printf("[ERROR : %s]\n", *line) == -1)
+		if (*line && ft_printf("[ERROR at line : %s]\n", *line) == -1)
 		{
 			ft_memdel((void**)line);
 			get_next_line(0, line, 0, 0);

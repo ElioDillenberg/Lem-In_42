@@ -6,13 +6,19 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 16:02:44 by edillenb          #+#    #+#             */
-/*   Updated: 2019/09/11 12:15:47 by thallot          ###   ########.fr       */
+/*   Updated: 2019/09/26 13:09:52 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incls/lem_in.h"
 #include "../libft/libft.h"
 #include <stdlib.h>
+
+int			exit_is_room(char **test, int ret)
+{
+	ft_memdel((void**)test);
+	return (ret);
+}
 
 /*
 ** Below function checks wether given line can be used at data for the nb of
@@ -101,15 +107,14 @@ int			is_room(char *line, t_room **room_lst, t_env *env)
 		return (-1);
 	test = ft_strncpy(test, line, i);
 	if (check_name(cr, test) == -1)
-		return (-2);
-	free(test);
+		return (exit_is_room(&test, -2));
 	while (*line != ' ' && *line++)
 		if (*line == '-')
-			return (-1);
+			return (exit_is_room(&test, -1));
 	if (line[0] == '\0' || i == 0 || check_room(line) == -1
 			|| ft_strchr(test, '-') != NULL)
-		return (-2);
+		return (exit_is_room(&test, -2));
 	if (env->opt_double && (check_coordinates(line, room_lst) == -1))
-		return (-2);
-	return (0);
+		return (exit_is_room(&test, -2));
+	return (exit_is_room(&test, 0));
 }

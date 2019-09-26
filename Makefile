@@ -6,13 +6,13 @@
 #    By: edillenb <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/09/26 12:02:30 by thallot          ###   ########.fr        #
+#    Updated: 2019/09/26 13:10:37 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem-in
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 LIBFT = libft/libft.a
 

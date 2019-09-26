@@ -108,6 +108,8 @@ int			is_room(char *line, t_room **room_lst, t_env *env)
 			return (-1);
 	if (line[0] == '\0' || i == 0 || check_room(line) == -1)
 		return (-2);
+	if (ft_strchr(test, '-') != NULL)
+		return (-2);
 	if (env->opt_double && (check_coordinates(line, room_lst) == -1))
 		return (-2);
 	return (0);

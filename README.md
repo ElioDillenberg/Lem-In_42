@@ -3,6 +3,7 @@ Lem_in project, part of algorithmic branch at 42
 
 Lem_in introduces the 42 students to the concept of graph traversal. The goal is to build a programm that will find the quickest way to get n ants accross an ant farm. The antfarm is provided by the user as follows:
 
+<pre>
 10 (number of ants in the starting room)
 ##start (following room is the starting room)
 start 2 0 (declaration of a room, name = "start", x coordinate = 2, y coordinate = 0)
@@ -24,6 +25,7 @@ start-3
 6-end
 1-2
 2-end
+</pre>
 
 NB: coordinates do not have an incident of the algorithm, it is only used in case students want to create a visualizer.
 

@@ -1,3 +1,4 @@
+<pre>
 # lem_in_42
 Lem_in project, part of algorithmic branch at 42
 
@@ -43,3 +44,4 @@ In order to have an effective search that would both be fast in processing and g
 Sources: http://www.macfreek.nl/memory/Disjoint_Path_Finding
 
 The official project subject can be found as PDF in the subject folder.
+</pre>

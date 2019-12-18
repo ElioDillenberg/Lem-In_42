@@ -1,5 +1,4 @@
-# lem_in_42
-Lem_in project, part of algorithmic branch at 42
+# Lem-In (42 School Project)
 
 Lem_in introduces the 42 students to the concept of graph traversal. The goal is to build a programm that will find the quickest way to get n ants accross an ant farm. 
 

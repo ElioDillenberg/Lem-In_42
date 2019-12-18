@@ -1,7 +1,13 @@
 # lem_in_42
 Lem_in project, part of algorithmic branch at 42
 
-Lem_in introduces the 42 students to the concept of graph traversal. The goal is to build a programm that will find the quickest way to get n ants accross an ant farm. The antfarm is provided by the user as follows:
+Lem_in introduces the 42 students to the concept of graph traversal. The goal is to build a programm that will find the quickest way to get n ants accross an ant farm. 
+
+In order to have an effective search that would both be fast in processing and give us the shortest possible path for any given ant farm we have chosen to use a BFS (Breadth First Search) coupled with DPF (Disjoint Path Finding).
+
+Sources: http://www.macfreek.nl/memory/Disjoint_Path_Finding
+
+The antfarm is provided by the user as follows:
 
 <pre>
 10 (number of ants in the starting room)
@@ -41,9 +47,25 @@ Graphical representation of this example :
        [end]
 </pre>
 
-The first goal is to parse the input, to make sure the provided map is valid.
-In order to have an effective search that would both be fast in processing and give us the shortest possible path for any given ant farm we have chosen to use a BFS (Breadth First Search) coupled with DPF (Disjoint Path Finding).
+# How to run:
+<pre>
+git clone https://github.com/ElioDillenberg/Lem-In_42.git lem-in
+cd lem-in
+make
+./lem-in < map_corr/classico.txt
 
-Sources: http://www.macfreek.nl/memory/Disjoint_Path_Finding
+usage: ./lem_in [option]
+options:
+    no option : lem_in works normally
+    -rounds : displays the number of rounds
+    -paths : displays used paths
+    -duplicate : stop parsing if duplicate coordinates found
+    -file -[path]: reads input from file at [path]
 
-The official project subject can be found as PDF in the subject folder.
+</pre>
+
+The map_corr folder holds a few ant-farms, you can play around and build your own farms to test the program. 
+
+Enjoy!
+
+NB: The official project subject can be found as PDF in the subject folder.

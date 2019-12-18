@@ -31,10 +31,10 @@ Graphical representation of this example :
 
       [start]
       /  |
-   [3]  [1]--[5]
-   /     |    |
-[4]-----[2]  [6]
-         |  /  
+   [3]  [1]---[5]
+   /     |     |
+[4]-----[2]   [6]
+         |   /  
        [end]
 
 The first goal is to parse the input, to make sure the provided map is valid.
@@ -42,4 +42,4 @@ In order to have an effective search that would both be fast in processing and g
 
 Sources: http://www.macfreek.nl/memory/Disjoint_Path_Finding
 
-The official project subject can be found as PDF in the Subject folder.
+The official project subject can be found as PDF in the subject folder.

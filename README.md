@@ -1,4 +1,3 @@
-<pre>
 # lem_in_42
 Lem_in project, part of algorithmic branch at 42
 
@@ -30,6 +29,7 @@ NB: coordinates do not have an incident of the algorithm, it is only used in cas
 
 Graphical representation of this example : 
 
+<pre>
       [start]
       /  |
    [3]  [1]---[5]
@@ -37,6 +37,7 @@ Graphical representation of this example :
 [4]-----[2]   [6]
          |   /  
        [end]
+</pre>
 
 The first goal is to parse the input, to make sure the provided map is valid.
 In order to have an effective search that would both be fast in processing and give us the shortest possible path for any given ant farm we have chosen to use a BFS (Breadth First Search) coupled with DPF (Disjoint Path Finding).
@@ -44,4 +45,3 @@ In order to have an effective search that would both be fast in processing and g
 Sources: http://www.macfreek.nl/memory/Disjoint_Path_Finding
 
 The official project subject can be found as PDF in the subject folder.
-</pre>
